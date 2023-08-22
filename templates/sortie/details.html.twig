@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+Détails de la sortie
+{% endblock %}
+
+{% block h1 %}<h1>{{ sortie.nom }}</h1>{% endblock %}
+
+{% block body %}
+
+<ul> Date et heure :
+    <li>Début : {{ sortie.dateHeureDebut | date }}</li>
+    <li>Fin {{ sortie.dateHeureFin | date }}</li>
+</ul>
+<p>Date limite d'inscription : {{ sortie.dateLimiteInscription | date }}</p>
+<p>Nombre de places : {{ sortie.nbInscriptionsMax }}</p>
+<p>Descriptions et infos : {{ sortie.infosSortie }}</p>
+<p>Lieu : {{ sortie.lieu }}</p>
+
+    <button type="button" onClick="window.history.back();">Go back</button>
+
+{% endblock %}
+
