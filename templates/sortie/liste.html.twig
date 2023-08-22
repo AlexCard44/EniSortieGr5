@@ -2,11 +2,19 @@
 
 {% block title %}Liste des Sorties{% endblock %}
 
+{% block h1 %}<h1>Liste des Sorties</h1>{% endblock %}
+
 {% block body %}
-    <h1>Liste des Sorties</h1>
     {% for sortie in sorties %}
     <div>
-        {{ sortie.nom }}
+        <p>{{ sortie.nom }}
+            <span> - <a href="{{ path('sortie_details', {'id': sortie.id}) }}">Détails</a></span>
+            {% if app.user == sortie.organisateur  %}
+                <span> -
+                <a href="{{ path('sortie_edit', {'id':sortie.id}) }}"> Modifier</a>
+                    </span>
+            {% endif %}
+        </p>
     </div>
     {% endfor %}
 {% endblock %}
