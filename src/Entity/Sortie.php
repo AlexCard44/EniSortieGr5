@@ -62,6 +62,7 @@ class Sortie
     public function __construct()
     {
         $this->participants = new ArrayCollection();
+        $this->estPublie=false;
     }
 
     public function getId(): ?int
