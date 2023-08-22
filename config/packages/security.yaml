@@ -16,6 +16,24 @@ security:
         main:
             lazy: true
             provider: app_user_provider
+            custom_authenticator: App\Security\AppAuthenticator
+            logout:
+                path: app_logout
+                # where to redirect after logout
+                # target: app_any_route
+#            form_login:
+#                login_path: app_login
+#                check_path: app_login
+#                username_parameter: username
+#                password_parameter: plainPassword
+#                csrf_token_generator: security.csrf.token_manager
+#                invalid_message: "Champs invalide, veuillez recommencer"
+
+            remember_me:
+                secret: '%kernel.secret%'
+                lifetime: 604800
+                path: /
+                always_remember_me: true
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
