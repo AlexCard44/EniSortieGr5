@@ -21,8 +21,8 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
-    #[Assert\NotNull(message: "Saisie non valide")]
-    #[Assert\NotBlank(message: "Saisie non valide !")]
+    #[Assert\NotNull()]
+    #[Assert\NotBlank()]
     private ?string $username = null;
 
     #[ORM\Column]
@@ -32,8 +32,6 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
-    #[Assert\NotNull(message: "Saisie non valide")]
-    #[Assert\NotBlank(message: "Saisie non valide !")]
     private ?string $password = null;
 
     #[ORM\Column(length: 30)]
