@@ -21,6 +21,13 @@ security:
                 path: app_logout
                 # where to redirect after logout
                 # target: app_any_route
+#            form_login:
+#                login_path: app_login
+#                check_path: app_login
+#                username_parameter: username
+#                password_parameter: plainPassword
+#                csrf_token_generator: security.csrf.token_manager
+#                invalid_message: "Champs invalide, veuillez recommencer"
 
             remember_me:
                 secret: '%kernel.secret%'
