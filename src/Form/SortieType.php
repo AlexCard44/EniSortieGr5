@@ -2,29 +2,29 @@
 
 namespace App\Form;
 
-use App\Entity\Etat;
 use App\Entity\Lieu;
-use App\Entity\Site;
 use App\Entity\Sortie;
-use App\Entity\Utilisateur;
-use App\Entity\Ville;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SortieType extends AbstractType
 {
+    private RequestStack $requestStack;
+
+    public function __construct(RequestStack $requestStack) {
+        $this->requestStack=$requestStack;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $currentUrl=$this->requestStack->getCurrentRequest()->getPathInfo();
         $builder
             ->add('nom', null, [
                 "label" => "Nom de la sortie : "
@@ -66,24 +66,24 @@ class SortieType extends AbstractType
             // TODO : récupérer les informations de lieu automatiquement une fois le lieu sélectionné (rue, code postal)
 
 
-            ->add('Enregistrer', SubmitType::class)
-            ->add('Publier', SubmitType::class)
-            ->add('Annuler', SubmitType::class, [
-                "label" => "Annuler la sortie"
-            ])
-        ;
+            ->add('Enregistrer', SubmitType::class);
+            if(str_contains($currentUrl,'creation')) {
+                $builder->add('Publier', SubmitType::class);
+            }
 
-//        $builder->addEventListener(
-//            FormEvents::PRE_SET_DATA,
-//            function (FormEvent $event): void {
-//                $form=$event->getForm();
-//
-//                $data=$event->getData();
-//                $lieu=$data->getLieu();
-//                $rue=null===$lieu ? [] : $lieu->getRue();
-//                $form->add('rue', TextareaType::class);
-//            }
-//        )
+            if(str_contains($currentUrl,'edit')) {
+                $builder->add('Annuler', SubmitType::class, [
+                    "label" => "Annuler la sortie"
+                ]);
+            }
+
+            $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+                $sortie=$event->getData();
+                $form=$event->getForm();
+                if ($sortie && !$sortie->isEstPublie()) {
+                    $form->add('Publier', SubmitType::class);
+                }
+            })
         ;
     }
 
