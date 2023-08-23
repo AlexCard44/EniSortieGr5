@@ -9,13 +9,15 @@ Détails de la sortie
 {% block body %}
 
 <ul> Date et heure :
-    <li>Début : {{ sortie.dateHeureDebut | date }}</li>
-    <li>Fin {{ sortie.dateHeureFin | date }}</li>
+    <li>Début : {{ sortie.dateHeureDebut | format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY à HH:mm") }}</li>
+    <li>Fin : {{ sortie.dateHeureFin | format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY à HH:mm") }}</li>
 </ul>
-<p>Date limite d'inscription : {{ sortie.dateLimiteInscription | date }}</p>
+<p>Date et heure limite d'inscription : {{ sortie.dateLimiteInscription | format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY à HH:mm") }}</p>
 <p>Nombre de places : {{ sortie.nbInscriptionsMax }}</p>
 <p>Descriptions et infos : {{ sortie.infosSortie }}</p>
 <p>Lieu : {{ sortie.lieu }}</p>
+<p>Organisateur : {{ sortie.organisateur.prenom ~ ' ' ~ sortie.organisateur.nom }}</p>
+    <p>Etat : {{ sortie.etat.libelle }}</p>
 
     <button type="button" onClick="window.history.back();">Go back</button>
 
