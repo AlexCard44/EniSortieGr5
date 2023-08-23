@@ -95,7 +95,7 @@ class SortieController extends AbstractController
         Request $request
     ): Response
     {
-        if($this->getUser() !== $sortie->getOrganisateur()) {
+        if($this->getUser() !== $sortie->getOrganisateur() || ($sortie->getEtat()->getId() != 1 && $sortie->getEtat()->getId() != 2)) {
             return $this->render('erreur.html.twig');
         }
         $sortieForm= $this->createForm(SortieType::class,$sortie);
