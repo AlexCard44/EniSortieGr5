@@ -12,6 +12,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -64,25 +65,9 @@ class SortieType extends AbstractType
 
             // TODO : récupérer les informations de lieu automatiquement une fois le lieu sélectionné (rue, code postal)
 
-            // TODO : sortir 'site' du formulaire et faire en sorte de récupérer automatiquement le site relié à l'utilisateur actuellement connecté
-            ->add('site', EntityType::class, [
-                'class'=>Site::class,
-                'multiple'=>false,
-                'label'=>'Site : ',
-                'choice_label' => 'nom'
-            ])
 
-            // TODO : sortir 'organisateur' du formulaire pour faire en sorte que l'organisateur soit l'utilisateur actuellement connecté
-            ->add('organisateur', EntityType::class, [
-                'class'=>Utilisateur::class,
-                'multiple'=>false,
-                'label'=>'Organisateur : ',
-                'choice_label' => 'username'
-            ])
-
-
-
-            ->add('Enregistrer', SubmitType::class)// TODO : boutons publier et annuler
+            ->add('Enregistrer', SubmitType::class)// TODO : boutons publier
+            ->add('Effacer',ResetType::class)
         ;
 
 //        $builder->addEventListener(
