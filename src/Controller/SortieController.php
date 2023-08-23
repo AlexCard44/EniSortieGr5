@@ -79,8 +79,6 @@ class SortieController extends AbstractController
             return $this->redirectToRoute('sortie_liste');
         }
 
-        $sortieForm->remove("Annuler");
-
         return $this->render('sortie/creation.html.twig',
             [
             'sortieForm' => $sortieForm->createView(),
@@ -124,10 +122,6 @@ class SortieController extends AbstractController
             $sortie->setEstPublie(false);
             $entityManager->flush();
             return $this->redirectToRoute('sortie_liste');
-        }
-
-        if ($sortie->isEstPublie()){
-            $sortieForm->remove("Publier");
         }
 
         return $this->render('sortie/edit.html.twig',
