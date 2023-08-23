@@ -66,8 +66,11 @@ class SortieType extends AbstractType
             // TODO : récupérer les informations de lieu automatiquement une fois le lieu sélectionné (rue, code postal)
 
 
-            ->add('Enregistrer', SubmitType::class)// TODO : boutons publier
-            ->add('Effacer',ResetType::class)
+            ->add('Enregistrer', SubmitType::class)
+            ->add('Publier', SubmitType::class)
+            ->add('Annuler', SubmitType::class, [
+                "label" => "Annuler la sortie"
+            ])
         ;
 
 //        $builder->addEventListener(

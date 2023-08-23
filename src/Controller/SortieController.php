@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Form\FormInterface;
 
 #[Route('/sortie', name:'sortie')]
 class SortieController extends AbstractController
@@ -61,12 +62,24 @@ class SortieController extends AbstractController
 
         $sortieForm = $this->createForm(SortieType::class, $sortie);
         $sortieForm->handleRequest($request);
+        $sortie->setSite($this->getUser()->getSite());
 
-        if($sortieForm->isSubmitted()&&$sortieForm->isValid()) {
+        if($sortieForm->isSubmitted()&&$sortieForm->isValid() && "Enregistrer" === $sortieForm->getClickedButton()->getName()) {
             $entityManager->persist($sortie);
             $entityManager->flush();
             return $this->redirectToRoute('sortie_liste');
         }
+
+        if($sortieForm->isSubmitted()&&$sortieForm->isValid() && "Publier" === $sortieForm->getClickedButton()->getName()) {
+            $etat=$etatRepository->findOneBy(["id"=>2]);
+            $sortie->setEtat($etat);
+            $sortie->setEstPublie(true);
+            $entityManager->persist($sortie);
+            $entityManager->flush();
+            return $this->redirectToRoute('sortie_liste');
+        }
+
+        $sortieForm->remove("Annuler");
 
         return $this->render('sortie/creation.html.twig',
             [
@@ -79,6 +92,7 @@ class SortieController extends AbstractController
         requirements: ["id"=>"\d+"])]
     public function edit(
         Sortie $sortie,
+        EtatRepository $etatRepository,
         EntityManagerInterface $entityManager,
         Request $request
     ): Response
@@ -89,9 +103,31 @@ class SortieController extends AbstractController
         $sortieForm= $this->createForm(SortieType::class,$sortie);
         $sortieForm->handleRequest($request);
 
-        if($sortieForm->isSubmitted()&&$sortieForm->isValid()) {
+
+         // TODO: optimiser le code des if
+        if($sortieForm->isSubmitted()&&$sortieForm->isValid()  && "Enregistrer" === $sortieForm->getClickedButton()->getName()) {
             $entityManager->flush();
             return $this->redirectToRoute('sortie_liste');
+        }
+
+        if($sortieForm->isSubmitted()&&$sortieForm->isValid() && "Publier" === $sortieForm->getClickedButton()->getName()) {
+            $etat=$etatRepository->findOneBy(["id"=>2]);
+            $sortie->setEtat($etat);
+            $sortie->setEstPublie(true);
+            $entityManager->flush();
+            return $this->redirectToRoute('sortie_liste');
+        }
+
+        if($sortieForm->isSubmitted()&&$sortieForm->isValid() && "Annuler" === $sortieForm->getClickedButton()->getName()) {
+            $etat=$etatRepository->findOneBy(["id"=>6]);
+            $sortie->setEtat($etat);
+            $sortie->setEstPublie(false);
+            $entityManager->flush();
+            return $this->redirectToRoute('sortie_liste');
+        }
+
+        if ($sortie->isEstPublie()){
+            $sortieForm->remove("Publier");
         }
 
         return $this->render('sortie/edit.html.twig',
