@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Sortie;
+use App\Entity\Utilisateur;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
@@ -20,6 +21,14 @@ class SortieRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Sortie::class);
+    }
+    public function findByUsername(Utilisateur $username){
+        return $this->createQueryBuilder('s')
+            ->where(':utilisateur_connecte MEMBER OF s.participants')
+            ->setParameter('utilisateur_connecte', $username)
+            ->getQuery()
+            ->getResult();
+
     }
 
 //    /**
