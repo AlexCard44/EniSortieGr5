@@ -49,7 +49,7 @@ class SortieRepository extends ServiceEntityRepository
     public function findAllCustom():Paginator{
         $queryBuilder = $this->createQueryBuilder('sortie')
             ->addOrderBy('sortie.nom','ASC')
-            ->andWhere('sortie.estPublie=false')
+            ->andWhere('sortie.estPublie=true')
             ->setMaxResults(10)
             ->getQuery();
         $paginator = new Paginator($queryBuilder);
