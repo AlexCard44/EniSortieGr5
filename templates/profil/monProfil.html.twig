@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ProfilController!{% endblock %}
+
+{% block body %}
+{{ form(form) }}
+    <ul>
+        {% for sortie in sorties %}
+            <li>{{ sortie.nom }}</li>
+        {% endfor %}
+    </ul>
+
+    <a href="{{ path('profil_modifMdp') }}" > <button >Changer de mot de passe</button></a>
+
+{% endblock %}
