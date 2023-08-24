@@ -65,8 +65,9 @@ class SortieRepository extends ServiceEntityRepository
         $paginator = new Paginator($queryBuilder);
         return $paginator;
     }
+
     public function findAllCommand():array{
-        $queryBuilder = $this->createQueryBuilder('sortie');
+        $queryBuilder = $this->createQueryBuilder('sortie'); // SELECT * FROM sortie
         return $queryBuilder->getQuery()->getResult();
-    }
+}
 }
