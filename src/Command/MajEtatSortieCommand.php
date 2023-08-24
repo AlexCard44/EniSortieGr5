@@ -40,20 +40,26 @@ class MajEtatSortieCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
         $sorties = $this->sortieRepository->findAllCommand();
+        $annulee=$this->etatRepository->findOneBy(["id" => 6]);
+        $archivee=$this->etatRepository->findOneBy(["id" => 7]);
         $cloture = $this->etatRepository->findOneBy(["id" => 3]);
         $enCours = $this->etatRepository->findOneBy(["id" => 4]);
         $passee = $this->etatRepository->findOneBy(["id" => 5]);
+        $creee = $this->etatRepository->findOneBy(["id" => 1]);
+        $now = new \DateTime();
         foreach ($sorties as $sortie) {
-            $now = new \DateTime();
-            if ($now > $sortie->getDateLimiteInscription()) {
-                $sortie->setEtat($cloture);
+            if ($sortie->getEtat() !== $annulee && $sortie->getEtat() !== $archivee && $sortie->getEtat() !== $creee) {
+                if ($now > $sortie->getDateLimiteInscription()) {
+                    $sortie->setEtat($cloture);
+                }
+                if ($now > $sortie->getDateHeureDebut()) {
+                    $sortie->setEtat($enCours);
+                }
+                if ($now > $sortie->getDateHeureFin()) {
+                    $sortie->setEtat($passee);
+                }
             }
-            if ($now > $sortie->getDateHeureDebut()) {
-                $sortie->setEtat($enCours);
-            }
-            if ($now > $sortie->getDateHeureFin()) {
-                $sortie->setEtat($passee);
-            }
+
             $this->entityManager->persist($sortie);
         }
         $this->entityManager->flush();
