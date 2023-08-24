@@ -52,11 +52,12 @@ class SortieType extends AbstractType
             // TODO : upload d'une image
 //            ->add('urlPhoto', null, ["label" => "Photo : "])
             // TODO : accéder à Ville  (relation indirecte passant par Lieu et faire en sorte qu'en sélectionnant la ville, cela limite la sélection des lieux)
-//            ->add('ville', EntityType::class, [
-//                'class'=>Ville::class,
-//                'multiple'=>false,
-//                'label'=>'Ville :',
-//            ])
+            ->add('lieu', EntityType::class, [
+                'class'=> Lieu::class,
+                'multiple'=>false,
+                'label'=>'Ville :',
+                'choice_label' => 'rue',
+            ])
             ->add('lieu', EntityType::class, [
                 'class' => Lieu::class,
                 'multiple' => false,
