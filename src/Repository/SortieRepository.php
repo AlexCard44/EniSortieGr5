@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Sortie;
+use App\Entity\SortiesFiltre;
 use App\Entity\Utilisateur;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
@@ -23,7 +24,9 @@ class SortieRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Sortie::class);
     }
-    public function findByUsername(Utilisateur $username){
+
+    public function findByUsername(Utilisateur $username)
+    {
         return $this->createQueryBuilder('s')
             ->where(':utilisateur_connecte MEMBER OF s.participants')
             ->setParameter('utilisateur_connecte', $username)
@@ -56,9 +59,10 @@ class SortieRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
-    public function findAllCustom():Paginator{
+    public function findAllCustom(): Paginator
+    {
         $queryBuilder = $this->createQueryBuilder('sortie')
-            ->addOrderBy('sortie.nom','ASC')
+            ->addOrderBy('sortie.nom', 'ASC')
 //            ->andWhere('sortie.estPublie=false')
             ->setMaxResults(10)
             ->getQuery();
@@ -66,8 +70,33 @@ class SortieRepository extends ServiceEntityRepository
         return $paginator;
     }
 
-    public function findAllCommand():array{
+    public function findAllCommand(): array
+    {
         $queryBuilder = $this->createQueryBuilder('sortie'); // SELECT * FROM sortie
         return $queryBuilder->getQuery()->getResult();
-}
+    }
+
+    public function findSearch(SortiesFiltre $sortiesFiltre, Utilisateur $utilisateur): Paginator
+    {
+        $query = $this
+            ->createQueryBuilder('sortie')
+            ->select('sortie');
+
+        if (!empty($sortiesFiltre->sortiesOrganisees)) {
+            $query = $query
+                ->andWhere('sortie.organisateur = :utilisateur')
+                ->setParameter('utilisateur', $utilisateur);
+        }
+
+        if (!empty($sortiesFiltre->sortiesPassees)) {
+            $query = $query
+                ->andWhere('sortie.etat = :etat')
+                ->setParameter('etat', 5);
+        }
+
+        $paginator = new Paginator($query);
+        return $paginator;
+
+
+    }
 }

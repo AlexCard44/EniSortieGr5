@@ -5,18 +5,36 @@
 {% block h1 %}<h1>Liste des Sorties</h1>{% endblock %}
 
 {% block body %}
-   <div>
-    <input type="checkbox" id="organisateur">
-    <label for="organisateur">Sorties dont je suis l'organisateur</label><br>
-    <input type="checkbox" id="inscrit">
-    <label for="inscrit">Sorties auxquelles je suis inscrit</label><br>
-    <input type="checkbox" id="nonInscrit">
-    <label for="nonInscrit">Sorties auxquelles je ne suis pas inscrit</label><br>
-    <input type="checkbox" id="passees">
-    <label for="passees">Sorties passées</label>
-   </div>
+    {{ form_start(form, {attr: {class: 'filter js-filter-form'}}) }}
+    <div class="spinner-border js-loading" role="status" aria-hidden="true" style="display: none">
+        <span class="sr-only">Loading...</span>
+    </div>
+
+    {{ form_row(form.sortiesOrganisees) }}
+
+    {{ form_row(form.sortiesInscrit) }}
+
+    {{ form_row(form.sortiesNonInscrit) }}
+
+    {{ form_row(form.sortiesPassees) }}
+
+
+
+{{ form_end(form) }}
+
+
+{#   <div id="filters">#}
+{#    <input type="checkbox" id="organisateur">#}
+{#    <label for="organisateur">Sorties dont je suis l'organisateur</label><br>#}
+{#    <input type="checkbox" id="inscrit">#}
+{#    <label for="inscrit">Sorties auxquelles je suis inscrit</label><br>#}
+{#    <input type="checkbox" id="nonInscrit">#}
+{#    <label for="nonInscrit">Sorties auxquelles je ne suis pas inscrit</label><br>#}
+{#    <input type="checkbox" id="passees">#}
+{#    <label for="passees">Sorties passées</label>#}
+{#   </div >#}
     {% for sortie in sorties %}
-    <div>
+    <div id="results">
         <p>{{ sortie.nom }}
         <p>Organisateur : <a href="{{ path('detail', {'id': sortie.organisateur.id}) }}">
                 {{ sortie.organisateur.username}}
