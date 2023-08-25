@@ -5,9 +5,22 @@
 {% block h1 %}<h1>Liste des Sorties</h1>{% endblock %}
 
 {% block body %}
+   <div>
+    <input type="checkbox" id="organisateur">
+    <label for="organisateur">Sorties dont je suis l'organisateur</label><br>
+    <input type="checkbox" id="inscrit">
+    <label for="inscrit">Sorties auxquelles je suis inscrit</label><br>
+    <input type="checkbox" id="nonInscrit">
+    <label for="nonInscrit">Sorties auxquelles je ne suis pas inscrit</label><br>
+    <input type="checkbox" id="passees">
+    <label for="passees">Sorties passées</label>
+   </div>
     {% for sortie in sorties %}
     <div>
         <p>{{ sortie.nom }}
+        <p>Organisateur : <a href="{{ path('detail', {'id': sortie.organisateur.id}) }}">
+                {{ sortie.organisateur.username}}
+            </a></p>
             <span> - <a href="{{ path('sortie_details', {'id': sortie.id}) }}">Détails</a></span>
             {% if app.user == sortie.organisateur and (sortie.etat.id == 1 or sortie.etat.id == 2) %}
                 <span> -

@@ -17,7 +17,9 @@ Détails de la sortie
 <p>Nombre de places disponibles: {{ sortie.nbInscriptionsMax - sortie.participants.count }}</p>
 <p>Descriptions et infos : {{ sortie.infosSortie }}</p>
 <p>Lieu : {{ sortie.lieu }}</p>
-<p>Organisateur : {{ sortie.organisateur.prenom ~ ' ' ~ sortie.organisateur.nom }}</p>
+<p>Organisateur : <a href="{{ path('detail', {'id': sortie.organisateur.id}) }}">
+    {{ sortie.organisateur.prenom ~ ' ' ~ sortie.organisateur.nom }}
+    </a></p>
     <p>Etat : {{ sortie.etat.libelle }}</p>
 
 

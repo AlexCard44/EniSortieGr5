@@ -4,11 +4,14 @@
 
 {% block body %}
 {{ form(form) }}
+
+    <p>Sorties auxquelles je participe !</p>
     <ul>
         {% for sortie in sorties %}
             <li>{{ sortie.nom }}</li>
         {% endfor %}
     </ul>
+
 
     <a href="{{ path('profil_modifMdp') }}" > <button >Changer de mot de passe</button></a>
 
