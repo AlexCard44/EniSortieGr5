@@ -5,7 +5,7 @@
     <h1>{{ user.username }}</h1>
 
     {% if user.photo %}
-        Photo : <img src="{{asset ('images/'~user.photo) }}" >
+        Photo : <img src="{{asset ('images/'~user.photo) }}" alt="photo_profil" >
     {% endif %}
     <ul>
         <li>Prénom : {{ user.prenom }}</li>
