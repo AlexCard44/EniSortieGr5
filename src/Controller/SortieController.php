@@ -37,6 +37,7 @@ class SortieController extends AbstractController
     {
         $sortie = new Sortie();
 
+
         // Définir l'état comme "créée" à la création de l'occurrence "sortie"
         $etat=$etatRepository->findOneBy(["id"=>1]);
         $sortie->setEtat($etat);

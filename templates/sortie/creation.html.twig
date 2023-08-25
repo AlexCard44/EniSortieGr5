@@ -1,15 +1,50 @@
 {% extends 'base.html.twig' %}
 
 {% block h1 %}
-<h1>Créer une Sortie</h1>
+<h1 class="text-base font-semibold leading-7 text-gray-900">Créer une Sortie</h1>
 {% endblock %}
 
 {% block body %}
-
+    <div class="sm:grid-cols-12">
+    {{ form_row(sortieForm.nom, {
+        row_class: 'my-5',
+        label_class: 'text-green-600',
+        widget_class: 'w-60 py-1 rounded '
+    }) }}
+    {{ form_row(sortieForm.dateHeureDebut, {
+        row_class: 'my-5',
+        label_class: 'text-green-600',
+        widget_class: 'w-60 py-1 rounded'
+    }) }}
+    {{ form_row(sortieForm.dateHeureFin, {
+        row_class: 'my-5',
+        label_class: 'text-green-600',
+        widget_class: 'w-60 py-1 rounded'
+    }) }}
+    {{ form_row(sortieForm.dateLimiteInscription, {
+        row_class: 'my-5',
+        label_class: 'text-green-600',
+        widget_class: 'w-60 py-1 rounded'
+    }) }}
+    {{ form_row(sortieForm.nbInscriptionsMax, {
+        row_class: 'my-5',
+        label_class: 'text-green-600',
+        widget_class: 'w-60 py-1 rounded'
+    }) }}
+    {{ form_row(sortieForm.infosSortie,{
+        row_class: 'my-5',
+        label_class: 'text-green-600',
+        widget_class: 'w-60'
+    }) }}
+    {{ form_row(sortieForm.lieu, {
+        row_class: 'my-5',
+        label_class: 'text-green-600',
+        widget_class: ''
+    }) }}
     {{ form(sortieForm) }}
-
-    <button type="button" onClick="window.history.back();">Go back</button>
-    <button type="button" onClick="window.location.href=window.location.href;">Effacer</button>
+</div>
+    <button type="button" onClick="window.history.back();"  class="bg-lime-500 hover:bg-lime-700 text-white font-bold py-2 px-4 border border-lime-700 rounded">Go back</button>
+    <button type="button" onClick="window.location.href=window.location.href;"  class="bg-lime-500 hover:bg-lime-700 text-white font-bold py-2 px-4 border border-lime-700 rounded">Effacer</button>
 
 {% endblock %}
 
