@@ -6,13 +6,17 @@ use App\Repository\UtilisateurRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Serializable;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: UtilisateurRepository::class)]
 #[UniqueEntity(fields: ['username'], message: 'There is already an account with this username')]
+#[Vich\Uploadable()]
 class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -61,6 +65,72 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\ManyToMany(targetEntity: Sortie::class, mappedBy: 'participants')]
     private Collection $sortiesParticipees;
+
+    #[ORM\Column(length: 2100, nullable: true)]
+    private ?String $photo = null;
+
+    #[Vich\UploadableField(mapping: 'products', fileNameProperty: 'photo', size: 'imageSize')]
+    private ?File $imageFile = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $imageSize = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $updatedAt = null;
+
+    /**
+     * @return File|null
+     */
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    /**
+     * @param File|null $imageFile
+     */
+    public function setImageFile(?File $imageFile): void
+    {
+        $this->imageFile = $imageFile;
+        if (null !== $imageFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getImageSize(): ?int
+    {
+        return $this->imageSize;
+    }
+
+    /**
+     * @param int|null $imageSize
+     */
+    public function setImageSize(?int $imageSize): void
+    {
+        $this->imageSize = $imageSize;
+    }
+
+    /**
+     * @return \DateTimeImmutable|null
+     */
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @param \DateTimeImmutable|null $updatedAt
+     */
+    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): void
+    {
+        $this->updatedAt = $updatedAt;
+    }
+
 
     public function __construct()
     {
@@ -280,4 +350,64 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    /**
+     * @return String|null
+     */
+    public function getPhoto(): ?string
+    {
+        return $this->photo;
+    }
+
+    /**
+     * @param String|null $photo
+     */
+    public function setPhoto(?string $photo): void
+    {
+        $this->photo = $photo;
+    }
+
+
+    public function __serialize()
+    {
+        return [
+            'id' => $this->id,
+            "photo" => $this->photo,
+            'site'=>$this->site,
+            'username'=>$this->username,
+            'role'=>$this->roles,
+            'password'=>$this->password,
+            'nom'=>$this->nom,
+            'prenom'=>$this->prenom,
+            'telephone'=>$this->telephone,
+            'mail'=>$this->mail,
+            'administrateur'=>$this->administrateur,
+            'actif'=>$this->actif,
+            'sortiesParticipees'=>$this->sortiesParticipees,
+            'sortiesOrganisees'=>$this->sortiesOrganisees,
+            'imageSize'=>$this->imageSize,
+            'updatedAt'=>$this->updatedAt
+        ];
+    }
+
+    public function __unserialize(array $data)
+    {
+        $this->photo = $data['photo'];
+        $this->site = $data['site'];
+        $this->sortiesOrganisees = $data['sortiesOrganisees'];
+        $this->sortiesParticipees = $data['sortiesParticipees'];
+        $this->updatedAt = $data['updatedAt'];
+        $this->imageSize = $data['imageSize'];
+        $this->actif = $data['actif'];
+        $this->administrateur = $data['administrateur'];
+        $this->mail = $data['mail'];
+        $this->nom = $data['nom'];
+        $this->prenom = $data['prenom'];
+        $this->password = $data['password'];
+        $this->telephone = $data['telephone'];
+        $this->username = $data['username'];
+        $this->id = $data['id'];
+
+    }
+
 }
