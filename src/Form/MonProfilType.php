@@ -61,6 +61,7 @@ class MonProfilType extends AbstractType
 //                ]
 //            ])
             ->add('imageFile', VichImageType::class, [
+                'required' => false,
                 'constraints' => [
                     new File([
                         'maxSize' => '4M',
