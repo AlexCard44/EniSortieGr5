@@ -5,6 +5,7 @@
 {% block h1 %}<h1>Liste des Sorties</h1>{% endblock %}
 
 {% block body %}
+
    <div>
     <input type="checkbox" id="organisateur">
     <label for="organisateur">Sorties dont je suis l'organisateur</label><br>
@@ -15,6 +16,7 @@
     <input type="checkbox" id="passees">
     <label for="passees">Sorties passées</label>
    </div>
+
     {% for sortie in sorties %}
     <div>
         <p>{{ sortie.nom }}
