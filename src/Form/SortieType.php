@@ -34,10 +34,12 @@ class SortieType extends AbstractType
                 "label" => "Date et heure de début de la sortie : ",
                 'widget'=>'single_text',
             ])
+
             ->add('dateHeureFin', null, [
                 "label" => "Date et heure de fin de la sortie : ",
                 'widget'=>'single_text',
             ])
+
             ->add('dateLimiteInscription', null, [
                 "label" => "Date limite d'inscription : ",
                 'widget'=>'single_text',
@@ -68,9 +70,12 @@ class SortieType extends AbstractType
 
 
             ->add('Enregistrer', SubmitType::class);
-            if(str_contains($currentUrl,'creation')) {
-                $builder->add('Publier', SubmitType::class);
-            }
+
+//            if(str_contains($currentUrl,'creation')) {
+//                $builder->add('Publier', SubmitType::class, [
+//                    "label" => "Publier la sortie"
+//                ]);
+//            }
 
             if(str_contains($currentUrl,'edit')) {
                 $builder->add('Annuler', SubmitType::class, [
