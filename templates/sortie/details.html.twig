@@ -8,6 +8,10 @@ Détails de la sortie
 
 {% block body %}
 
+    {% if sortie.urlPhoto %}
+        Photo : <img src="{{asset ('images/'~sortie.urlPhoto) }}" >
+    {% endif %}
+
 <ul> Date et heure :
     <li>Début : {{ sortie.dateHeureDebut | format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY à HH:mm") }}</li>
     <li>Fin : {{ sortie.dateHeureFin | format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY à HH:mm") }}</li>

@@ -3,7 +3,10 @@
 {% block body %}
 
     <h1>{{ user.username }}</h1>
-    Photo : <img src="{{asset ('images/'~user.photo) }}" >
+
+    {% if user.photo %}
+        Photo : <img src="{{asset ('images/'~user.photo) }}" >
+    {% endif %}
     <ul>
         <li>Prénom : {{ user.prenom }}</li>
         <li>Nom : {{ user.nom }}</li>
@@ -18,6 +21,6 @@
 {% endblock %}
 
 {% block title %}
-
+    {{ parent() }} | {{ user.username }}
 {% endblock %}
 
