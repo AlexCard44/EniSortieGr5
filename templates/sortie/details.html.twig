@@ -13,7 +13,8 @@ Détails de la sortie
     <li>Fin : {{ sortie.dateHeureFin | format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY à HH:mm") }}</li>
 </ul>
 <p>Date et heure limite d'inscription : {{ sortie.dateLimiteInscription | format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY à HH:mm") }}</p>
-<p>Nombre de places : {{ sortie.nbInscriptionsMax }}</p>
+<p>Nombre de places maximum: {{ sortie.nbInscriptionsMax }}</p>
+<p>Nombre de places disponibles: {{ sortie.nbInscriptionsMax - sortie.participants.count }}</p>
 <p>Descriptions et infos : {{ sortie.infosSortie }}</p>
 <p>Lieu : {{ sortie.lieu }}</p>
 <p>Organisateur : <a href="{{ path('detail', {'id': sortie.organisateur.id}) }}">
@@ -21,7 +22,18 @@ Détails de la sortie
     </a></p>
     <p>Etat : {{ sortie.etat.libelle }}</p>
 
+
     <button type="button" onClick="window.history.back();">Go back</button>
+    {% if app.user and sortie.etat.libelle == "Ouverte" and sortie.participants.count < sortie.nbInscriptionsMax and not sortie.participants.contains(app.user) %}
+        <a href="{{ path('app_participation', {'id' : sortie.id}) }}">
+            <button>Rejoindre</button>
+        </a>
+    {% endif %}
+    {% if app.user and sortie.etat.libelle == "Ouverte" and sortie.participants.contains(app.user) %}
+        <a href="{{ path('app_desistement', {'id' : sortie.id}) }}">
+            <button>Se désister</button>
+        </a>
+    {% endif %}
 
 {% endblock %}
 

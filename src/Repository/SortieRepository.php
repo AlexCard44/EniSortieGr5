@@ -7,6 +7,7 @@ use App\Entity\Utilisateur;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
+use PhpParser\Node\Expr\Array_;
 
 /**
  * @extends ServiceEntityRepository<Sortie>
@@ -64,4 +65,9 @@ class SortieRepository extends ServiceEntityRepository
         $paginator = new Paginator($queryBuilder);
         return $paginator;
     }
+
+    public function findAllCommand():array{
+        $queryBuilder = $this->createQueryBuilder('sortie'); // SELECT * FROM sortie
+        return $queryBuilder->getQuery()->getResult();
+}
 }
