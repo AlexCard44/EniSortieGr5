@@ -17,21 +17,21 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ProfilController extends AbstractController
 {
-    #[Route('/profil', name: 'app_profil')]
-    public function index(): Response
-    {
-        return $this->render('profil/profil.html.twig', [
-            'controller_name' => 'ProfilController',
-        ]);
-    }
+//    #[Route('/profil', name: 'app_profil')]
+//    public function index(): Response
+//    {
+//        return $this->render('profil/profil.html.twig', [
+//            'controller_name' => 'ProfilController',
+//        ]);
+//    }
 
     #[Route('/monProfil', name: 'profil_monProfil')]
     public function monProfil(
-        Request $request,
+        Request                     $request,
         UserPasswordHasherInterface $hasher,
-        EntityManagerInterface $entityManager,
-        SortieRepository $sortieRepository,
-        UtilisateurRepository $utilisateurRepository
+        EntityManagerInterface      $entityManager,
+        SortieRepository            $sortieRepository,
+        UtilisateurRepository       $utilisateurRepository
     ): Response
     {
         $user = $this->getUser();
@@ -47,13 +47,13 @@ class ProfilController extends AbstractController
 //        $profil->setSite($user->getSite());
 //        $profil->setUserIdentifier()
 
-        $profil= $utilisateurRepository->findOneBy(['username'=>$user->getUserIdentifier()]);
+        $profil = $utilisateurRepository->findOneBy(['username' => $user->getUserIdentifier()]);
         $sorties = $sortieRepository->findByUsername($profil);
         //dd($sorties);
         $form = $this->createForm(MonProfilType::class, $profil);
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
 //            $profil->setPassword(
 //                $hasher->hashPassword(
 //                    $profil,
@@ -62,7 +62,7 @@ class ProfilController extends AbstractController
 //            );
             $entityManager->persist($profil);
             $entityManager->flush();
-            $this->addFlash('success', 'Profil modifié avec succès');
+            //$this->addFlash('success', 'Profil modifié avec succès');
 
             return $this->redirectToRoute('sortie_liste');
 
@@ -75,49 +75,54 @@ class ProfilController extends AbstractController
     }
 
     #[Route('/modifMotDePasse', name: 'profil_modifMdp')]
-    public function modifMdp(Request $request,
+    public function modifMdp(Request                     $request,
                              UserPasswordHasherInterface $passwordHasher,
-                             UtilisateurRepository $utilisateurRepository,
-                             EntityManagerInterface $entityManager
+                             UtilisateurRepository       $utilisateurRepository,
+                             EntityManagerInterface      $entityManager
 
     ): Response
     {
         $userActuel = $this->getUser();
 
 
-        $profil= $utilisateurRepository->findOneBy(['username'=>$userActuel->getUserIdentifier()]);
+        $profil = $utilisateurRepository->findOneBy(['username' => $userActuel->getUserIdentifier()]);
 
 //        $form = $this->createForm(MotDePasseType::class,$profil);
         $form = $this->createForm(MotDePasseType::class);
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
 
-          $oldPassword = $form->get('password')->getData();
+            $oldPassword = $form->get('password')->getData();
 //          dd($passwordHasher->isPasswordValid($this->getUser(), $oldPassword));
 //            dump($profil->getPassword());
 //            dd($passwordHasher->isPasswordValid($profil, '123456'));
             //verif de la correspondance
-            if($passwordHasher->isPasswordValid($profil,$oldPassword )){
+            if ($passwordHasher->isPasswordValid($profil, $oldPassword)) {
                 $newMdpHash = $passwordHasher->hashPassword($profil, $form->get('newPassword')->getData());
                 $profil->setPassword($newMdpHash);
-                $entityManager ->persist($profil);
-                $entityManager ->flush();
+                $entityManager->persist($profil);
+                $entityManager->flush();
                 return $this->redirectToRoute('sortie_liste');
             }
-
-
-
-            }
-
-
-
-
+        }
         return $this->render('profil/motDePasse.html.twig', [
             'controller_name' => 'ProfilController',
-            'form'=>$form->createView()
+            'form' => $form->createView()
         ]);
+    }
 
-
+    #[Route('/profil/{id}', name: 'detail', requirements: ["id" => "\d+"])]
+    public function detail(
+        UtilisateurRepository $utilisateurRepository,
+        int $id
+    ): Response
+    {
+        //dd($id);
+        $user = $utilisateurRepository->findOneBy(
+            ["id" => $id]
+        );
+        return $this->render('profil/profil.html.twig',
+        compact('user'));
     }
 }

@@ -9,15 +9,20 @@ use App\Repository\SortieRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
+use Symfony\UX\Dropzone\Form\DropzoneType;
+use Vich\UploaderBundle\Form\Type\VichFileType;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class MonProfilType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-       // $user = $options['user'];
+        // $user = $options['user'];
         $builder
             ->add('username')
             //->add('roles')
@@ -41,8 +46,34 @@ class MonProfilType extends AbstractType
 //             //   'query_builder' =>
 //
 //            ])
-            ->add('modifier', SubmitType::class);
-        ;
+//            ->add('photo', FileType::class,[
+//                'label'=>'Ajouter une image de profil ',
+//                'required'=>false,
+//                'constraints'=> [
+//                    new File([
+//                        'maxSize'=> '4M',
+//                        'mimeTypes'=>[
+//                            'image/jpeg',
+//                            'image/png'
+//                        ],
+//                        'mimeTypesMessage'=> 'Veuillez télécherger uune image au format JPEG ou PNG'
+//                    ])
+//                ]
+//            ])
+            ->add('imageFile', VichImageType::class, [
+                'required' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '4M',
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/png'
+                        ],
+                        'mimeTypesMessage'=> 'Veuillez télécherger une image au format JPEG ou PNG'
+                    ])
+                ]
+            ])
+            ->add('modifier', SubmitType::class);;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

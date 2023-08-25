@@ -2,9 +2,25 @@
 
 {% block body %}
 
+    <h1>{{ user.username }}</h1>
+
+    {% if user.photo %}
+        Photo : <img src="{{asset ('images/'~user.photo) }}" alt="photo_profil" >
+    {% endif %}
+    <ul>
+        <li>Prénom : {{ user.prenom }}</li>
+        <li>Nom : {{ user.nom }}</li>
+        <li>Téléphone : {{ user.telephone }}</li>
+        <li>Email : <a href="mailto:{{ user.mail }}">{{ user.mail }}</a></li>
+        <li>Ville de rattachement : {{ user.site.ville.nom }}</li>
+
+    </ul>
+
+    <button type="button" onClick="window.history.back();">Retour</button>
+
 {% endblock %}
 
 {% block title %}
-
+    {{ parent() }} | {{ user.username }}
 {% endblock %}
 

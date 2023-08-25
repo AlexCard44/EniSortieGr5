@@ -13,6 +13,8 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class SortieType extends AbstractType
 {
@@ -64,6 +66,19 @@ class SortieType extends AbstractType
                 'class' => Lieu::class,
                 'multiple' => false,
                 'label' => 'Lieu : ',
+            ])
+            ->add('imageFile', VichImageType::class, [
+                'required' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '4M',
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/png'
+                        ],
+                        'mimeTypesMessage'=> 'Veuillez télécharger une image au format JPEG ou PNG',
+                    ])
+                ]
             ])
 
             // TODO : récupérer les informations de lieu automatiquement une fois le lieu sélectionné (rue, code postal)
