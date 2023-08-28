@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% for lieu in lieux %}
+        <div>
+            <p>{{ lieu.nom }} - {{ lieu.rue }} - {{ lieu.ville }}
+            {% if app.user %}
+                <span> -
+                <a href="{{ path('lieu_edit', {'id':lieu.id}) }}"> Modifier</a>
+                    </span>
+            {% endif %}
+            </p>
+        </div>
+    {% endfor %}
+{% endblock %}
+
+{% block title %}
+Liste des Lieux
+{% endblock %}
+

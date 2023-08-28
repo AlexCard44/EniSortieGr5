@@ -73,14 +73,14 @@ class SortieController extends AbstractController
         try {
             $sortie->setOrganisateur($this->getUser()); // ça me donne l'objet user
         } catch (\Throwable$throwable) {
-            return $this->render('erreur.html.twig');
+            return $this->render('error401.html.twig');
         }
 
         // Définir le site rattaché à l'organisateur
         try {
             $username = $this->getUser()->getUserIdentifier(); // ça me donne l'username de l'utilisateur actuellement connecté
         } catch (\Throwable $throwable) {
-            return $this->render('erreur.html.twig');
+            return $this->render('error401.html.twig');
         }
 
         // Chercher le site rattaché au username
@@ -122,8 +122,9 @@ class SortieController extends AbstractController
         Request                $request
     ): Response
     {
-        if ($this->getUser() !== $sortie->getOrganisateur() || ($sortie->getEtat()->getId() != 1 && $sortie->getEtat()->getId() != 2)) {
-            return $this->render('erreur.html.twig');
+
+        if($this->getUser() !== $sortie->getOrganisateur() || ($sortie->getEtat()->getId() != 1 && $sortie->getEtat()->getId() != 2)) {
+            return $this->render('error401.html.twig');
         }
         $sortieForm = $this->createForm(SortieType::class, $sortie);
         $sortieForm->handleRequest($request);
