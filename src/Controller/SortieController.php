@@ -168,7 +168,7 @@ class SortieController extends AbstractController
     ): Response
     {
         try {
-            $userActuel = $this->getUser();
+            $userActuel = $this->getUser()->getUserIdentifier();
         } catch (\Throwable $throwable) {
             return $this->render('error401.html.twig');
         }
