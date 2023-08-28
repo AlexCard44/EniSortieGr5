@@ -4,30 +4,57 @@
     Détails de la sortie
 {% endblock %}
 
-{% block h1 %}<h1>{{ sortie.nom }}</h1>{% endblock %}
+{% block h1 %}
+    <h2 class="text-4xl font-bold dark:text-white ml-10">{{ sortie.nom }}</h2>
+{% endblock %}
 
 {% block body %}
+<div class="px-4 sm:px-0 border-gray-200">
+    <div class="mt-6 border-t border-gray-200">
+        <dl class="divide-y divide-gray-200">
+        <div class="px-4 py-6 sm:grid sm:grid-cols-12 sm:gap-4 sm:px-0">
+            <dt class="text-base font-semibold col-start-2 col-span-2 leading-6 text-gray-900">Début : </dt>
+            <dd class="mt-1 text-sm leading-6 text-gray-700 col-start-9 sm:col-span-2 sm:mt-0">{{ sortie.dateHeureDebut | format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY à HH:mm") }}</dd>
+        </div>
+        <div class="px-4 py-6 sm:grid sm:grid-cols-12 sm:gap-4 sm:px-0 bg-gray-200">
+            <dt class="text-base font-semibold col-start-2 col-span-2 leading-6 text-gray-900">Fin : </dt>
+            <dd class="mt-1 text-sm leading-6 text-gray-700 col-start-7 sm:col-span-2 sm:mt-0">{{ sortie.dateHeureFin | format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY à HH:mm") }}</dd>
+        </div>
+        <div class="px-4 py-6 sm:grid sm:grid-cols-12 sm:gap-4 sm:px-0">
+            <dt class="text-base font-semibold col-start-2 col-span-2 leading-6 text-gray-900">Date et heure limite d'inscription : </dt>
+            <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ sortie.dateLimiteInscription | format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY à HH:mm") }}</dd>
+        </div>
 
 
+        <div class="px-4 py-6 sm:grid sm:grid-cols-12 sm:gap-4 sm:px-0 bg-gray-200">
+            <dt class="text-base font-semibold col-start-2 col-span-2 leading-6 text-gray-900">Nombre de places maximum : </dt>
+            <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ sortie.nbInscriptionsMax }}</dd>
+        </div>
+        <div class="px-4 py-6 sm:grid sm:grid-cols-12 sm:gap-4 sm:px-0">
+            <dt class="text-base font-semibold col-start-2 col-span-2 leading-6 text-gray-900">Nombre de places disponibles : </dt>
+            <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ sortie.nbInscriptionsMax - sortie.participants.count }}</dd>
+        </div>
+        <div class="px-4 py-6 sm:grid sm:grid-cols-12 sm:gap-4 sm:px-0 bg-gray-200">
+            <dt class="text-base font-semibold col-start-2 col-span-2 leading-6 text-gray-900">Descriptions et infos : </dt>
+            <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ sortie.infosSortie }}</dd>
+        </div>
+        <div class="px-4 py-6 sm:grid sm:grid-cols-12 sm:gap-4 sm:px-0">
+            <dt class="text-base font-semibold col-start-2 col-span-2 leading-6 text-gray-900">Lieu : </dt>
+            <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ sortie.lieu }}</dd>
+        </div>
+        <div class="px-4 py-6 sm:grid sm:grid-cols-12 sm:gap-4 sm:px-0 bg-gray-200">
+            <dt class="text-base font-semibold col-start-2 col-span-2 leading-6 text-gray-900">Organisateur : </dt>
+            <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ sortie.organisateur.prenom ~ ' ' ~ sortie.organisateur.nom }}</dd>
+        </div>
+        <div class="px-4 py-6 sm:grid sm:grid-cols-12 sm:gap-4 sm:px-0">
+            <dt class="text-base font-semibold col-start-2 col-span-2 leading-6 text-gray-900">Etat : </dt>
+            <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ sortie.etat.libelle }}</dd>
+        </div>
+        </dl>
     {% if sortie.urlPhoto %}
         Photo : <img src="{{asset ('images/'~sortie.urlPhoto) }}" alt="photo_sortie" >
     {% endif %}
-
-<ul> Date et heure :
-    <li>Début : {{ sortie.dateHeureDebut | format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY à HH:mm") }}</li>
-    <li>Fin : {{ sortie.dateHeureFin | format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY à HH:mm") }}</li>
-</ul>
-<p>Date et heure limite d'inscription : {{ sortie.dateLimiteInscription | format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY à HH:mm") }}</p>
-<p>Nombre de places maximum: {{ sortie.nbInscriptionsMax }}</p>
-<p>Nombre de places disponibles: {{ sortie.nbInscriptionsMax - sortie.participants.count }}</p>
-<p>Descriptions et infos : {{ sortie.infosSortie }}</p>
-<p>Lieu : {{ sortie.lieu }}</p>
-<p>Organisateur : <a href="{{ path('detail', {'id': sortie.organisateur.id}) }}">
-    {{ sortie.organisateur.prenom ~ ' ' ~ sortie.organisateur.nom }}
-    </a></p>
-
-    <p>Etat : {{ sortie.etat.libelle }}</p>
-
+    </div>
     <table>
         <thead>
         <tr>
@@ -44,25 +71,32 @@
                 <td>{{ participant.username }}</td>
                 <td>{{ participant.nom | upper }} {{ participant.prenom }}</td>
             </tr>
-        {% endfor %}
+       {% endfor %}
         </tbody>
 
     </table>
+</div>
+<div class="grid grid-cols-12 gap-4">
+    <div class="col-start-2">
+        <button type="button" onClick="window.history.back();" class="bg-lime-500 hover:bg-lime-700 text-white font-bold py-2 px-4 border border-lime-700 rounded">Go back</button>
+    </div>
 
-
-
-
-    <button type="button" onClick="window.history.back();">Go back</button>
     {% if app.user and sortie.etat.libelle == "Ouverte" and sortie.participants.count < sortie.nbInscriptionsMax and not sortie.participants.contains(app.user) %}
-        <a href="{{ path('app_participation', {'id' : sortie.id}) }}">
-            <button>Rejoindre</button>
-        </a>
+        <div class="col-start-4">
+            <a href="{{ path('app_participation', {'id' : sortie.id}) }}">
+                <button class="bg-lime-500 hover:bg-lime-700 text-white font-bold py-2 px-4 col-start-4 border border-lime-700 rounded">Rejoindre</button>
+            </a>
+        </div>
     {% endif %}
     {% if app.user and sortie.etat.libelle == "Ouverte" and sortie.participants.contains(app.user) %}
-        <a href="{{ path('app_desistement', {'id' : sortie.id}) }}">
-            <button>Se désister</button>
-        </a>
+        <div class="col-start-4">
+            <a href="{{ path('app_desistement', {'id' : sortie.id}) }}">
+                <button class="bg-lime-500 hover:bg-lime-700 text-white font-bold py-2 px-4 col-start-4 border border-lime-700 rounded">Se désister</button>
+            </a>
+        </div>
     {% endif %}
+</div>
+
 
 {% endblock %}
 

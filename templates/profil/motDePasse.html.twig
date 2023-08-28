@@ -1,21 +1,36 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-
+    Changement de mot de passe
 {% endblock %}
 
 {% block body %}
-    {{ form (form) }}
-{#    <form method="post" action="monProfil.html.twig">#}
-{#        <label for="mdpActuel">Mot de passe actuel</label>#}
-{#        <input type="password" name="oldPassword" id="oldPassword" value="oldPassword"  required autofocus><br>#}
-{#        <label for="newPassword">Nouveau mot de passe</label>#}
-{#        <input type="password" name="newPassword" id="newPassword" value="newPassword" required><br>#}
-{#        <label for="confirmPassword">confirmez nouveau mot de passe</label>#}
-{#        <input type="password" name="confirmPassword" id="confirmPassword"  required><br>#}
-{#        <button >Valider</button>#}
-{#    </form>#}
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+
+    <div id="error-message-container" class="text-danger"></div>
+
+    {{ form_end(form) }}
+    <script>
+        function verifPassword() {
+            let newPasswordField = document.getElementById('mot_de_passe_newPassword_first');
+            let confirmPasswordField = document.getElementById('mot_de_passe_newPassword_second');
+            let errorContainer = document.getElementById('error-message-container');
+
+            newPasswordField.addEventListener('change', verifPassword);
+            confirmPasswordField.addEventListener('input', () => {
+                let newPassword = newPasswordField.value;
+                let confirmPassword = confirmPasswordField.value;
 
 
+                if (newPassword !== confirmPassword) {
+                    errorContainer.innerText = "Saisie incorrect";
+                } else {
+                    errorContainer.innerText = "";
+                }
+            });
+        }
+        verifPassword();
+    </script>
 {% endblock %}
 

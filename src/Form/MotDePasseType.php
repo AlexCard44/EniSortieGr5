@@ -22,8 +22,14 @@ class MotDePasseType extends AbstractType
             ])
             ->add('newPassword', RepeatedType::class,[
                 'type'=>PasswordType::class,
-                'first_options' => ['label'=>'Nouveau mot de passe'],
-                'second_options' => ['label'=>'Confirmez nouveau mot de passe'],
+                'first_options' => [
+                    'label'=>'Nouveau mot de passe',
+                    'attr' =>['id' => 'newPassword']
+                ],
+                'second_options' => [
+                    'label'=>'Confirmer nouveau mot de passe',
+                    'attr' =>['id' => 'confirmNewPassword']
+                ],
                 "mapped"=> false,
 
 
