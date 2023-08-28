@@ -15,50 +15,31 @@
         {{ encore_entry_script_tags('app') }}
         {{ encore_entry_script_tags('notyf') }}
     {% endblock %}
-</head>
-<body>
-<header>
-    <div class="nav">
-        <a href="{{ path('sortie_liste') }}">Liste des sorties</a>
-        {% if app.user %}
-            <a href="{{ path('sortie_creation') }}">Créer une sortie</a>
-            <a href="{{ path('app_logout') }}">Se déconnecter</a>
-            <a href="{{ path('profil_monProfil') }}">Mon profil</a>
-            <a href="{{ path('lieu_creation') }}">Ajouter un lieu</a>
-            <a href="{{ path('lieu_liste') }}">Afficher les lieux</a>
-        {% endif %}
-        {% if not app.user %}
-            <a href="{{ path('app_login') }}">Se connecter</a>
-            <a href="{{ path('app_register') }}">S'inscrire</a>
-        {% endif %}
-
-
-    </div>
-</header>
-{% include '_notyf.html.twig'%}
-{% block h1 %}{% endblock %}
-{% block body %}{% endblock %}
-</body>
-
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-            {{ encore_entry_script_tags('notyf') }}
-        {% endblock %}
     </head>
     <body class="bg-white">
     <header>
         <div class="flex flex-1 items-center text-center justify-center sm:items-stretch sm:justify-start bg-lime-300">
             <h1 class="text-6xl font-bold dark:text-white">Git'out</h1>
             <nav class="flex justify-around">
-                <div>
-                    <a href="{{ path('sortie_liste') }}" class="text-gray-900 hover:bg-green-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Liste des sorties</a>
-                </div>
+
                 {% if app.user %}
+                    <div>
+                        <a href="{{ path('sortie_liste') }}" class="text-gray-900 hover:bg-green-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Liste des sorties</a>
+                    </div>
                     <div>
                         <a href="{{ path('sortie_creation') }}" class="text-gray-900 hover:bg-lime-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Créer une sortie</a>
                     </div>
                     <div>
                         <a href="{{ path('app_logout') }}" class="text-gray-900 hover:bg-lime-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Se déconnecter</a>
+                    </div>
+                    <div>
+                        <a href="{{ path('profil_monProfil') }}" class="text-gray-900 hover:bg-lime-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Mon profil</a>
+                    </div>
+                    <div>
+                        <a href="{{ path('lieu_creation') }}" class="text-gray-900 hover:bg-lime-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Ajouter un lieu</a>
+                    </div>
+                    <div>
+                        <a href="{{ path('lieu_liste') }}" class="text-gray-900 hover:bg-lime-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Afficher les lieux</a>
                     </div>
                 {% endif %}
                 {% if not app.user %}
@@ -67,11 +48,6 @@
                     </div>
                     <div>
                         <a href="{{ path('app_register') }}" class="text-gray-900 hover:bg-lime-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">S'inscrire</a>
-                    </div>
-                {% endif %}
-                {% if app.user %}
-                    <div>
-                        <a href="{{ path('profil_monProfil') }}" class="text-gray-900 hover:bg-lime-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Mon profil</a>
                     </div>
                 {% endif %}
             </nav>

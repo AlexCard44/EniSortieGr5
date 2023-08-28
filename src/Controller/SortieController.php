@@ -29,9 +29,12 @@ class SortieController extends AbstractController
     ): Response
 
     {
-
-        $userActuel = $this->getUser();
-        $profil = $utilisateurRepository->findOneBy(['username' => $userActuel->getUserIdentifier()]);
+        try {
+            $userActuel = $this->getUser()->getUserIdentifier();
+        } catch (\Throwable $throwable) {
+            return $this->render('error401.html.twig');
+        }
+        $profil = $utilisateurRepository->findOneBy(['username' => $userActuel]);
         $data = new SortiesFiltre();
         $data->sortiesOrganisees = $request->get('sortiesOrganisees', false);
         $form = $this->createForm(SortieFiltreType::class, $data);
@@ -164,6 +167,11 @@ class SortieController extends AbstractController
         Sortie $sortie
     ): Response
     {
+        try {
+            $userActuel = $this->getUser();
+        } catch (\Throwable $throwable) {
+            return $this->render('error401.html.twig');
+        }
         return $this->render('sortie/details.html.twig',
             [
                 'sortie' => $sortie
@@ -178,7 +186,7 @@ class SortieController extends AbstractController
         $form = $this->createForm(SortiesFiltre::class, $data);
         $form->handleRequest($request);
         $products = $sortiesFiltreRepository->findSearch($data);
-        return $this->render('sortie/list.html.twig', [
+        return $this->render('sortie/liste.html.twig', [
             'products' => $products,
             'form' => $form->createView()
         ]);
