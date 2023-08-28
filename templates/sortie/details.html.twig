@@ -1,12 +1,13 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-Détails de la sortie
+    Détails de la sortie
 {% endblock %}
 
 {% block h1 %}<h1>{{ sortie.nom }}</h1>{% endblock %}
 
 {% block body %}
+
 
     {% if sortie.urlPhoto %}
         Photo : <img src="{{asset ('images/'~sortie.urlPhoto) }}" alt="photo_sortie" >
@@ -24,7 +25,31 @@ Détails de la sortie
 <p>Organisateur : <a href="{{ path('detail', {'id': sortie.organisateur.id}) }}">
     {{ sortie.organisateur.prenom ~ ' ' ~ sortie.organisateur.nom }}
     </a></p>
+
     <p>Etat : {{ sortie.etat.libelle }}</p>
+
+    <table>
+        <thead>
+        <tr>
+            <th colspan="2">Liste des participants</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Pseudo</td>
+            <td>Nom</td>
+        </tr>
+        {% for participant in sortie.participants %}
+            <tr>
+                <td>{{ participant.username }}</td>
+                <td>{{ participant.nom | upper }} {{ participant.prenom }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+
+    </table>
+
+
 
 
     <button type="button" onClick="window.history.back();">Go back</button>

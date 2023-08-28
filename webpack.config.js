@@ -21,7 +21,13 @@ Encore
      * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
      */
     .addEntry('app', './assets/app.js')
+    .addEntry('notyf', './assets/notyf.js')
 
+    // Inclure Bootstrap CSS
+    .addStyleEntry('bootstrap', './node_modules/bootstrap/dist/css/bootstrap.css')
+
+    // Inclure jQuery
+    .autoProvidejQuery()
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
 
