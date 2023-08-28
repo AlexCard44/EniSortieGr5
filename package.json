@@ -2,7 +2,6 @@
     "devDependencies": {
         "@babel/core": "^7.17.0",
         "@babel/preset-env": "^7.16.0",
-
         "@hotwired/stimulus": "^3.0.0",
         "@symfony/stimulus-bridge": "^3.2.0",
         "@symfony/ux-dropzone": "file:vendor/symfony/ux-dropzone/assets",
@@ -21,7 +20,6 @@
         "regenerator-runtime": "^0.13.9",
         "sass": "^1.66.1",
         "sass-loader": "^13.0.0",
-
         "tailwindcss": "^3.3.3",
         "webpack": "^5.74.0",
         "webpack-cli": "^4.10.0",

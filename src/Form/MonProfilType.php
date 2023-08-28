@@ -69,7 +69,7 @@ class MonProfilType extends AbstractType
                             'image/jpeg',
                             'image/png'
                         ],
-                        'mimeTypesMessage'=> 'Veuillez télécherger une image au format JPEG ou PNG'
+                        'mimeTypesMessage'=> 'Veuillez télécharger une image au format JPEG ou PNG'
                     ])
                 ]
             ])
