@@ -3,16 +3,59 @@
 {% block title %}{{ parent() }} | {{ app.user.username }}{% endblock %}
 
 {% block body %}
-{{ form(form) }}
 
-    <p>Sorties auxquelles je participe !</p>
-    <ul>
+    {{ form_start(form) }}
+<div class="w-full">
+    <div class="grid grid-cols-6 gap-4">
+        {{ form_row(form.username, {
+            row_class: 'my-5 grid grid-cols-4 col-start-2 col-span-4 flex',
+            label_class: 'text-green-600',
+            widget_class: 'w-60 py-1 rounded'
+        }) }}
+    </div>
+    <div class="grid grid-cols-6 gap-4">
+        {{ form_row(form.nom, {
+            row_class: 'my-5 grid grid-cols-4 col-start-2 col-span-4 flex',
+            label_class: 'text-green-600',
+            widget_class: 'w-60 py-1 rounded'
+        }) }}
+    </div>
+    <div class="grid grid-cols-6 gap-4">
+        {{ form_row(form.prenom, {
+            row_class: 'my-5 grid grid-cols-4 col-start-2 col-span-4 flex',
+            label_class: 'text-green-600',
+            widget_class: 'w-60 py-1 rounded'
+        }) }}
+    </div>
+    <div class="grid grid-cols-6 gap-4">
+        {{ form_row(form.telephone, {
+            row_class: 'my-5 grid grid-cols-4 col-start-2 col-span-4 flex',
+            label_class: 'text-green-600',
+            widget_class: 'w-60 py-1 rounded'
+        }) }}
+    </div>
+    <div class="grid grid-cols-6 gap-4">
+        {{ form_row(form.mail,{
+            row_class: 'my-5 grid grid-cols-4 col-start-2 col-span-4 flex',
+            label_class: 'text-green-600',
+            widget_class: 'col-span-1.5'
+        }) }}
+    </div>
+</div>
+<div class="w-full grid grid-cols-6">
+    <div class="my-6 grid grid-cols-4 col-start-2 col-span-4">
+{{ form_end(form) }}
+        <a href="{{ path('profil_modifMdp') }}" class="col-start-2">
+            <button class="bg-lime-500 hover:bg-lime-700 text-white font-bold py-2 px-4 border border-lime-700 rounded">Changer de mot de passe</button>
+        </a>
+    </div>
+</div>
+<div class="w-1/2 grid grid-cols-3 ">
+    <ul class="my-6 px-4 py-3 border border-lime-700 col-start-2 col-span-2 max-h-[100rem]] overflow-y-scroll">
         {% for sortie in sorties %}
-            <li>{{ sortie.nom }}</li>
+            <li class="py-2 even:bg-lime-100">{{ sortie.nom ~ " - " ~ sortie.dateHeureDebut | format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY à HH:mm") }}</li>
         {% endfor %}
     </ul>
-
-
-    <a href="{{ path('profil_modifMdp') }}" > <button >Changer de mot de passe</button></a>
+</div>
 
 {% endblock %}

@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}{{ parent() }} | Connexion{% endblock %}
 
 {% block body %}
 <form method="post">
@@ -14,21 +14,22 @@
         </div>
     {% endif %}
 
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label for="inputUsername">Username</label>
+    <h1 class="h3 mb-3 font-weight-normal">Connectez-vous</h1>
+    <label for="inputUsername">Pseudo</label>
     <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control" autocomplete="username" required autofocus>
-    <label for="inputPassword">Password</label>
+    <label for="inputPassword">Mot de passe</label>
     <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
     <label>
         <input type="checkbox" name="_remember_me" checked>
-        Keep me logged in
+        Se souvenir de moi
     </label>
+    <a href="{{ path('app_forgot_password_request') }}">Mot de passe oublié</a>
     <input type="hidden" name="_csrf_token"
            value="{{ csrf_token('authenticate') }}"
     >
 
     <button class="btn btn-lg btn-primary" type="submit">
-        Sign in
+        Connexion !
     </button>
 </form>
 {% endblock %}

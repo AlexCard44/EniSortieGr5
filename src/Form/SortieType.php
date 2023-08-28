@@ -6,6 +6,7 @@ use App\Entity\Lieu;
 use App\Entity\Sortie;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -32,17 +33,17 @@ class SortieType extends AbstractType
                 "label" => "Nom de la sortie : "
             ])
             // TODO : modification format date (CSS ?)
-            ->add('dateHeureDebut', null, [
+
+            ->add('dateHeureDebut', DateTimeType::class, [
                 "label" => "Date et heure de début de la sortie : ",
                 'widget'=>'single_text',
             ])
 
-            ->add('dateHeureFin', null, [
+            ->add('dateHeureFin', DateTimeType::class, [
                 "label" => "Date et heure de fin de la sortie : ",
                 'widget'=>'single_text',
             ])
-
-            ->add('dateLimiteInscription', null, [
+            ->add('dateLimiteInscription', DateTimeType::class, [
                 "label" => "Date limite d'inscription : ",
                 'widget'=>'single_text',
             ])
@@ -84,7 +85,11 @@ class SortieType extends AbstractType
             // TODO : récupérer les informations de lieu automatiquement une fois le lieu sélectionné (rue, code postal)
 
 
-            ->add('Enregistrer', SubmitType::class);
+            ->add('Enregistrer', SubmitType::class, [
+                'attr' => [
+                    'class' => 'bg-lime-500 hover:bg-lime-700 text-white font-bold py-2 px-4 border border-lime-700 rounded'
+                ]
+            ]);
 
 //            if(str_contains($currentUrl,'creation')) {
 //                $builder->add('Publier', SubmitType::class, [
@@ -102,10 +107,24 @@ class SortieType extends AbstractType
                 $sortie=$event->getData();
                 $form=$event->getForm();
                 if ($sortie && !$sortie->isEstPublie()) {
-                    $form->add('Publier', SubmitType::class);
+                    $form->add('Publier', SubmitType::class, [
+                            'label' => "Publier la sortie",
+                            'attr' => [
+                                'class' => 'bg-lime-500 hover:bg-lime-700 text-white font-bold py-2 px-4 border border-lime-700 rounded'
+                            ]
+                        ]
+                    );
                 }
-            })
-        ;
+            });
+
+            if(str_contains($currentUrl,'edit')) {
+                $builder->add('Annuler', SubmitType::class, [
+                    "label" => "Annuler la sortie",
+                    'attr' => [
+                        'class' => 'bg-lime-500 hover:bg-lime-700 text-white font-bold py-2 px-4 border border-lime-700 rounded'
+                    ]
+                ]);
+            }
     }
 
     public function configureOptions(OptionsResolver $resolver): void
