@@ -90,18 +90,17 @@ class SortieController extends AbstractController
 
         $sortieForm = $this->createForm(SortieType::class, $sortie);
         $sortieForm->handleRequest($request);
+
+
         $sortie->setSite($this->getUser()->getSite());
-
-        if ($sortieForm->isSubmitted() && $sortieForm->isValid() && "Enregistrer" === $sortieForm->getClickedButton()->getName()) {
-            $entityManager->persist($sortie);
-            $entityManager->flush();
-            return $this->redirectToRoute('sortie_liste');
-        }
-
-        if ($sortieForm->isSubmitted() && $sortieForm->isValid() && "Publier" === $sortieForm->getClickedButton()->getName()) {
-            $etat = $etatRepository->findOneBy(["id" => 2]);
-            $sortie->setEtat($etat);
-            $sortie->setEstPublie(true);
+     
+        if ($sortieForm->isSubmitted()&&$sortieForm->isValid()){
+          
+            if ("Publier" === $sortieForm->getClickedButton()->getName()){
+                $etat = $etatRepository->findOneBy(["id" => 2]);
+                $sortie->setEtat($etat);
+                $sortie->setEstPublie(true);
+            }
             $entityManager->persist($sortie);
             $entityManager->flush();
             return $this->redirectToRoute('sortie_liste');
