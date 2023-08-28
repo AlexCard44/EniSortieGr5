@@ -7,6 +7,26 @@
 {% endblock %}
 
 {% block body %}
+
+{{ form_start(form, {attr: {class: 'filter js-filter-form'}}) }}
+    <div class="spinner-border js-loading" role="status" aria-hidden="true" style="display: none">
+        <span class="sr-only">Loading...</span>
+    </div>
+
+    {{ form_row(form.name) }}
+
+    {{ form_row(form.sortiesOrganisees) }}
+
+    {{ form_row(form.sortiesInscrit) }}
+
+    {{ form_row(form.sortiesNonInscrit) }}
+
+    {{ form_row(form.sortiesPassees) }}
+
+
+
+{{ form_end(form) }}
+
 <div class="px-4 sm:px-0 border-gray-200">
     <div class="mt-6 border-t border-gray-200">
         <dl class="divide-y divide-gray-200">
@@ -20,6 +40,11 @@
             </div>
             {% endfor %}
         </dl>
+
+
+    
+
+   
     </div>
 </div>
 {% endblock %}

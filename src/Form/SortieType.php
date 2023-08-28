@@ -14,6 +14,8 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class SortieType extends AbstractType
 {
@@ -36,6 +38,7 @@ class SortieType extends AbstractType
                 "label" => "Date et heure de début de la sortie : ",
                 'widget'=>'single_text',
             ])
+
             ->add('dateHeureFin', DateTimeType::class, [
                 "label" => "Date et heure de fin de la sortie : ",
                 'widget'=>'single_text',
@@ -65,13 +68,40 @@ class SortieType extends AbstractType
                 'multiple' => false,
                 'label' => 'Lieu : ',
             ])
+            ->add('imageFile', VichImageType::class, [
+                'required' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '4M',
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/png'
+                        ],
+                        'mimeTypesMessage'=> 'Veuillez télécharger une image au format JPEG ou PNG',
+                    ])
+                ]
+            ])
+
             // TODO : récupérer les informations de lieu automatiquement une fois le lieu sélectionné (rue, code postal)
+
 
             ->add('Enregistrer', SubmitType::class, [
                 'attr' => [
                     'class' => 'bg-lime-500 hover:bg-lime-700 text-white font-bold py-2 px-4 border border-lime-700 rounded'
                 ]
             ]);
+
+//            if(str_contains($currentUrl,'creation')) {
+//                $builder->add('Publier', SubmitType::class, [
+//                    "label" => "Publier la sortie"
+//                ]);
+//            }
+
+            if(str_contains($currentUrl,'edit')) {
+                $builder->add('Annuler', SubmitType::class, [
+                    "label" => "Annuler la sortie"
+                ]);
+            }
 
             $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
                 $sortie=$event->getData();

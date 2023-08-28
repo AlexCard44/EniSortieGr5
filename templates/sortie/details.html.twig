@@ -25,6 +25,7 @@
             <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ sortie.dateLimiteInscription | format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY à HH:mm") }}</dd>
         </div>
 
+
         <div class="px-4 py-6 sm:grid sm:grid-cols-12 sm:gap-4 sm:px-0 bg-gray-200">
             <dt class="text-base font-semibold col-start-2 col-span-2 leading-6 text-gray-900">Nombre de places maximum : </dt>
             <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ sortie.nbInscriptionsMax }}</dd>
@@ -50,12 +51,36 @@
             <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ sortie.etat.libelle }}</dd>
         </div>
         </dl>
+    {% if sortie.urlPhoto %}
+        Photo : <img src="{{asset ('images/'~sortie.urlPhoto) }}" alt="photo_sortie" >
+    {% endif %}
     </div>
+    <table>
+        <thead>
+        <tr>
+            <th colspan="2">Liste des participants</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Pseudo</td>
+            <td>Nom</td>
+        </tr>
+        {% for participant in sortie.participants %}
+            <tr>
+                <td>{{ participant.username }}</td>
+                <td>{{ participant.nom | upper }} {{ participant.prenom }}</td>
+            </tr>
+       {% endfor %}
+        </tbody>
+
+    </table>
 </div>
 <div class="grid grid-cols-12 gap-4">
     <div class="col-start-2">
         <button type="button" onClick="window.history.back();" class="bg-lime-500 hover:bg-lime-700 text-white font-bold py-2 px-4 border border-lime-700 rounded">Go back</button>
     </div>
+
     {% if app.user and sortie.etat.libelle == "Ouverte" and sortie.participants.count < sortie.nbInscriptionsMax and not sortie.participants.contains(app.user) %}
         <div class="col-start-4">
             <a href="{{ path('app_participation', {'id' : sortie.id}) }}">
