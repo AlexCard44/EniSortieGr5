@@ -78,6 +78,7 @@ class SortieRepository extends ServiceEntityRepository
 
     public function findSearch(SortiesFiltre $sortiesFiltre, Utilisateur $utilisateur): Paginator
     {
+       # $utilisateurId = $this->getUser()->getId();
         $query = $this
             ->createQueryBuilder('sortie')
             ->select('sortie');
@@ -93,6 +94,31 @@ class SortieRepository extends ServiceEntityRepository
                 ->andWhere('sortie.etat = :etat')
                 ->setParameter('etat', 5);
         }
+
+
+            if (!empty($sortiesFiltre->sortiesNonInscrit)){
+                $query=$query
+                    ->andWhere(':utilisateur NOT MEMBER OF sortie.participants')
+                    ->setParameter('utilisateur', $utilisateur);
+            }
+
+
+
+
+            if (!empty($sortiesFiltre->sortiesInscrit)) {
+                $query = $query
+                  ->andWhere(':utilisateur MEMBER OF sortie.participants')
+                  ->setParameter('utilisateur', $utilisateur);
+            }
+
+            if (!empty($sortiesFiltre->getName())){
+                $query =$query
+                    ->andWhere('sortie.nom LIKE :name')
+                    ->setParameter('name', "%{$sortiesFiltre->getName()}%");
+            }
+
+
+
 
         $paginator = new Paginator($query);
         return $paginator;

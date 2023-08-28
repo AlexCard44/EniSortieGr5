@@ -24,6 +24,24 @@ class SortiesFiltre
 
     public ?bool $sortiesPassees = null;
 
+    public ?string $name=null;
+
+    /**
+     * @return string|null
+     */
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string|null $name
+     */
+    public function setName(?string $name): void
+    {
+        $this->name = $name;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
