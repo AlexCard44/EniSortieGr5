@@ -37,7 +37,6 @@ class SortieController extends AbstractController
     {
         $sortie = new Sortie();
 
-
         // Définir l'état comme "créée" à la création de l'occurrence "sortie"
         $etat=$etatRepository->findOneBy(["id"=>1]);
         $sortie->setEtat($etat);
@@ -63,22 +62,21 @@ class SortieController extends AbstractController
 
         $sortieForm = $this->createForm(SortieType::class, $sortie);
         $sortieForm->handleRequest($request);
+
         $sortie->setSite($this->getUser()->getSite());
-
-        if($sortieForm->isSubmitted()&&$sortieForm->isValid() && "Enregistrer" === $sortieForm->getClickedButton()->getName()) {
+        //dd($sortie);
+        if ($sortieForm->isSubmitted()&&$sortieForm->isValid()){
+           // dd($sortie);
+            if ("Publier" === $sortieForm->getClickedButton()->getName()){
+                $etat = $etatRepository->findOneBy(["id" => 2]);
+                $sortie->setEtat($etat);
+                $sortie->setEstPublie(true);
+            }
             $entityManager->persist($sortie);
             $entityManager->flush();
             return $this->redirectToRoute('sortie_liste');
         }
 
-        if($sortieForm->isSubmitted()&&$sortieForm->isValid() && "Publier" === $sortieForm->getClickedButton()->getName()) {
-            $etat=$etatRepository->findOneBy(["id"=>2]);
-            $sortie->setEtat($etat);
-            $sortie->setEstPublie(true);
-            $entityManager->persist($sortie);
-            $entityManager->flush();
-            return $this->redirectToRoute('sortie_liste');
-        }
 
         return $this->render('sortie/creation.html.twig',
             [

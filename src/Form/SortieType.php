@@ -32,15 +32,15 @@ class SortieType extends AbstractType
             ])
             // TODO : modification format date (CSS ?)
 
-            ->add('dateHeureDebut', null, [
+            ->add('dateHeureDebut', DateTimeType::class, [
                 "label" => "Date et heure de début de la sortie : ",
                 'widget'=>'single_text',
             ])
-            ->add('dateHeureFin', null, [
+            ->add('dateHeureFin', DateTimeType::class, [
                 "label" => "Date et heure de fin de la sortie : ",
                 'widget'=>'single_text',
             ])
-            ->add('dateLimiteInscription', null, [
+            ->add('dateLimiteInscription', DateTimeType::class, [
                 "label" => "Date limite d'inscription : ",
                 'widget'=>'single_text',
             ])
@@ -73,15 +73,6 @@ class SortieType extends AbstractType
                 ]
             ]);
 
-            if(str_contains($currentUrl,'edit')) {
-                $builder->add('Annuler', SubmitType::class, [
-                    "label" => "Annuler la sortie",
-                    'attr' => [
-                        'class' => 'bg-lime-500 hover:bg-lime-700 text-white font-bold py-2 px-4 border border-lime-700 rounded'
-                    ]
-                ]);
-            }
-
             $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
                 $sortie=$event->getData();
                 $form=$event->getForm();
@@ -94,8 +85,16 @@ class SortieType extends AbstractType
                         ]
                     );
                 }
-            })
-        ;
+            });
+
+            if(str_contains($currentUrl,'edit')) {
+                $builder->add('Annuler', SubmitType::class, [
+                    "label" => "Annuler la sortie",
+                    'attr' => [
+                        'class' => 'bg-lime-500 hover:bg-lime-700 text-white font-bold py-2 px-4 border border-lime-700 rounded'
+                    ]
+                ]);
+            }
     }
 
     public function configureOptions(OptionsResolver $resolver): void

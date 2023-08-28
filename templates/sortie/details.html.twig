@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block h1 %}
-    <h2 class="text-4xl font-bold dark:text-white">{{ sortie.nom }}</h2>
+    <h2 class="text-4xl font-bold dark:text-white ml-10">{{ sortie.nom }}</h2>
 {% endblock %}
 
 {% block body %}
@@ -52,17 +52,26 @@
         </dl>
     </div>
 </div>
-    <button type="button" onClick="window.history.back();" class="bg-lime-500 hover:bg-lime-700 text-white font-bold py-2 px-4 border border-lime-700 rounded">Go back</button>
+<div class="grid grid-cols-12 gap-4">
+    <div class="col-start-2">
+        <button type="button" onClick="window.history.back();" class="bg-lime-500 hover:bg-lime-700 text-white font-bold py-2 px-4 border border-lime-700 rounded">Go back</button>
+    </div>
     {% if app.user and sortie.etat.libelle == "Ouverte" and sortie.participants.count < sortie.nbInscriptionsMax and not sortie.participants.contains(app.user) %}
-        <a href="{{ path('app_participation', {'id' : sortie.id}) }}">
-            <button class="bg-lime-500 hover:bg-lime-700 text-white font-bold py-2 px-4 border border-lime-700 rounded">Rejoindre</button>
-        </a>
+        <div class="col-start-4">
+            <a href="{{ path('app_participation', {'id' : sortie.id}) }}">
+                <button class="bg-lime-500 hover:bg-lime-700 text-white font-bold py-2 px-4 col-start-4 border border-lime-700 rounded">Rejoindre</button>
+            </a>
+        </div>
     {% endif %}
     {% if app.user and sortie.etat.libelle == "Ouverte" and sortie.participants.contains(app.user) %}
-        <a href="{{ path('app_desistement', {'id' : sortie.id}) }}">
-            <button class="bg-lime-500 hover:bg-lime-700 text-white font-bold py-2 px-4 border border-lime-700 rounded">Se désister</button>
-        </a>
+        <div class="col-start-4">
+            <a href="{{ path('app_desistement', {'id' : sortie.id}) }}">
+                <button class="bg-lime-500 hover:bg-lime-700 text-white font-bold py-2 px-4 col-start-4 border border-lime-700 rounded">Se désister</button>
+            </a>
+        </div>
     {% endif %}
+</div>
+
 
 {% endblock %}
 

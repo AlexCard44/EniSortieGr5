@@ -41,7 +41,11 @@ class MonProfilType extends AbstractType
 //             //   'query_builder' =>
 //
 //            ])
-            ->add('modifier', SubmitType::class);
+            ->add('modifier', SubmitType::class,[
+                'attr' => [
+                    'class' => 'bg-lime-500 hover:bg-lime-700 text-white font-bold py-2 px-4 border border-lime-700 rounded'
+                ]
+            ]);
         ;
     }
 

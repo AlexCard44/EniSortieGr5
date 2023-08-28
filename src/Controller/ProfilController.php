@@ -106,12 +106,7 @@ class ProfilController extends AbstractController
                 return $this->redirectToRoute('sortie_liste');
             }
 
-
-
             }
-
-
-
 
         return $this->render('profil/motDePasse.html.twig', [
             'controller_name' => 'ProfilController',

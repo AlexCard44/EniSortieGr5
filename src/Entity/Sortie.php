@@ -24,14 +24,20 @@ class Sortie
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     #[Assert\GreaterThan(propertyPath: 'dateLimiteInscription')]
+    #[Assert\NotNull]
+    #[Assert\NotBlank]
     private ?\DateTimeInterface $dateHeureDebut = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     #[Assert\GreaterThan(propertyPath: "dateHeureDebut")]
+    #[Assert\NotNull]
+    #[Assert\NotBlank]
     private ?\DateTimeInterface $dateHeureFin = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     #[Assert\GreaterThan('now')]
+    #[Assert\NotNull]
+    #[Assert\NotBlank]
     private ?\DateTimeInterface $dateLimiteInscription = null;
 
     #[ORM\Column]
