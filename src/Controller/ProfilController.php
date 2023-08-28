@@ -105,7 +105,10 @@ class ProfilController extends AbstractController
                 $entityManager->flush();
                 return $this->redirectToRoute('sortie_liste');
             }
+
+
         }
+
         return $this->render('profil/motDePasse.html.twig', [
             'controller_name' => 'ProfilController',
             'form' => $form->createView()
