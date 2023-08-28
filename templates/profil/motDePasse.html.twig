@@ -13,13 +13,12 @@
     {{ form_end(form) }}
     <script>
         function verifPassword() {
-            console.log('tfgy')
             let newPasswordField = document.getElementById('mot_de_passe_newPassword_first');
             let confirmPasswordField = document.getElementById('mot_de_passe_newPassword_second');
             let errorContainer = document.getElementById('error-message-container');
 
             newPasswordField.addEventListener('change', verifPassword);
-            confirmPasswordField.addEventListener('change', () => {
+            confirmPasswordField.addEventListener('input', () => {
                 let newPassword = newPasswordField.value;
                 let confirmPassword = confirmPasswordField.value;
 
