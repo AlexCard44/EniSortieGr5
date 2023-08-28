@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+Modifier un Lieu
+{% endblock %}
+
+{% block body %}
+<h1>Modifier un lieu</h1>
+    {{ form(lieuForm) }}
+    <button type="button" onClick="window.history.back();">Go back</button>
+{% endblock %}
+

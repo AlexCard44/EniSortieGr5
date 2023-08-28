@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Lieu;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -45,4 +46,12 @@ class LieuRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+    public function findAllCustom():Paginator {
+        $queryBuilder=$this->createQueryBuilder('lieu')
+            ->addOrderBy('lieu.id','ASC')
+            ->setMaxResults(10)
+            ->getQuery();
+        $paginator=new Paginator($queryBuilder);
+        return $paginator;
+    }
 }

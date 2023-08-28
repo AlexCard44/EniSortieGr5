@@ -23,7 +23,7 @@ class ParticipationController extends AbstractController
     {
         $etatOuvert=$etatRepository->findOneBy(["id"=>2]);
         if($sortie->getEtat()!==$etatOuvert || !$this->getUser()) {
-            return $this->render('erreur.html.twig');
+            return $this->render('error401.html.twig');
         } else {
             $user = $this->getUser();
             //  $sortie = $sortieRepository->findOneBy(["id" => $id]);
@@ -51,7 +51,7 @@ class ParticipationController extends AbstractController
     {
         $etatOuvert=$etatRepository->findOneBy(["id"=>2]);
         if($sortie->getEtat()!==$etatOuvert || !$this->getUser()) {
-            return $this->render('erreur.html.twig');
+            return $this->render('error401.html.twig');
         } else {
             $user = $this->getUser();
             //  $sortie = $sortieRepository->findOneBy(["id" => $id]);
