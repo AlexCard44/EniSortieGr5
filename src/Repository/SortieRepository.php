@@ -87,18 +87,24 @@ class SortieRepository extends ServiceEntityRepository
         if (!empty($sortiesFiltre->sortiesOrganisees)) {
             $query = $query
                 ->andWhere('sortie.organisateur = :utilisateur')
+                ->andWhere('sortie.etat != 7')
                 ->setParameter('utilisateur', $utilisateur);
         }
 
         if (!empty($sortiesFiltre->sortiesPassees)) {
             $query = $query
                 ->andWhere('sortie.etat = :etat')
+                ->andWhere('sortie.estPublie = true')
                 ->setParameter('etat', 5);
         }
 
 
             if (!empty($sortiesFiltre->sortiesNonInscrit)){
                 $query=$query
+                    ->andWhere('sortie.etat != 7')
+                    ->andWhere('sortie.estPublie = true AND sortie.etat != 6 AND sortie.etat != 1 
+                    OR 
+                    (:utilisateur NOT MEMBER OF sortie.participants AND :utilisateur = sortie.organisateur AND (sortie.etat = 6 OR sortie.etat = 1))')
                     ->andWhere(':utilisateur NOT MEMBER OF sortie.participants')
                     ->setParameter('utilisateur', $utilisateur);
             }
@@ -108,14 +114,24 @@ class SortieRepository extends ServiceEntityRepository
 
             if (!empty($sortiesFiltre->sortiesInscrit)) {
                 $query = $query
+                    ->andWhere('sortie.etat != 7')
+                    ->andWhere('sortie.estPublie = true AND sortie.etat != 6 AND sortie.etat != 1 AND :utilisateur MEMBER OF sortie.participants
+                    OR
+                    (:utilisateur MEMBER OF sortie.participants AND :utilisateur = sortie.organisateur AND (sortie.etat = 6 OR sortie.etat = 1))')
                   ->andWhere(':utilisateur MEMBER OF sortie.participants')
                   ->setParameter('utilisateur', $utilisateur);
             }
 
             if (!empty($sortiesFiltre->getName())){
                 $query =$query
+                    ->andWhere('sortie.etat != 7')
+                    ->andWhere('sortie.estPublie = true AND sortie.etat != 1
+                    OR 
+                    (:utilisateur = sortie.organisateur)')
                     ->andWhere('sortie.nom LIKE :name')
-                    ->setParameter('name', "%{$sortiesFiltre->getName()}%");
+                    ->setParameter('name', "%{$sortiesFiltre->getName()}%")
+                    ->setParameter('utilisateur', $utilisateur)
+                ;
             }
 
 
