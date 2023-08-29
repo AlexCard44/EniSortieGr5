@@ -2,6 +2,8 @@
 
 namespace App\Security;
 
+use App\Entity\Utilisateur;
+use App\Repository\UtilisateurRepository;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -44,13 +46,21 @@ class AppAuthenticator extends AbstractLoginFormAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
-        if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
-            return new RedirectResponse($targetPath);
+        $utilisateur = new Utilisateur();
+        //$utilisateur = $request->getUser();
+        if ($utilisateur->isActif()) {
+            if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
+                return new RedirectResponse($targetPath);
+            }
+
+            // For example:
+            return new RedirectResponse($this->urlGenerator->generate('sortie_liste'));
+            // throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
+        }
+        else {
+            return new RedirectResponse($this->urlGenerator->generate('app_login'));
         }
 
-        // For example:
-        return new RedirectResponse($this->urlGenerator->generate('sortie_liste'));
-        // throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }
 
     protected function getLoginUrl(Request $request): string
