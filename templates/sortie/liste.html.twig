@@ -3,7 +3,7 @@
 {% block title %}Liste des Sorties{% endblock %}
 
 {% block h1 %}
-    <h1 class="text-xl font-bold text-gray-900 ">Liste des Sorties</h1>
+    <h1 class="ml-8 py-4 text-4xl font-bold text-gray-900 ">Liste des Sorties</h1>
 {% endblock %}
 
 {% block body %}
@@ -13,29 +13,57 @@
         <span class="sr-only">Loading...</span>
     </div>
 
-    {{ form_row(form.name) }}
-
-    {{ form_row(form.sortiesOrganisees) }}
-
-    {{ form_row(form.sortiesInscrit) }}
-
-    {{ form_row(form.sortiesNonInscrit) }}
-
-    {{ form_row(form.sortiesPassees) }}
 
 
+    {{ form_row(form.sortiesOrganisees, {
+        row_class: 'my-5 ml-6 grid grid-cols-3 col-start-2 col-span-4 [&>*]:flex [&>*]:flex-row',
+        label_class: 'ml-4',
+        widget_class: 'py-1 col-start-2 text-lime-600 focus:ring-lime-500 checked:bg-lime-600 rounded'
+    }) }}
 
-{{ form_end(form) }}
+    {{ form_row(form.sortiesInscrit, {
+        row_class: 'my-5 ml-6 grid grid-cols-3 col-start-2 col-span-4 [&>*]:flex [&>*]:flex-row',
+        label_class: 'ml-4',
+        widget_class: 'py-1 col-start-2 text-lime-600 focus:ring-lime-500 checked:bg-lime-600 rounded'
+    }) }}
+
+    {{ form_row(form.sortiesNonInscrit, {
+        row_class: 'my-5 ml-6 grid grid-cols-3 col-start-2 col-span-4 [&>*]:flex [&>*]:flex-row',
+        label_class: 'ml-4',
+        widget_class: 'py-1 col-start-2 text-lime-600 focus:ring-lime-500 checked:bg-lime-600 rounded'
+    }) }}
+
+    {{ form_row(form.sortiesPassees, {
+        row_class: 'my-5 ml-6 grid grid-cols-3 col-start-2 col-span-4 [&>*]:flex [&>*]:flex-row',
+        label_class: 'ml-4',
+        widget_class: 'py-1 col-start-2 text-lime-600 focus:ring-lime-500 checked:bg-lime-600 rounded'
+    }) }}
+
+<div class="flex ">
+    {{ form_row(form.name, {
+        row_class: 'flex',
+        label_class: '',
+        widget_class: 'w-96 ml-6 rounded'
+    }) }}
+
+    {{ form_end(form) }}
+</div>
 
 <div class="px-4 sm:px-0 border-gray-200">
     <div class="mt-6 border-t border-gray-200">
         <dl class="divide-y divide-gray-200">
+            <div class="px-4 py-6 bg-lime-200  sm:grid sm:grid-cols-12 sm:gap-4 sm:px-0">
+                <h3 class="text-base font-semibold col-start-2 col-span-2 leading-6 text-gray-900">Nom de la sortie</h3>
+                <h3 class="text-base font-semibold col-start-4 col-span-2 leading-6 text-gray-900">Organisateur</h3>
+                <h3 class="text-base flex justify-center font-semibold col-start-6 col-span-4 leading-6 text-gray-900">Actions</h3>
+            </div>
             {% for sortie in sorties %}
             <div class="px-4 py-6 sm:grid sm:grid-cols-12 sm:gap-4 sm:px-0">
                 <p class="text-base font-semibold col-start-2 col-span-2 leading-6 text-gray-900">{{ sortie.nom }}</p>
-                    <a href="{{ path('sortie_details', {'id': sortie.id}) }}" class="bg-lime-500 hover:bg-lime-700 text-white flex justify-center font-bold py-1 px-3 rounded-full col-start-5">Détails</a>
+                <a href="{{ path('detail', {'id': sortie.organisateur.id}) }}" class="text-base font-semibold col-start-4 col-span-2 leading-6 text-gray-900"><p>{{ sortie.organisateur.username }}</p></a>
+                    <a href="{{ path('sortie_details', {'id': sortie.id}) }}" class="bg-lime-500 hover:bg-lime-700 text-white flex justify-center font-bold py-1 px-3 rounded-full col-start-6">Détails</a>
                     {% if app.user == sortie.organisateur and (sortie.etat.id == 1 or sortie.etat.id == 2) %}
-                        <a href="{{ path('sortie_edit', {'id':sortie.id}) }}" class="bg-lime-500 hover:bg-lime-700 text-white flex justify-center font-bold py-1 px-3 rounded-full col-start-7"> Modifier</a>
+                        <a href="{{ path('sortie_edit', {'id':sortie.id}) }}" class="bg-lime-500 hover:bg-lime-700 text-white flex justify-center font-bold py-1 px-3 rounded-full col-start-8"> Modifier</a>
                     {% endif %}
             </div>
             {% endfor %}

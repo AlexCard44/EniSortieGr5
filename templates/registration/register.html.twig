@@ -3,24 +3,80 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
+    <h1 class="ml-8 mt-3 text-4xl font-semibold leading-7 text-gray-900">Inscription</h1>
 
     {{ form_errors(registrationForm) }}
 
     {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.username) }}
-        {{ form_row(registrationForm.mail) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
+    <div class="w-full">
+        <div class="grid grid-cols-6 gap-4">
+            {{ form_row(registrationForm.username, {
+                row_class: 'my-5 grid grid-cols-3 col-start-2 col-span-4 flex',
+                label_class: 'text-green-600',
+                widget_class: 'w-60 py-1 col-start-2 rounded'
+            }) }}
+        </div>
+        <div class="grid grid-cols-6 gap-4">
+            {{ form_row(registrationForm.mail, {
+                row_class: 'my-5 grid grid-cols-3 col-start-2 col-span-4 flex',
+                label_class: 'text-green-600',
+                widget_class: 'w-60 py-1 col-start-2 rounded'
+            }) }}
+        </div>
+        <div class="grid grid-cols-6 gap-4">
+            {{ form_row(registrationForm.plainPassword, {
+                row_class: 'my-5 grid grid-cols-3 col-start-2 col-span-4 flex',
+                label_class: 'text-green-600',
+                widget_class: 'w-60 py-1 col-start-2 rounded',
+                label: 'Password'
+            }) }}
+        </div>
+        <div class="grid grid-cols-6 gap-4">
+            {{ form_row(registrationForm.nom, {
+                row_class: 'my-5 grid grid-cols-3 col-start-2 col-span-4 flex',
+                label_class: 'text-green-600',
+                widget_class: 'w-60 py-1 col-start-2 rounded'
+            }) }}
+        </div>
+        <div class="grid grid-cols-6 gap-4">
+            {{ form_row(registrationForm.prenom, {
+                row_class: 'my-5 grid grid-cols-3 col-start-2 col-span-4 flex',
+                label_class: 'text-green-600',
+                widget_class: 'w-60 py-1 col-start-2 rounded'
+            }) }}
+        </div>
+        <div class="grid grid-cols-6 gap-4">
+            {{ form_row(registrationForm.telephone, {
+                row_class: 'my-5 grid grid-cols-3 col-start-2 col-span-4 flex',
+                label_class: 'text-green-600',
+                widget_class: 'w-60 py-1 col-start-2 rounded'
+            }) }}
+        </div>
+        <div class="grid grid-cols-6 gap-4">
+            {{ form_row(registrationForm.site, {
+                row_class: 'my-5 grid grid-cols-3 col-start-2 col-span-4 flex',
+                label_class: 'text-green-600',
+                widget_class: 'w-60 py-1 col-start-2 rounded'
+            }) }}
+        </div>
+        <div class="grid grid-cols-6 gap-4">
+            {{ form_row(registrationForm.actif, {
+                row_class: 'my-5 ml-6 grid grid-cols-3 col-start-2 col-span-4 [&>*]:flex [&>*]:flex-row',
+                label_class: 'ml-4',
+                widget_class: 'py-1 col-start-2 text-lime-600 focus:ring-lime-500 checked:bg-lime-600 rounded'
+            }) }}
+        </div>
+        <div class="grid grid-cols-6 gap-4">
+            {{ form_row(registrationForm.agreeTerms, {
+                row_class: 'my-5 ml-6 grid grid-cols-3 col-start-2 col-span-4 [&>*]:flex [&>*]:flex-row',
+                label_class: 'ml-4',
+                widget_class: 'py-1 col-start-2 text-lime-600 focus:ring-lime-500 checked:bg-lime-600 rounded'
+            }) }}
+        </div>
+    </div>
+    <div class="grid grid-cols-6 gap-4">
+        <button type="submit" class="bg-lime-500 col-start-2 hover:bg-lime-700 text-white font-bold py-2 px-4 border border-lime-700 rounded">Register</button>
+    </div>
 
-        {{ form_row(registrationForm.nom) }}
-        {{ form_row(registrationForm.prenom) }}
-        {{ form_row(registrationForm.telephone) }}
-        {{ form_row(registrationForm.site) }}
-        {{ form_row(registrationForm.actif) }}
-        {{ form_row(registrationForm.agreeTerms) }}
-
-        <button type="submit" class="btn">Register</button>
     {{ form_end(registrationForm) }}
 {% endblock %}

@@ -39,7 +39,11 @@ class SortieFiltreType extends AbstractType
                 'required'=>false
             ])
 
-            ->add('Rechercher', SubmitType::class);
+            ->add('Rechercher', SubmitType::class, [
+                'attr' => [
+                    'class' => 'bg-lime-500 hover:bg-lime-700 text-white font-bold py-2 px-4 border border-lime-700 rounded ml-4'
+                ]
+            ]);
         ;
     }
 

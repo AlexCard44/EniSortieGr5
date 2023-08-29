@@ -1,22 +1,44 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    <div class="flex grid grid-cols-12 mt-3">
+        {% if user.photo %}
+            <div class="h-24 w-24 border-4 border-gray-400 rounded-full col-start-2 position-relative top-1">
+                <img src="{{asset ('images/'~user.photo) }}" alt="photo_sortie" class="flex items-center">
+            </div>
+        {% endif %}
+        <h1 class="text-4xl font-bold dark:text-white ml-10 col-start-3 flex items-center">{{ user.username }}</h1>
+    </div>
 
-    <h1>{{ user.username }}</h1>
-
-    {% if user.photo %}
-        Photo : <img src="{{asset ('images/'~user.photo) }}" alt="photo_profil" >
-    {% endif %}
-    <ul>
-        <li>Prénom : {{ user.prenom }}</li>
-        <li>Nom : {{ user.nom }}</li>
-        <li>Téléphone : {{ user.telephone }}</li>
-        <li>Email : <a href="mailto:{{ user.mail }}">{{ user.mail }}</a></li>
-        <li>Ville de rattachement : {{ user.site.ville.nom }}</li>
-
-    </ul>
-
-    <button type="button" onClick="window.history.back();">Retour</button>
+    <div class="px-4 sm:px-0 border-gray-200">
+        <div class="mt-6 border-t border-gray-200">
+            <dl class="divide-y divide-gray-200">
+                <div class="px-4 py-6 sm:grid sm:grid-cols-12 sm:gap-4 sm:px-0">
+                    <dt class="text-base font-semibold col-start-2 col-span-2 leading-6 text-gray-900">Prénom : </dt>
+                    <dd class="mt-1 text-sm leading-6 text-gray-700 col-start-9 sm:col-span-2 sm:mt-0">{{ user.prenom }}</dd>
+                </div>
+                <div class="px-4 py-6 sm:grid sm:grid-cols-12 sm:gap-4 sm:px-0 bg-gray-200">
+                    <dt class="text-base font-semibold col-start-2 col-span-2 leading-6 text-gray-900">Nom : </dt>
+                    <dd class="mt-1 text-sm leading-6 text-gray-700 col-start-7 sm:col-span-2 sm:mt-0">{{ user.nom }}</dd>
+                </div>
+                <div class="px-4 py-6 sm:grid sm:grid-cols-12 sm:gap-4 sm:px-0">
+                    <dt class="text-base font-semibold col-start-2 col-span-2 leading-6 text-gray-900">Téléphone : </dt>
+                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ user.telephone }}</dd>
+                </div>
+                <div class="px-4 py-6 sm:grid sm:grid-cols-12 sm:gap-4 sm:px-0 bg-gray-200">
+                    <dt class="text-base font-semibold col-start-2 col-span-2 leading-6 text-gray-900">Email : </dt>
+                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ user.mail }}</dd>
+                </div>
+                <div class="px-4 py-6 sm:grid sm:grid-cols-12 sm:gap-4 sm:px-0">
+                    <dt class="text-base font-semibold col-start-2 col-span-2 leading-6 text-gray-900">Ville de rattachement : </dt>
+                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ user.site.ville.nom }}</dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+<div class="grid grid-cols-12 gap-4">
+    <button type="button" onClick="window.history.back();" class="bg-lime-500 hover:bg-lime-700 col-start-2 text-white font-bold py-2 px-4 border border-lime-700 rounded">Retour</button>
+</div>
 
 {% endblock %}
 
