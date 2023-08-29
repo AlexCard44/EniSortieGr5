@@ -18,41 +18,60 @@
     </head>
     <body class="bg-white">
     <header>
-        <div class="flex flex-1 items-center text-center justify-center sm:items-stretch sm:justify-start bg-lime-300">
-            <a href="{{ path('sortie_liste') }}">
-                <img src="{{ asset('images/logo.png') }}" alt="Git'out" class="h-20 m-2">
-            </a>
-            <nav class="flex justify-around">
-
+        <div class="flex items-center justify-between bg-lime-300">
+            <div class="flex">
+                <a href="{{ path('sortie_liste') }}">
+                    <img src="{{ asset('images/logo.png') }}" alt="Git'out" class="h-20 m-2">
+                </a>
+                <nav class="flex justify-around">
+                    {% if app.user %}
+                        <div class="flex items-center">
+                            <a href="{{ path('sortie_liste') }}" class="text-gray-900 hover:bg-lime-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium font-hepta">Liste des sorties</a>
+                        </div>
+                        <div class="flex items-center">
+                            <a href="{{ path('sortie_creation') }}" class="text-gray-900 hover:bg-lime-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium font-hepta">Créer une sortie</a>
+                        </div>
+                        <div class="flex items-center">
+                            <a href="{{ path('app_logout') }}" class="text-gray-900 hover:bg-lime-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium font-hepta">Se déconnecter</a>
+                        </div>
+                        <div class="flex items-center">
+                            <a href="{{ path('lieu_creation') }}" class="text-gray-900 hover:bg-lime-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium font-hepta">Ajouter un lieu</a>
+                        </div>
+                        <div class="flex items-center">
+                            <a href="{{ path('lieu_liste') }}" class="text-gray-900 hover:bg-lime-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium font-hepta">Afficher les lieux</a>
+                        </div>
+                    {% endif %}
+                    {% if not app.user %}
+                        <div class="flex items-center">
+                            <a href="{{ path('app_login') }}" class="text-gray-900 hover:bg-lime-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium font-hepta">Se connecter</a>
+                        </div>
+                        <div class="flex items-center">
+                            <a href="{{ path('app_register') }}" class="text-gray-900 hover:bg-lime-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium font-hepta">S'inscrire</a>
+                        </div>
+                    {% endif %}
+                </nav>
+            </div>
+            <div class="flex ">
                 {% if app.user %}
                     <div class="flex items-center">
-                        <a href="{{ path('sortie_liste') }}" class="text-gray-900 hover:bg-lime-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Liste des sorties</a>
+                        <a href="{{ path('profil_monProfil') }}" class="text-gray-900 hover:bg-lime-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium font-hepta">{{ app.user.username }}</a>
                     </div>
-                    <div class="flex items-center">
-                        <a href="{{ path('sortie_creation') }}" class="text-gray-900 hover:bg-lime-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Créer une sortie</a>
-                    </div>
-                    <div class="flex items-center">
-                        <a href="{{ path('app_logout') }}" class="text-gray-900 hover:bg-lime-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Se déconnecter</a>
-                    </div>
-                    <div class="flex items-center">
-                        <a href="{{ path('profil_monProfil') }}" class="text-gray-900 hover:bg-lime-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Mon profil</a>
-                    </div>
-                    <div class="flex items-center">
-                        <a href="{{ path('lieu_creation') }}" class="text-gray-900 hover:bg-lime-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Ajouter un lieu</a>
-                    </div>
-                    <div class="flex items-center">
-                        <a href="{{ path('lieu_liste') }}" class="text-gray-900 hover:bg-lime-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Afficher les lieux</a>
-                    </div>
+                    {% if app.user.photo %}
+                        <div class="flex flex-wrap justify-cente col-start-2">
+                            <div class="relative w-20 h-20 ">
+                                <img src="{{ app.user.photo }}" alt="photo_sortie" class="w-20 h-20 shadow-sm border-4 rounded-full border-gray-400 overflow-hidden">
+                            </div>
+                        </div>
+                        {% else %}
+                            <div class="flex flex-wrap justify-cente col-start-2">
+                                <div class="relative w-20 h-20 ">
+                                    <img src="{{ asset('images/Default_pfp.jpg') }}" alt="photo_sortie" class="w-20 h-20 shadow-sm border-4 rounded-full border-gray-400 overflow-hidden">
+                                </div>
+                            </div>
+                    {% endif %}
+
                 {% endif %}
-                {% if not app.user %}
-                    <div class="flex items-center">
-                        <a href="{{ path('app_login') }}" class="text-gray-900 hover:bg-lime-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Se connecter</a>
-                    </div>
-                    <div class="flex items-center">
-                        <a href="{{ path('app_register') }}" class="text-gray-900 hover:bg-lime-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">S'inscrire</a>
-                    </div>
-                {% endif %}
-            </nav>
+            </div>
         </div>
     </header>
     {% include '_notyf.html.twig'%}

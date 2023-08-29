@@ -3,8 +3,10 @@
 {% block body %}
     <div class="flex grid grid-cols-12 mt-3">
         {% if user.photo %}
-            <div class="h-24 w-24 border-4 border-gray-400 rounded-full col-start-2 position-relative top-1">
-                <img src="{{asset ('images/'~user.photo) }}" alt="photo_sortie" class="flex items-center">
+            <div class="flex flex-wrap justify-cente col-start-2">
+                <div class="relative w-24 h-24 ">
+                    <img src="{{ asset('images/mascotte401.jpg') }}" alt="photo_sortie" class="shadow-sm border-4 rounded-full border-gray-400 overflow-hidden">
+                </div>
             </div>
         {% endif %}
         <h1 class="text-4xl font-bold dark:text-white ml-10 col-start-3 flex items-center">{{ user.username }}</h1>

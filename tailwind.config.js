@@ -5,6 +5,9 @@ module.exports = {
     "./templates/**/*.html.twig",
   ],
   theme: {
+    fontFamily: {
+      'hepta': ['Hepta Slab', 'serif'],
+  },
     extend: {},
   },
   plugins: [
