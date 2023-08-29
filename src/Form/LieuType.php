@@ -35,10 +35,16 @@ class LieuType extends AbstractType
                 "label" => "Numéro et nom de la rue"
             ])
             ->add('latitude', null, [
-                "label" => "Latitude (coordonnées GPS)"
+                "label" => "Latitude (coordonnées GPS)",
+                "attr"=> [
+                    "id"=>"latitude"
+                ]
             ])
             ->add('longitude', null, [
-                "label" => "Longitude (coordonnées GPS)"
+                "label" => "Longitude (coordonnées GPS)",
+                "attr"=> [
+                    "id"=>"longitude"
+                ]
             ])
             ->add('ville', EntityType::class, [
                 'class'=>Ville::class,

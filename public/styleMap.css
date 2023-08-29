@@ -1,0 +1,13 @@
+#map {
+    height: 500px;
+    width: 500px;
+}
+
+#map {
+    border-radius: 5em;
+    border: black 5px solid;
+    display: flex;
+    position: relative;
+    margin:auto;
+
+}
