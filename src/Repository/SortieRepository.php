@@ -81,8 +81,10 @@ class SortieRepository extends ServiceEntityRepository
     {
        # $utilisateurId = $this->getUser()->getId();
         $query = $this
+
             ->createQueryBuilder('sortie')
             ->select('sortie');
+
 
         if (!empty($sortiesFiltre->sortiesOrganisees)) {
             $query = $query
@@ -132,6 +134,19 @@ class SortieRepository extends ServiceEntityRepository
                     ->setParameter('name', "%{$sortiesFiltre->getName()}%")
                     ->setParameter('utilisateur', $utilisateur)
                 ;
+            }
+
+            if (!empty($sortiesFiltre->getDateTime())){
+                $query=$query
+                    ->andWhere('sortie.etat != 7')
+                    ->andWhere('sortie.dateHeureDebut >= :dateTime ')
+                    ->addOrderBy('sortie.dateHeureDebut', 'ASC')
+                    ->andWhere('sortie.etat != 6 AND sortie.etat != 1 OR :utilisateur = sortie.organisateur')
+                    ->setParameter('utilisateur', $utilisateur)
+                    ->setParameter('dateTime', $sortiesFiltre->getDateTime());
+
+
+
             }
 
 
