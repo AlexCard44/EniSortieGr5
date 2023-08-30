@@ -52,18 +52,24 @@
 <div class="px-4 sm:px-0 border-gray-200">
     <div class="mt-6 border-t border-gray-200">
         <dl class="divide-y divide-gray-200">
-            <div class="px-4 py-6 bg-lime-200  sm:grid sm:grid-cols-12 sm:gap-4 sm:px-0">
-                <h3 class="text-base font-semibold col-start-2 col-span-2 leading-6 text-gray-900 font-hepta">Nom de la sortie</h3>
-                <h3 class="text-base font-semibold col-start-4 col-span-2 leading-6 text-gray-900 font-hepta">Organisateur</h3>
-                <h3 class="text-base flex justify-center font-semibold col-start-6 col-span-4 leading-6 text-gray-900 font-hepta">Actions</h3>
+            <div class="px-4 py-6 bg-lime-200  grid grid-cols-12 gap-2 sm:px-0">
+                <h3 class=" ml-8 text-base items-center font-semibold col-start-1 col-span-2 leading-6 text-gray-900 font-hepta">Nom de la sortie</h3>
+                <h3 class="text-base items-center font-semibold col-start-3 col-span-2 leading-6 text-gray-900 font-hepta">Organisateur</h3>
+                <h3 class="text-base items-center font-semibold col-start-5 col-span-1 leading-6 text-gray-900 font-hepta">Etat</h3>
+                <h3 class="text-base items-center font-semibold col-start-6 col-span-2 leading-6 text-gray-900 font-hepta">Date</h3>
+                <h3 class="text-base items-center font-semibold col-start-8 col-span-1 leading-6 text-gray-900 font-hepta">Inscrits</h3>
+                <h3 class="text-base items-center flex justify-center font-semibold col-start-9 col-span-3 leading-6 text-gray-900 font-hepta">Actions</h3>
             </div>
             {% for sortie in sorties %}
-            <div class="px-4 py-6 sm:grid sm:grid-cols-12 sm:gap-4 sm:px-0">
-                <p class="text-base font-semibold col-start-2 col-span-2 leading-6 text-gray-900">{{ sortie.nom }}</p>
-                <a href="{{ path('detail', {'id': sortie.organisateur.id}) }}" class="text-base font-semibold col-start-4 col-span-2 leading-6 text-gray-900"><p>{{ sortie.organisateur.username }}</p></a>
-                    <a href="{{ path('sortie_details', {'id': sortie.id}) }}" class="bg-lime-500 hover:bg-lime-700 text-white flex justify-center font-bold py-1 px-3 rounded-full col-start-6">Détails</a>
+            <div class="px-4 py-6 grid grid-cols-12 gap-2 sm:px-0">
+                <p class="ml-8 text-base font-semibold col-start-1 col-span-2 leading-6 text-gray-900">{{ sortie.nom }}</p>
+                <a href="{{ path('detail', {'id': sortie.organisateur.id}) }}" class="text-base font-semibold col-start-3 col-span-2 leading-6 text-gray-900"><p>{{ sortie.organisateur.username }}</p></a>
+                <p class="text-base font-semibold col-start-5 col-span-1 leading-6 text-gray-900">{{ sortie.etat.libelle }}</p>
+                <p class="text-base font-semibold col-start-6 col-span-2 leading-6 text-gray-900">{{ sortie.dateHeureDebut | format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY à HH:mm") }}</p>
+                <p>{{ sortie.participants.count ~ "/" ~ sortie.nbInscriptionsMax  }}</p>
+                    <a href="{{ path('sortie_details', {'id': sortie.id}) }}" class="bg-lime-500 hover:bg-lime-700 text-white flex justify-center font-bold py-1 px-3 rounded-full col-start-9">Détails</a>
                     {% if app.user == sortie.organisateur and (sortie.etat.id == 1 or sortie.etat.id == 2) %}
-                        <a href="{{ path('sortie_edit', {'id':sortie.id}) }}" class="bg-lime-500 hover:bg-lime-700 text-white flex justify-center font-bold py-1 px-3 rounded-full col-start-8"> Modifier</a>
+                        <a href="{{ path('sortie_edit', {'id':sortie.id}) }}" class="bg-lime-500 hover:bg-lime-700 text-white flex justify-center font-bold py-1 px-3 rounded-full col-start-11"> Modifier</a>
                     {% endif %}
             </div>
             {% endfor %}
