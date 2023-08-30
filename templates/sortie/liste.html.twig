@@ -39,6 +39,12 @@
         widget_class: 'py-1 col-start-2 text-lime-600 focus:ring-lime-500 checked:bg-lime-600 rounded'
     }) }}
 
+    {{ form_row(form.dateTime, {
+        row_class: 'my-5 ml-2 grid grid-cols-10 col-start-2 col-span-4 [&>*]:flex [&>*]:flex-row',
+        label_class: 'ml-4 font-hepta',
+        widget_class: 'py-1 text-lime-600 focus:ring-lime-500'
+    }) }}
+
 <div class="flex ">
     {{ form_row(form.name, {
         row_class: 'flex',

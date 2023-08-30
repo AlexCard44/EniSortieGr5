@@ -29,11 +29,11 @@ class SortieController extends AbstractController
     ): Response
 
     {
-        try {
+//        try {
             $userActuel = $this->getUser()->getUserIdentifier();
-        } catch (\Throwable $throwable) {
-            return $this->render('error401.html.twig');
-        }
+//        } catch (\Throwable $throwable) {
+//            return $this->render('error401.html.twig');
+//        }
         $profil = $utilisateurRepository->findOneBy(['username' => $userActuel]);
         $data = new SortiesFiltre();
         $data->sortiesOrganisees = $request->get('sortiesOrganisees', false);

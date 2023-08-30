@@ -41,7 +41,7 @@ class SortieFiltreType extends AbstractType
                 'required'=>false
             ])
             ->add('dateTime', DateTimeType::class,[
-                'label'=>'Recherche par date de début',
+                'label'=>'Date de début',
                 'required'=> false,
                 'widget'=>'single_text'
             ])
