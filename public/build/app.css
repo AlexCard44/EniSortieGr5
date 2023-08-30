@@ -683,17 +683,11 @@ select {
 .col-span-2 {
   grid-column: span 2 / span 2;
 }
-.col-span-3 {
-  grid-column: span 3 / span 3;
-}
 .col-span-4 {
   grid-column: span 4 / span 4;
 }
-.col-start-1 {
-  grid-column-start: 1;
-}
-.col-start-11 {
-  grid-column-start: 11;
+.col-span-3 {
+  grid-column: span 3 / span 3;
 }
 .col-start-2 {
   grid-column-start: 2;
@@ -703,9 +697,6 @@ select {
 }
 .col-start-4 {
   grid-column-start: 4;
-}
-.col-start-5 {
-  grid-column-start: 5;
 }
 .col-start-6 {
   grid-column-start: 6;
@@ -719,6 +710,15 @@ select {
 .col-start-9 {
   grid-column-start: 9;
 }
+.col-start-1 {
+  grid-column-start: 1;
+}
+.col-start-11 {
+  grid-column-start: 11;
+}
+.col-start-5 {
+  grid-column-start: 5;
+
 .col-start-10 {
   grid-column-start: 10;
 }
@@ -732,6 +732,10 @@ select {
 .my-6 {
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
+}
+.my-2 {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 .ml-10 {
   margin-left: 2.5rem;
@@ -753,6 +757,9 @@ select {
 }
 .mt-6 {
   margin-top: 1.5rem;
+}
+.ml-2 {
+  margin-left: 0.5rem;
 }
 .block {
   display: block;
@@ -814,6 +821,12 @@ select {
 .grid-cols-6 {
   grid-template-columns: repeat(6, minmax(0, 1fr));
 }
+.grid-cols-8 {
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+}
+.grid-cols-10 {
+  grid-template-columns: repeat(10, minmax(0, 1fr));
+}
 .flex-col {
   flex-direction: column;
 }
@@ -832,11 +845,11 @@ select {
 .justify-around {
   justify-content: space-around;
 }
-.gap-2 {
-  gap: 0.5rem;
-}
 .gap-4 {
   gap: 1rem;
+}
+.gap-2 {
+  gap: 0.5rem;
 }
 .divide-y > :not([hidden]) ~ :not([hidden]) {
   --tw-divide-y-reverse: 0;

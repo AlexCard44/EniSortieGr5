@@ -11,12 +11,6 @@ class CheckUser implements EventSubscriberInterface {
 
     public function checkUser(CheckPassportEvent $event): void {
 
-        if ($event->getPassport()->getUser()->isAdministrateur()){
-//            dd('coucou');
-            $event->getPassport()->getUser()->setRoles(array("ROLE_ADMIN"));
-
-        }
-
         if (!$event->getPassport()->getUser()->isActif()) {
 
             throw new CustomUserMessageAuthenticationException(
