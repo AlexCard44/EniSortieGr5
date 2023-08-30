@@ -1,16 +1,47 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-Ajouter un lieu
+    Ajouter un lieu
 {% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{asset('styleMap.css')}}">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossorigin=""/>
+{% endblock %}
+
+{% block javascripts %}
+{#    {{ parent() }}#}
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+            crossorigin="" defer></script>
+    <script src="{{ asset('map.js') }}" defer></script>
+
+{% endblock %}
+
 
 {% block body %}
 
     <h1>Ajouter un lieu</h1>
 
     {{ form(lieuForm) }}
+
+    <div>Carte</div>
+    <span>Rentrez l'adresse :</span>
+    <input id="rechercheAdresse" type="text" placeholder="veuillez renseigner l'adresse recherchée">
+    <button id="boutonAdresse" type="button" onclick="rechercheAdresse()">Rechercher l'adresse</button>
+    <div id="resultats"></div>
+    <div id="map"></div>
+
+
     <button type="button" onClick="window.history.back();">Go back</button>
     <button type="button" onClick="window.location.href=window.location.href;">Effacer</button>
+
+
+
 
 {% endblock %}
 
