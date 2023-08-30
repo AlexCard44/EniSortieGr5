@@ -47,16 +47,16 @@ security:
     access_control:
         - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/register, roles: ROLE_ADMIN }
-        - { path: ^/profile, roles: ROLE_VALID }
-        - { path: ^/notFoundRedirect, roles: ROLE_VALID }
-        - { path: ^/lieu, roles: ROLE_VALID }
-        - { path: ^/participation, roles: ROLE_VALID }
-        - { path: ^/desistement, roles: ROLE_VALID }
-        - { path: ^/monProfil, roles: ROLE_VALID }
-        - { path: ^/modifMotDePasse, roles: ROLE_VALID }
-        - { path: ^/profil, roles: ROLE_VALID }
-        - { path: ^/reset-password, roles: ROLE_VALID }
-        - { path: ^/sortie, roles: ROLE_VALID }
+#        - { path: ^/profile, roles: ROLE_VALID }
+#        - { path: ^/notFoundRedirect, roles: ROLE_VALID }
+#        - { path: ^/lieu, roles: ROLE_VALID }
+#        - { path: ^/participation, roles: ROLE_VALID }
+#        - { path: ^/desistement, roles: ROLE_VALID }
+#        - { path: ^/monProfil, roles: ROLE_VALID }
+#        - { path: ^/modifMotDePasse, roles: ROLE_VALID }
+#        - { path: ^/profil, roles: ROLE_VALID }
+#        - { path: ^/reset-password, roles: ROLE_VALID }
+#        - { path: ^/sortie, roles: ROLE_VALID }
 
     role_hierarchy:
         ROLE_ADMIN: ['ROLE_VALID']
