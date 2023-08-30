@@ -332,6 +332,11 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->sortiesParticipees;
     }
 
+    public function __toString(): string
+    {
+        return $this->prenom . ' ' . $this->nom;
+    }
+
     public function addSortiesParticipee(Sortie $sortiesParticipee): static
     {
         if (!$this->sortiesParticipees->contains($sortiesParticipee)) {
