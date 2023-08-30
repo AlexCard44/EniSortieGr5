@@ -45,6 +45,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $prenom = null;
 
     #[ORM\Column(length: 15, nullable: true)]
+    #[Assert\Regex("/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/")]
     private ?string $telephone = null;
 
     #[ORM\Column(length: 30)]
@@ -260,6 +261,14 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function isAdministrateur(): ?bool
     {
+        $role = $this->getRoles();
+
+        if($this->administrateur === true) {
+            $this->setRoles([]);
+        } else {
+            $this->setRoles(["ROLE_ADMIN"]);
+        }
+
         return $this->administrateur;
     }
 
