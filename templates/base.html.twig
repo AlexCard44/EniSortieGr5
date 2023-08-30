@@ -59,13 +59,13 @@
                     {% if app.user.photo %}
                         <div class="flex flex-wrap justify-cente col-start-2">
                             <div class="relative w-20 h-20 ">
-                                <img src="{{ app.user.photo }}" alt="photo_sortie" class="w-20 h-20 shadow-sm border-4 rounded-full border-gray-400 overflow-hidden">
+                                <img src="{{ asset('/images/' ~ app.user.photo) }}" alt="photo_profil" class="w-20 h-20 shadow-sm border-4 rounded-full border-gray-400 overflow-hidden">
                             </div>
                         </div>
                         {% else %}
                             <div class="flex flex-wrap justify-cente col-start-2">
                                 <div class="relative w-20 h-20 ">
-                                    <img src="{{ asset('images/Default_pfp.jpg') }}" alt="photo_sortie" class="w-20 h-20 shadow-sm border-4 rounded-full border-gray-400 overflow-hidden">
+                                    <img src="{{ asset('images/Default_pfp.jpg') }}" alt="photo_profil_default" class="w-20 h-20 shadow-sm border-4 rounded-full border-gray-400 overflow-hidden">
                                 </div>
                             </div>
                     {% endif %}

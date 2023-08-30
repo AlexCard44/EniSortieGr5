@@ -5,9 +5,15 @@
         {% if user.photo %}
             <div class="flex flex-wrap justify-cente col-start-2">
                 <div class="relative w-24 h-24 ">
-                    <img src="{{ asset('images/mascotte401.jpg') }}" alt="photo_sortie" class="shadow-sm border-4 rounded-full border-gray-400 overflow-hidden">
+                    <img src="{{ asset('/images/' ~ user.photo) }}" alt="photo_profil" class="shadow-sm border-4 rounded-full border-gray-400 overflow-hidden">
                 </div>
             </div>
+            {% else %}
+                <div class="flex flex-wrap justify-cente col-start-2">
+                    <div class="relative w-20 h-20 ">
+                        <img src="{{ asset('images/Default_pfp.jpg') }}" alt="photo_profil_default" class="w-20 h-20 shadow-sm border-4 rounded-full border-gray-400 overflow-hidden">
+                    </div>
+                </div>
         {% endif %}
         <h1 class="text-4xl font-bold dark:text-white ml-10 col-start-3 flex items-center">{{ user.username }}</h1>
     </div>
@@ -16,23 +22,23 @@
         <div class="mt-6 border-t border-gray-200">
             <dl class="divide-y divide-gray-200">
                 <div class="px-4 py-6 sm:grid sm:grid-cols-12 sm:gap-4 sm:px-0">
-                    <dt class="text-base font-semibold col-start-2 col-span-2 leading-6 text-gray-900">Prénom : </dt>
+                    <dt class="text-base font-semibold col-start-2 col-span-2 leading-6 text-gray-900 font-hepta">Prénom : </dt>
                     <dd class="mt-1 text-sm leading-6 text-gray-700 col-start-9 sm:col-span-2 sm:mt-0">{{ user.prenom }}</dd>
                 </div>
                 <div class="px-4 py-6 sm:grid sm:grid-cols-12 sm:gap-4 sm:px-0 bg-gray-200">
-                    <dt class="text-base font-semibold col-start-2 col-span-2 leading-6 text-gray-900">Nom : </dt>
+                    <dt class="text-base font-semibold col-start-2 col-span-2 leading-6 text-gray-900 font-hepta">Nom : </dt>
                     <dd class="mt-1 text-sm leading-6 text-gray-700 col-start-7 sm:col-span-2 sm:mt-0">{{ user.nom }}</dd>
                 </div>
                 <div class="px-4 py-6 sm:grid sm:grid-cols-12 sm:gap-4 sm:px-0">
-                    <dt class="text-base font-semibold col-start-2 col-span-2 leading-6 text-gray-900">Téléphone : </dt>
+                    <dt class="text-base font-semibold col-start-2 col-span-2 leading-6 text-gray-900 font-hepta">Téléphone : </dt>
                     <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ user.telephone }}</dd>
                 </div>
                 <div class="px-4 py-6 sm:grid sm:grid-cols-12 sm:gap-4 sm:px-0 bg-gray-200">
-                    <dt class="text-base font-semibold col-start-2 col-span-2 leading-6 text-gray-900">Email : </dt>
+                    <dt class="text-base font-semibold col-start-2 col-span-2 leading-6 text-gray-900 font-hepta">Email : </dt>
                     <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ user.mail }}</dd>
                 </div>
                 <div class="px-4 py-6 sm:grid sm:grid-cols-12 sm:gap-4 sm:px-0">
-                    <dt class="text-base font-semibold col-start-2 col-span-2 leading-6 text-gray-900">Ville de rattachement : </dt>
+                    <dt class="text-base font-semibold col-start-2 col-span-2 leading-6 text-gray-900 font-hepta">Ville de rattachement : </dt>
                     <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ user.site.ville.nom }}</dd>
                 </div>
             </dl>
