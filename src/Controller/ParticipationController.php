@@ -21,6 +21,11 @@ class ParticipationController extends AbstractController
       //  int $id
     ): Response
     {
+        try {
+            $userActuel = $this->getUser()->getUserIdentifier();
+        } catch (\Throwable $throwable) {
+            return $this->render(':bundles/TwigBundle/Exception:error401.html.twig');
+        }
         $etatOuvert=$etatRepository->findOneBy(["id"=>2]);
         if($sortie->getEtat()!==$etatOuvert || !$this->getUser()) {
             return $this->render('error401.html.twig');
@@ -49,6 +54,11 @@ class ParticipationController extends AbstractController
         //  int $id
     ): Response
     {
+        try {
+            $userActuel = $this->getUser()->getUserIdentifier();
+        } catch (\Throwable $throwable) {
+            return $this->render(':bundles/TwigBundle/Exception:error401.html.twig');
+        }
         $etatOuvert=$etatRepository->findOneBy(["id"=>2]);
         if($sortie->getEtat()!==$etatOuvert || !$this->getUser()) {
             return $this->render('error401.html.twig');
