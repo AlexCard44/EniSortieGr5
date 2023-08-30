@@ -76,15 +76,32 @@ function appliquerAdresse(element) {
     // Créez un nouveau marqueur à partir de l'adresse donnée
     marker = L.marker([element.lat, element.lon]).addTo(map);
 
+    // Utilisez une expression régulière pour extraire le numéro de rue, le mot dérivé (s'il existe) et le nom de la rue/lieu
+    const rueMatch = element.display_name.match(/(\d+\s*(?:[Bb]is|[Tt]er)?)(?:,\s*)?(.*?)\,/);
+    let rue = '';
+
+    if (rueMatch) {
+        const numeroRue = rueMatch[1] ? rueMatch[1].trim() : '';
+        const nomRue = rueMatch[2].trim();
+
+        rue = numeroRue + ' ' + nomRue;
+    }
+
     // Mettre à jour la latitude et la longitude dans le formulaire
-    let latitudeText = document.getElementById("lieu_latitude")
-    let longitudeText = document.getElementById("lieu_longitude")
-    latitudeText.value=element.lat;
-    longitudeText.value=element.lon;
+    let latitudeText = document.getElementById("lieu_latitude");
+    let longitudeText = document.getElementById("lieu_longitude");
+    let rueText = document.getElementById("lieu_rue");
+    latitudeText.value = element.lat;
+    longitudeText.value = element.lon;
+    console.log(rue);
+    rueText.value = rue;
 
     // Mettre à jour la map
     map.flyTo([element.lat, element.lon]);
+
 }
+
+
 
 
 

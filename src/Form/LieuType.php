@@ -32,7 +32,10 @@ class LieuType extends AbstractType
                 "label" => "Nom du lieu : "
             ])
             ->add('rue', null, [
-                "label" => "Numéro et nom de la rue"
+                "label" => "Numéro et nom de la rue",
+                "attr"=> [
+                    "id"=>"rue"
+                ]
             ])
             ->add('latitude', null, [
                 "label" => "Latitude (coordonnées GPS)",
@@ -51,7 +54,10 @@ class LieuType extends AbstractType
                 'required' => true,
                 'multiple' => false,
                 'label' => 'Ville',
-                'choice_label' => 'nom'
+                'choice_label' => 'nom',
+                "attr"=> [
+                    "id"=>"ville"
+                ]
             ])
             ->add('Enregistrer', SubmitType::class);
 
