@@ -29,17 +29,16 @@ class SortieController extends AbstractController
     ): Response
 
     {
-//        try {
+       try {
             $userActuel = $this->getUser()->getUserIdentifier();
-//        } catch (\Throwable $throwable) {
-//            return $this->render('error401.html.twig');
-//        }
+        } catch (\Throwable $throwable) {
+            return $this->render('@Twig/Exception/error401.html.twig');
+        }
         $profil = $utilisateurRepository->findOneBy(['username' => $userActuel]);
         $data = new SortiesFiltre();
         $data->sortiesOrganisees = $request->get('sortiesOrganisees', false);
         $form = $this->createForm(SortieFiltreType::class, $data);
         $form->handleRequest($request);
-
         $sorties = $sortieRepository->findAllCustom();
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -76,14 +75,14 @@ class SortieController extends AbstractController
         try {
             $sortie->setOrganisateur($this->getUser()); // ça me donne l'objet user
         } catch (\Throwable$throwable) {
-            return $this->render('error401.html.twig');
+            return $this->render('@Twig/Exception/error401.html.twig');
         }
 
         // Définir le site rattaché à l'organisateur
         try {
             $username = $this->getUser()->getUserIdentifier(); // ça me donne l'username de l'utilisateur actuellement connecté
         } catch (\Throwable $throwable) {
-            return $this->render('error401.html.twig');
+            return $this->render('@Twig/Exception/error401.html.twig');
         }
 
         // Chercher le site rattaché au username
@@ -127,7 +126,7 @@ class SortieController extends AbstractController
     {
 
         if($this->getUser() !== $sortie->getOrganisateur() || ($sortie->getEtat()->getId() != 1 && $sortie->getEtat()->getId() != 2)) {
-            return $this->render('error401.html.twig');
+            return $this->render('@Twig/Exception/error403.html.twig');
         }
         $sortieForm = $this->createForm(SortieType::class, $sortie);
         $sortieForm->handleRequest($request);
@@ -170,7 +169,7 @@ class SortieController extends AbstractController
         try {
             $userActuel = $this->getUser()->getUserIdentifier();
         } catch (\Throwable $throwable) {
-            return $this->render('error401.html.twig');
+            return $this->render('@Twig/Exception/error401.html.twig');
         }
         return $this->render('sortie/details.html.twig',
             [

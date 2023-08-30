@@ -19,6 +19,11 @@ class LieuController extends AbstractController
         LieuRepository $lieuRepository
     ): Response
     {
+        try {
+            $userActuel = $this->getUser()->getUserIdentifier();
+        } catch (\Throwable $throwable) {
+            return $this->render('@Twig/Exception/error401.html.twig');
+        }
         $lieux=$lieuRepository->findAllCustom();
         return $this->render('lieu/liste.html.twig',
             compact('lieux')
@@ -32,9 +37,9 @@ class LieuController extends AbstractController
     ): Response {
         $lieu = new Lieu();
         try {
-            $username=$this->getUser();
+            $userActuel = $this->getUser()->getUserIdentifier();
         } catch (\Throwable $throwable) {
-            return $this->render('error401.html.twig');
+            return $this->render('@Twig/Exception/error401.html.twig');
         }
         $lieuForm = $this->createForm(LieuType::class,$lieu);
         $lieuForm->handleRequest($request);
@@ -59,9 +64,9 @@ public function edit(
     Request $request
 ):Response {
         try {
-            $username=$this->getUser();
+            $userActuel = $this->getUser()->getUserIdentifier();
         } catch (\Throwable $throwable) {
-            return $this->render('error401.html.twig');
+            return $this->render('@Twig/Exception/error401.html.twig');
         }
 
         $lieuForm=$this->createForm(LieuType::class, $lieu);

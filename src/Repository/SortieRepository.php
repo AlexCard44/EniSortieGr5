@@ -65,6 +65,7 @@ class SortieRepository extends ServiceEntityRepository
 
             ->addOrderBy('sortie.nom','ASC')
             ->andWhere('sortie.estPublie=true')
+            ->andWhere('sortie.etat!=7')
             ->setMaxResults(10)
             ->getQuery();
         $paginator = new Paginator($queryBuilder);
@@ -85,6 +86,14 @@ class SortieRepository extends ServiceEntityRepository
             ->createQueryBuilder('sortie')
             ->select('sortie');
 
+
+        if(empty($sortiesFiltre->sortiesOrganisees) && empty($sortiesFiltre->sortiesPassees) && empty($sortiesFiltre->sortiesNonInscrit) && empty($sortiesFiltre->sortiesInscrit) && empty($sortiesFiltre->getName())) {
+            $query = $query
+                ->addOrderBy('sortie.nom','ASC')
+                ->andWhere('sortie.estPublie=true')
+                ->andWhere('sortie.etat!=7')
+                ->setMaxResults(10);
+        }
 
         if (!empty($sortiesFiltre->sortiesOrganisees)) {
             $query = $query
