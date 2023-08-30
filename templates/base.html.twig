@@ -40,14 +40,17 @@
                         <div class="flex items-center">
                             <a href="{{ path('lieu_liste') }}" class="text-gray-900 hover:bg-lime-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium font-hepta">Afficher les lieux</a>
                         </div>
+                        {% if 'ROLE_ADMIN' in app.user.getRoles() %}
+                        <div class="flex items-center">
+                            <a href="{{ path('app_register') }}" class="text-gray-900 hover:bg-lime-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium font-hepta">Inscrire</a>
+                        </div>
+                        {% endif%}
                     {% endif %}
                     {% if not app.user %}
                         <div class="flex items-center">
                             <a href="{{ path('app_login') }}" class="text-gray-900 hover:bg-lime-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium font-hepta">Se connecter</a>
                         </div>
-                        <div class="flex items-center">
-                            <a href="{{ path('app_register') }}" class="text-gray-900 hover:bg-lime-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium font-hepta">S'inscrire</a>
-                        </div>
+
                     {% endif %}
                 </nav>
             </div>
