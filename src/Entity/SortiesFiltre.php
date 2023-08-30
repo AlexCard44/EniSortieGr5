@@ -26,6 +26,24 @@ class SortiesFiltre
 
     public ?string $name=null;
 
+    public ?\DateTimeInterface $dateTime= null;
+
+    /**
+     * @return \DateTimeInterface|null
+     */
+    public function getDateTime(): ?\DateTimeInterface
+    {
+        return $this->dateTime;
+    }
+
+    /**
+     * @param \DateTimeInterface|null $dateTime
+     */
+    public function setDateTime(?\DateTimeInterface $dateTime): void
+    {
+        $this->dateTime = $dateTime;
+    }
+
     /**
      * @return string|null
      */
