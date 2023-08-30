@@ -1,26 +1,11 @@
-<body>
+{% extends 'base.html.twig' %}
 
+{% block title %}Erreur{% endblock %}
 
-<header>
-    <div class="nav">
-        <a href="{{ path('sortie_liste') }}">Liste des sorties</a>
-        {% if app.user %}
-            <a href="{{ path('sortie_creation') }}">Créer une sortie</a>
-            <a href="{{ path('app_logout') }}">Se déconnecter</a>
-            <a href="{{ path('profil_monProfil') }}">Mon profil</a>
-            <a href="{{ path('lieu_creation') }}">Ajouter un lieu</a>
-            <a href="{{ path('lieu_liste') }}">Afficher les lieux</a>
-        {% endif %}
-        {% if not app.user %}
-            <a href="{{ path('app_login') }}">Se connecter</a>
-            <a href="{{ path('app_register') }}">S'inscrire</a>
-        {% endif %}
+{% block body %}
 
-
+    <div class="flex justify-center items-center">
+        <img src="{{ asset('images/mascotte404.jpg') }}"  alt="">
     </div>
-</header>
-    <h1>Erreur</h1>
-    <img src="{{ asset('images/mascotte404.jpg') }}"  alt="">
 
-</body>
-
+{% endblock %}

@@ -34,6 +34,11 @@ class ProfilController extends AbstractController
         UtilisateurRepository       $utilisateurRepository
     ): Response
     {
+        try {
+            $userActuel = $this->getUser()->getUserIdentifier();
+        } catch (\Throwable $throwable) {
+            return $this->render('@Twig/Exception/error401.html.twig');
+        }
         $user = $this->getUser();
         $sorties = [];
 
@@ -82,6 +87,11 @@ class ProfilController extends AbstractController
 
     ): Response
     {
+        try {
+            $userActuel = $this->getUser()->getUserIdentifier();
+        } catch (\Throwable $throwable) {
+            return $this->render('@Twig/Exception/error401.html.twig');
+        }
         $userActuel = $this->getUser();
 
 
@@ -121,6 +131,11 @@ class ProfilController extends AbstractController
         int $id
     ): Response
     {
+        try {
+            $userActuel = $this->getUser()->getUserIdentifier();
+        } catch (\Throwable $throwable) {
+            return $this->render('@Twig/Exception/error401.html.twig');
+        }
         //dd($id);
         $user = $utilisateurRepository->findOneBy(
             ["id" => $id]

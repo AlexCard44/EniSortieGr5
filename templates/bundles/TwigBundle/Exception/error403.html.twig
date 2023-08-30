@@ -1,6 +1,10 @@
+{% extends 'base.html.twig' %}
+
 {% block title %}Erreur{% endblock %}
 
 {% block body %}
-    <h1>Erreur 403, modifier l'image !</h1>
-    <img src="{{ asset('images/mascotte401.jpg') }}"  alt="Message d'erreur">
+    <div class="flex justify-center items-center">
+        <img src="{{ asset('images/mascotte403.jpg') }}"  alt="">
+    </div>
+
 {% endblock %}

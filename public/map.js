@@ -51,12 +51,19 @@ function rechercheAdresse(){
         .catch(err=>console.log(err))
 }
 
+function escapeHTML(string) {
+    return string.replace(/"/g, '').replace(/'/g, '');
+}
+
 function listerAdresses(){
     resultats.innerHTML=''
     if (tabAdresses.length>0) {
         tabAdresses.forEach(element => {
+            const displayName = escapeHTML(JSON.stringify(element.display_name));
+            const elementLat = JSON.stringify(element.lat);
+            const elementLon = JSON.stringify(element.lon);
             resultats.innerHTML+=
-                "<button class = 'resultats' type='button' onclick='appliquerAdresse("+JSON.stringify(element)+ ")'>"
+                "<button class='resultats' type='button' onclick='appliquerAdresse(\"" + displayName + "\", " + elementLat + ", " + elementLon + ")'>"
                 + element.display_name
                 +"</button>"
                 +"<br>"
@@ -68,16 +75,16 @@ function listerAdresses(){
 }
 
 
-function appliquerAdresse(element) {
+function appliquerAdresse(displayName, elementLat, elementLon) {
 
     // Supprimez l'ancien marqueur
     map.removeLayer(marker);
 
     // Créez un nouveau marqueur à partir de l'adresse donnée
-    marker = L.marker([element.lat, element.lon]).addTo(map);
+    marker = L.marker([elementLat, elementLon]).addTo(map);
 
     // Utilisez une expression régulière pour extraire le numéro de rue, le mot dérivé (s'il existe) et le nom de la rue/lieu
-    const rueMatch = element.display_name.match(/(\d+\s*(?:[Bb]is|[Tt]er)?)(?:,\s*)?(.*?)\,/);
+    let rueMatch = displayName.match(/(\d+\s*(?:[Bb]is|[Tt]er)?)(?:,\s*)?(.*?)\,/);
     let rue = '';
 
     if (rueMatch) {
@@ -91,18 +98,12 @@ function appliquerAdresse(element) {
     let latitudeText = document.getElementById("lieu_latitude");
     let longitudeText = document.getElementById("lieu_longitude");
     let rueText = document.getElementById("lieu_rue");
-    latitudeText.value = element.lat;
-    longitudeText.value = element.lon;
+    latitudeText.value = elementLat;
+    longitudeText.value = elementLon;
     console.log(rue);
     rueText.value = rue;
 
     // Mettre à jour la map
-    map.flyTo([element.lat, element.lon]);
+    map.flyTo([elementLat, elementLon]);
 
 }
-
-
-
-
-
-
