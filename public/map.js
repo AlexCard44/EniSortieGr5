@@ -70,7 +70,7 @@ function listerAdresses(){
                 +"<br>";
         });
     } else {
-        resultats.innerHTML = "<p style ='color: red'>Not Found</p>"
+        resultats.innerHTML = "<p style ='color: red'>Nous n'avons pas trouvé l'adresse. Merci de saisir une nouvelle adresse</p>"
     }
 }
 

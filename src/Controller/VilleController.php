@@ -54,7 +54,8 @@ class VilleController extends AbstractController
         if ($villeForm->isSubmitted() && $villeForm->isValid()) {
             $entityManager->persist($ville);
             $entityManager->flush();
-            return $this->redirectToRoute('sortie_liste');
+            $this->addFlash('success', $ville->getNom() . ' a bien été créée !');
+            return $this->redirectToRoute('ville_liste');
         }
 
         return $this->render('ville/creation.html.twig',
@@ -64,7 +65,9 @@ class VilleController extends AbstractController
     }
 
 
-    #[Route('/delete', name: '_delete')]
+    #[Route('/delete/{id}',
+        name: '_delete',
+        requirements: ["id"=>"\d+"])]
     public function delete(
         Ville $ville,
         EntityManagerInterface $entityManager
@@ -78,6 +81,7 @@ class VilleController extends AbstractController
         }
         $entityManager->remove($ville);
         $entityManager->flush();
+        $this->addFlash('success', 'La suppression a bien été effectuée !');
         return $this->redirectToRoute('ville_liste');
 
     }
