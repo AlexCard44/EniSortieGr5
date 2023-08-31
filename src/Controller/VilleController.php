@@ -78,7 +78,7 @@ class VilleController extends AbstractController
     ):Response
     {
         // Vérifier si l'utilisateur est bien connecté
-        // Dans le cas contraire, on envoie l'utilisateur vers une page d'erreur qui lui demande de se connecters
+        // Dans le cas contraire, on envoie l'utilisateur vers une page d'erreur qui lui demande de se connecter
         try {
             $username = $this->getUser()->getUserIdentifier();
         } catch (\Throwable $throwable) {
