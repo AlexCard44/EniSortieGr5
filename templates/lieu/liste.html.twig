@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+
     <div class="px-4 sm:px-0 border-gray-200">
         <div class="mt-6 border-t border-gray-200">
             <dl class="divide-y divide-gray-200">
@@ -18,10 +19,16 @@
                         {% if app.user %}
                             <a href="{{ path('lieu_edit', {'id':lieu.id}) }}" class="bg-lime-500 hover:bg-lime-700 text-white flex justify-center font-bold py-1 px-3 rounded-full col-start-10"> Modifier</a>
                         {% endif %}
-                        </p>
                     </div>
                 {% endfor %}
             </dl>
+        </div>
+    </div>
+    <div class="w-full grid grid-cols-12">
+        <div class="col-start-2">
+            <a href="{{ path('lieu_creation') }}">
+                <button class="w-44 bg-lime-500 hover:bg-lime-700 text-white font-bold py-2 px-4 border border-lime-700 rounded">Ajouter un lieu</button>
+            </a>
         </div>
     </div>
 

@@ -30,6 +30,8 @@
         "build": "encore production --progress"
     },
     "dependencies": {
+        "flowbite": "^1.8.1",
+        "flowbyte": "^1.0.0",
         "notyf": "^3.10.0"
     }
 }

@@ -25,21 +25,65 @@
                 </a>
                 <nav class="flex justify-around">
                     {% if app.user %}
+{#                        <div class="flex items-center">#}
+{#                            <a href="{{ path('sortie_liste') }}" class="text-gray-900 hover:bg-lime-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium font-hepta">Liste des sorties</a>#}
+{#                        </div>#}
+{#                        <div class="flex items-center">#}
+{#                            <a href="{{ path('sortie_creation') }}" class="text-gray-900 hover:bg-lime-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium font-hepta">Créer une sortie</a>#}
+{#                        </div>#}
+{#                        <div class="flex items-center">#}
+{#                            <a href="{{ path('app_logout') }}" class="text-gray-900 hover:bg-lime-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium font-hepta">Se déconnecter</a>#}
+{#                        </div>#}
+
+                        {# Dropdown menu sorties #}
                         <div class="flex items-center">
-                            <a href="{{ path('sortie_liste') }}" class="text-gray-900 hover:bg-lime-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium font-hepta">Liste des sorties</a>
+                            <button id="dropdownDefaultButton" data-dropdown-toggle="sortie_dropdown" class="h-10 text-gray-900 bg-lime-300 hover:bg-lime-700 hover:text-white focus:outline-none focus:ring-lime-300 font-medium font-hepta rounded-lg text-sm px-3 py-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
+                                Sorties
+                                <svg class="w-2.5 h-2.5 ml-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"></path>
+                                </svg></button>
                         </div>
+
+                        {#                        Dropdown menu#}
+                        <div id="sortie_dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+                            <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+                                <li class="py-2 flex justify-center">
+                                    <a href="{{ path('sortie_creation') }}" class="text-gray-900 hover:bg-lime-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium font-hepta">Ajouter une sortie</a>
+                                </li>
+                                <li class="py-2 flex justify-center">
+                                    <a href="{{ path('sortie_liste') }}" class="text-gray-900 hover:bg-lime-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium font-hepta">Afficher les sorties</a>
+                                </li>
+                            </ul>
+                        </div>
+
+{#                        <div class="flex items-center">#}
+{#                            <a href="{{ path('lieu_creation') }}" class="text-gray-900 hover:bg-lime-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium font-hepta">Ajouter un lieu</a>#}
+{#                        </div>#}
+{#                        <div class="flex items-center">#}
+{#                            <a href="{{ path('lieu_liste') }}" class="text-gray-900 hover:bg-lime-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium font-hepta">Afficher les lieux</a>#}
+{#                        </div>#}
+                    {# Dropdown menu lieux #}
                         <div class="flex items-center">
-                            <a href="{{ path('sortie_creation') }}" class="text-gray-900 hover:bg-lime-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium font-hepta">Créer une sortie</a>
+                            <button id="dropdownDefaultButton" data-dropdown-toggle="lieu_dropdown" class="h-10 text-gray-900 bg-lime-300 hover:bg-lime-700 hover:text-white focus:outline-none focus:ring-lime-300 font-medium font-hepta rounded-lg text-sm px-3 py-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
+                                Lieux
+                                <svg class="w-2.5 h-2.5 ml-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"></path>
+                                </svg></button>
                         </div>
-                        <div class="flex items-center">
-                            <a href="{{ path('app_logout') }}" class="text-gray-900 hover:bg-lime-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium font-hepta">Se déconnecter</a>
+
+{#                        Dropdown menu#}
+                        <div id="lieu_dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+                            <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+                                <li class="py-2 flex justify-center">
+                                    <a href="{{ path('lieu_creation') }}" class="text-gray-900 hover:bg-lime-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium font-hepta">Ajouter un lieu</a>
+                                </li>
+                                <li class="py-2 flex justify-center">
+                                    <a href="{{ path('lieu_liste') }}" class="text-gray-900 hover:bg-lime-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium font-hepta">Afficher les lieux</a>
+                                </li>
+                            </ul>
                         </div>
-                        <div class="flex items-center">
-                            <a href="{{ path('lieu_creation') }}" class="text-gray-900 hover:bg-lime-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium font-hepta">Ajouter un lieu</a>
-                        </div>
-                        <div class="flex items-center">
-                            <a href="{{ path('lieu_liste') }}" class="text-gray-900 hover:bg-lime-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium font-hepta">Afficher les lieux</a>
-                        </div>
+
+
                         {% if 'ROLE_ADMIN' in app.user.getRoles() %}
                         <div class="flex items-center">
                             <a href="{{ path('app_register') }}" class="text-gray-900 hover:bg-lime-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium font-hepta">Inscrire</a>
@@ -59,9 +103,31 @@
             </div>
             <div class="flex ">
                 {% if app.user %}
+{#                    <div class="flex items-center">#}
+{#                        <a href="{{ path('profil_monProfil') }}" class="text-gray-900 hover:bg-lime-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium font-hepta">{{ app.user.username }}</a>#}
+{#                    </div>#}
+
+                    {# Dropdown menu profil #}
                     <div class="flex items-center">
-                        <a href="{{ path('profil_monProfil') }}" class="text-gray-900 hover:bg-lime-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium font-hepta">{{ app.user.username }}</a>
+                        <button id="dropdownDefaultButton" data-dropdown-toggle="profil_dropdown" class="h-10 text-gray-900 bg-lime-300 hover:bg-lime-700 hover:text-white focus:outline-none focus:ring-lime-300 font-medium font-hepta rounded-lg text-sm px-3 py-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
+                            {{ app.user.username }}
+                            <svg class="w-2.5 h-2.5 ml-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"></path>
+                            </svg></button>
                     </div>
+
+                    {#  Dropdown menu#}
+                    <div id="profil_dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+                        <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+                            <li class="py-2 flex justify-center">
+                                <a href="{{ path('profil_monProfil') }}" class="text-gray-900 hover:bg-lime-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium font-hepta">Mon profil</a>
+                            </li>
+                            <li class="py-2 flex justify-center">
+                                <a href="{{ path('app_logout') }}" class="text-gray-900 hover:bg-lime-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium font-hepta">Se déconnecter</a>
+                            </li>
+                        </ul>
+                    </div>
+
                     {% if app.user.photo %}
                         <div class="flex flex-wrap justify-cente col-start-2">
                             <div class="relative w-20 h-20 ">
@@ -83,5 +149,6 @@
     {% include '_notyf.html.twig'%}
         {% block h1 %}{% endblock %}
         {% block body %}{% endblock %}
+
     </body>
 </html>
