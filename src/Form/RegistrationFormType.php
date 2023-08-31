@@ -25,17 +25,18 @@ class RegistrationFormType extends AbstractType
             ->add('prenom')
             ->add('telephone')
             ->add('mail')
-            ->add('site',EntityType::class ,[
-               'class' => Site::class ,
-                'choice_label'=> 'nom',
+            ->add('site', EntityType::class, [
+                'class' => Site::class,
+                'choice_label' => 'nom',
                 'label' => 'Site'
             ])
             ->add('actif', CheckboxType::class, [
                 'mapped' => true,
-                'data'=>true
+                'data' => true
             ])
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
+                'label' => 'Veuillez accepter les CGU',
                 'constraints' => [
                     new IsTrue([
                         'message' => 'Veuillez accepter les CGU',

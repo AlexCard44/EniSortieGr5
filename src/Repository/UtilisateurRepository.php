@@ -11,7 +11,7 @@ use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 
 /**
  * @extends ServiceEntityRepository<Utilisateur>
-* @implements PasswordUpgraderInterface<Utilisateur>
+ * @implements PasswordUpgraderInterface<Utilisateur>
  *
  * @method Utilisateur|null find($id, $lockMode = null, $lockVersion = null)
  * @method Utilisateur|null findOneBy(array $criteria, array $orderBy = null)
@@ -33,7 +33,6 @@ class UtilisateurRepository extends ServiceEntityRepository implements PasswordU
         if (!$user instanceof Utilisateur) {
             throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', $user::class));
         }
-
         $user->setPassword($newHashedPassword);
         $this->getEntityManager()->persist($user);
         $this->getEntityManager()->flush();
