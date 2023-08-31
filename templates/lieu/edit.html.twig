@@ -5,8 +5,61 @@ Modifier un Lieu
 {% endblock %}
 
 {% block body %}
-<h1>Modifier un lieu</h1>
-    {{ form(lieuForm) }}
-    <button type="button" onClick="window.history.back();">Go back</button>
+<h1 class="ml-8 py-4 text-4xl text-gray-900 font-hepta">Modifier un lieu</h1>
+
+    {{ form_start(lieuForm) }}
+    <div class="w-full">
+        <div class="grid grid-cols-6 gap-4">
+            {{ form_row(lieuForm.nom, {
+                row_class: 'my-5 grid grid-cols-3 col-start-2 col-span-4 flex',
+                label_class: 'text-green-600 font-hepta',
+                widget_class: 'w-60 py-1 col-start-2 rounded'
+            }) }}
+        </div>
+        <div class="grid grid-cols-6 gap-4">
+            {{ form_row(lieuForm.rue, {
+                row_class: 'my-5 grid grid-cols-3 col-start-2 col-span-4 flex',
+                label_class: 'text-green-600 font-hepta',
+                widget_class: 'w-60 py-1 col-start-2 rounded'
+            }) }}
+        </div>
+        <div class="grid grid-cols-6 gap-4">
+            {{ form_row(lieuForm.latitude, {
+                row_class: 'my-5 grid grid-cols-3 col-start-2 col-span-4 flex',
+                label_class: 'text-green-600 font-hepta',
+                widget_class: 'w-60 py-1 col-start-2 rounded disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none',
+                'attr':{'disabled':'disabled'}
+            }) }}
+        </div>
+        <div class="grid grid-cols-6 gap-4">
+            {{ form_row(lieuForm.longitude, {
+                row_class: 'my-5 grid grid-cols-3 col-start-2 col-span-4 flex',
+                label_class: 'text-green-600 font-hepta',
+                widget_class: 'w-60 py-1 col-start-2 rounded disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none',
+                'attr':{'disabled':'disabled'}
+            }) }}
+        </div>
+        <div class="grid grid-cols-6 gap-4">
+            {{ form_row(lieuForm.ville, {
+                row_class: 'my-5 grid grid-cols-3 col-start-2 col-span-4 flex disabled',
+                label_class: 'text-green-600 font-hepta',
+                widget_class: 'w-60 py-1 col-start-2 rounded disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none',
+                'attr':{'disabled':'disabled'}
+            }) }}
+        </div>
+        <div class="grid grid-cols-6 gap-4 [&>div:first-child]:col-start-2">
+            <div class="grid grid-cols-3 col-start-2 col-span-4">
+                {{ form_end(lieuForm) }}
+            </div>
+        </div>
+    </div>
+
+<div class="w-full">
+    <div class="grid grid-cols-6 gap-4">
+        <div class="my-5 grid grid-cols-3 col-start-2 col-span-4 flex">
+    <button type="button" onClick="window.history.back();" class="w-24 bg-lime-500 hover:bg-lime-700 text-white font-bold py-2 px-4 border border-lime-700 rounded">Go back</button>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
