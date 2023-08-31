@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Ville;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -45,4 +46,17 @@ class VilleRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+public function findAllCustom():Paginator {
+        $queryBuilder=$this->createQueryBuilder('ville')
+            ->addOrderBy('ville.codePostal', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery();
+        $paginator=new Paginator($queryBuilder);
+        return $paginator;
+}
+
+
+
+
 }
