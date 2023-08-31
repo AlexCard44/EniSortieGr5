@@ -24,7 +24,7 @@ class ArchivageSortiesCommand extends Command
     private mixed $sortieRepository;
     private mixed $entityManager;
 
-    public function __construct(EtatRepository$etatRepository, SortieRepository$sortieRepository, EntityManagerInterface $entityManager)
+    public function __construct(EtatRepository $etatRepository, SortieRepository $sortieRepository, EntityManagerInterface $entityManager)
     {
         parent::__construct();
         $this->etatRepository = $etatRepository;
@@ -43,13 +43,25 @@ class ArchivageSortiesCommand extends Command
 
         // Obtenez la date actuelle
         $now = new \DateTime();
+
+        // Rechercher toutes les sorties enregistrées et les stocker dans une variable
         $sorties = $this->sortieRepository->findAllCommand();
-        $archivee=$this->etatRepository->findOneBy(["id" => 7]);
+
+        // Rechercher l'objet etat correspondant à "archivé"
+        $archivee = $this->etatRepository->findOneBy(["id" => 7]);
+
+        // Rechercher l'objet etat correspondant à "passé"
         $passee = $this->etatRepository->findOneBy(["id" => 5]);
+
+        // Boucle pour lire l'ensemble des enregistrements de sortie
         foreach ($sorties as $sortie) {
-            $interval=$now->diff($sortie->getDateHeureFin());
+            // Calculer le nombre de jours de différences entre la fin d'une sortie et le moment où la commande est lancée
+            $interval = $now->diff($sortie->getDateHeureFin());
             $joursDifference = $interval->format('%a');
-            if ($joursDifference>30 && $sortie->getEtat() == $passee) {
+
+            // Si le nombre de jours de différence dépasse 30 et que l'état de la sortie est en "passé"
+            // Alors on lui passe l'objet "archivé" dans l'attribut "etat"
+            if ($joursDifference > 30 && $sortie->getEtat() == $passee) {
                 $sortie->setEtat($archivee);
             }
             $this->entityManager->persist($sortie);

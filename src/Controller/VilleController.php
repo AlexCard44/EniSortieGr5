@@ -26,6 +26,7 @@ class VilleController extends AbstractController
         } catch (\Throwable $throwable) {
             return $this->render('@Twig/Exception/error401.html.twig');
         }
+        // Affichage de l'ensemble des enregistrements dans la table Ville selon une requête personnalisée
         $villes = $villeRepository->findAllCustom();
         return $this->render('ville/liste.html.twig',
             compact('villes')
@@ -48,9 +49,11 @@ class VilleController extends AbstractController
             return $this->render('@Twig/Exception/error401.html.twig');
         }
 
+        // On créé le formulaire lié à l'entité Ville et la requête associée
         $villeForm = $this->createForm(VilleType::class, $ville);
         $villeForm->handleRequest($request);
 
+        // Si le formulaire est soumis et valide, on envoie la requête poru création de l'enregistrement en BDD
         if ($villeForm->isSubmitted() && $villeForm->isValid()) {
             $entityManager->persist($ville);
             $entityManager->flush();
@@ -58,6 +61,7 @@ class VilleController extends AbstractController
             return $this->redirectToRoute('ville_liste');
         }
 
+        // On envoie à la vue le formulaire
         return $this->render('ville/creation.html.twig',
             [
                 'villeForm' => $villeForm->createView(),
@@ -79,12 +83,13 @@ class VilleController extends AbstractController
         } catch (\Throwable $throwable) {
             return $this->render('@Twig/Exception/error401.html.twig');
         }
+
+        // Si l'utilisateur a cliqué sur le bouton "Supprimer" accessible depuis la liste des Villes,
+        // Alors on envoie une requête pour supprimer l'enregistrement en BDD
         $entityManager->remove($ville);
         $entityManager->flush();
         $this->addFlash('success', 'La suppression a bien été effectuée !');
         return $this->redirectToRoute('ville_liste');
 
     }
-
-
 }
