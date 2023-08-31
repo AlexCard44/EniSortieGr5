@@ -97,11 +97,11 @@ class SortieType extends AbstractType
 //                ]);
 //            }
 
-            if(str_contains($currentUrl,'edit')) {
-                $builder->add('Annuler', SubmitType::class, [
-                    "label" => "Annuler la sortie"
-                ]);
-            }
+//            if(str_contains($currentUrl,'edit')) {
+//                $builder->add('Annuler', SubmitType::class, [
+//                    "label" => "Annuler la sortie"
+//                ]);
+//            }
 
             $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
                 $sortie=$event->getData();
