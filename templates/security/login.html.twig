@@ -8,13 +8,13 @@
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
 
-    <h1 class="text-4xl font-bold dark:text-white ml-10">Connectez-vous</h1>
+    <h1 class="text-4xl font-bold dark:text-white ml-10 font-hepta">Connectez-vous</h1>
     <div class="grid grid-cols-6 gap-4">
-        <label for="inputUsername" class="my-5 text-green-600 col-start-2">Pseudo</label>
+        <label for="inputUsername" class="my-5 text-green-600 col-start-2 font-hepta">Pseudo</label>
         <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="col-start-3 w-60 rounded" autocomplete="username" required autofocus>
     </div>
     <div class="grid grid-cols-6 gap-4">
-        <label for="inputPassword" class="my-5 text-green-600 col-start-2">Mot de passe</label>
+        <label for="inputPassword" class="my-5 text-green-600 col-start-2 font-hepta">Mot de passe</label>
         <input type="password" name="password" id="inputPassword" class="col-start-3 w-60 rounded" autocomplete="current-password" required>
     </div>
     <div class="grid grid-cols-6 gap-4">
