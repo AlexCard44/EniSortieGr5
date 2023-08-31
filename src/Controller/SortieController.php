@@ -27,7 +27,7 @@ class SortieController extends AbstractController
 
     {
         // On vérifie si l'utilisateur est bien connecté afin de récupérer son identifiant
-        // Dans le cas contraire, on l'envoie vers une page d'erreur
+        // Dans le cas contraire, on l'envoie vers une page d'erreur pour lui demander de se connecter
         try {
             $userActuel = $this->getUser()->getUserIdentifier();
         } catch (\Throwable $throwable) {
