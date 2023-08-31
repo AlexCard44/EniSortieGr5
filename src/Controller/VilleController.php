@@ -14,7 +14,6 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/ville', name: 'ville')]
 class VilleController extends AbstractController
 {
-
     #[Route('/liste', name: '_liste')]
     public function liste(
         VilleRepository $villeRepository

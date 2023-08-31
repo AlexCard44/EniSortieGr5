@@ -14,6 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/lieu', name: 'lieu')]
 class LieuController extends AbstractController
 {
+
     #[Route('/liste', name: '_liste')]
     public function liste(
         LieuRepository $lieuRepository
