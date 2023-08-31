@@ -39,7 +39,8 @@ class MonProfilType extends AbstractType
                         ],
                         'mimeTypesMessage' => 'Veuillez télécharger une image au format JPEG ou PNG'
                     ])
-                ]
+                ],
+                'download_uri' => false,
             ])
             ->add('modifier', SubmitType::class, [
                 'attr' => [

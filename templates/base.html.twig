@@ -194,5 +194,15 @@
 {% block h1 %}{% endblock %}
 {% block body %}{% endblock %}
 
+
+    <footer class="fixed inset-x-0 bottom-0">
+        <div class="h-24 flex justify-center bg-lime-300">
+            <div class="flex justify-center items-center">
+                <h2 class="flex items-center text-gray-900 font-hepta text-xl">Git'out - {{ date('now') | format_date(locale='fr',pattern="EEEE dd MMMM YYYY") }}</h2>
+            </div>
+        </div>
+    </footer>
+
 </body>
+
 </html>
