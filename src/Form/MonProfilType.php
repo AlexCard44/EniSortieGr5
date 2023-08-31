@@ -23,13 +23,20 @@ class MonProfilType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('username')
+            ->add('username', null, [
+                'label' => 'Pseudo'
+            ])
             ->add('nom')
-            ->add('prenom')
-            ->add('telephone')
+            ->add('prenom', null, [
+                'label' => 'Prénom'
+            ])
+            ->add('telephone', null, [
+                'label' => 'Téléphone'
+            ])
             ->add('mail')
             ->add('imageFile', VichImageType::class, [
                 'required' => false,
+                'label' => 'Photo',
                 'constraints' => [
                     new File([
                         'maxSize' => '4M',
