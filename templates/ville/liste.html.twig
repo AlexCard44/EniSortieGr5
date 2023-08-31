@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="px-4 sm:px-0 border-gray-200">
+        <div class="mt-6 border-t border-gray-200">
+            <dl class="divide-y divide-gray-200">
+                <div  class="px-4 py-6 bg-lime-200  grid grid-cols-12 gap-2 sm:px-0">
+                    <h3 class="ml-8 text-base items-center font-semibold col-start-1 col-span-2 leading-6 text-gray-900 font-hepta">Nom</h3>
+                    <h3 class="text-base items-center font-semibold col-start-4 col-span-3 leading-6 text-gray-900 font-hepta">Code Postal</h3>
+                    <h3 class="text-base items-center flex justify-center font-semibold col-start-9 col-span-3 leading-6 text-gray-900 font-hepta">Actions</h3>
+                </div>
+                {% for ville in villes %}
+                    <div class="px-4 py-6 grid grid-cols-12 gap-2 sm:px-0">
+                        <p class="ml-8 text-base font-semibold col-start-1 col-span-2 leading-6 text-gray-900">{{ ville.nom }}</p>
+                        <p class="text-base font-semibold col-start-4 col-span-3 leading-6 text-gray-900">{{ ville.codePostal }}</p>
+                        {% if app.user %}
+                            <a href="{{ path('ville_delete', {'id':ville.id}) }}" class="bg-lime-500 hover:bg-lime-700 text-white flex justify-center font-bold py-1 px-3 rounded-full col-start-10"> Supprimer</a>
+                        {% endif %}
+                        </p>
+                    </div>
+                {% endfor %}
+            </dl>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block title %}
+    Liste des Villes
+{% endblock %}
+
