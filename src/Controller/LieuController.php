@@ -47,6 +47,7 @@ class LieuController extends AbstractController
         if($lieuForm->isSubmitted()&&$lieuForm->isValid()&&'Enregistrer'=== $lieuForm->getClickedButton()->getName()) {
             $entityManager->persist($lieu);
             $entityManager->flush();
+            $this->addFlash('success', $lieu->getNom()  . ' a bien été créé ! ');
             return $this->redirectToRoute('lieu_liste');
         }
         return $this->render('lieu/creation.html.twig',
@@ -75,8 +76,12 @@ public function edit(
         if($lieuForm->isSubmitted()&&$lieuForm->isValid()) {
             if("Supprimer"===$lieuForm->getClickedButton()->getName()) {
                 $entityManager->remove($lieu);
+                $entityManager->flush();
+                $this->addFlash('success', 'La suppression a bien été effectuée');
+            } else {
+                $this->addFlash('success', $lieu->getNom() . ' a bien été modifié !');
+                $entityManager->flush();
             }
-            $entityManager->flush();
             return $this->redirectToRoute('lieu_liste');
         }
         return $this->render('lieu/edit.html.twig',

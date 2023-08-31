@@ -105,6 +105,7 @@ class SortieController extends AbstractController
             }
             $entityManager->persist($sortie);
             $entityManager->flush();
+            $this->addFlash('success', $sortie->getNom() . ' a bien été créée !');
             return $this->redirectToRoute('sortie_liste');
         }
 
