@@ -5,11 +5,29 @@
 {% endblock %}
 
 {% block h1 %}
-    <h2 class="text-4xl font-bold dark:text-white ml-10 font-hepta">{{ sortie.nom }}</h2>
+
 {% endblock %}
 
 {% block body %}
-<div class="px-4 sm:px-0 border-gray-200">
+
+    <div class="flex grid grid-cols-12 mt-3">
+        {% if sortie.urlPhoto %}
+            <div class="flex flex-wrap justify-cente col-start-2">
+                <div class="relative w-24 h-24 ">
+                    <img src="{{ asset('/images/' ~ sortie.urlPhoto) }}" alt="photo_profil" class="shadow-sm border-4 rounded-full border-gray-400 overflow-hidden">
+                </div>
+            </div>
+        {% else %}
+            <div class="flex flex-wrap justify-cente col-start-2">
+                <div class="relative w-20 h-20 ">
+                    <img src="{{ asset('images/Default_pfp.jpg') }}" alt="photo_profil_default" class="w-20 h-20 shadow-sm border-4 rounded-full border-gray-400 overflow-hidden">
+                </div>
+            </div>
+        {% endif %}
+        <h1 class="text-4xl font-bold dark:text-white ml-10 col-start-3 col-span-8 flex items-center font-hepta">{{ sortie.nom }}</h1>
+    </div>
+
+    <div class="px-4 sm:px-0 border-gray-200">
     <div class="mt-6 border-t border-gray-200">
         <dl class="divide-y divide-gray-200">
         <div class="px-4 py-6 sm:grid sm:grid-cols-12 sm:gap-4 sm:px-0">
@@ -49,9 +67,6 @@
             <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ sortie.etat.libelle }}</dd>
         </div>
         </dl>
-    {% if sortie.urlPhoto %}
-        Photo : <img src="{{asset ('images/'~sortie.urlPhoto) }}" alt="photo_sortie" >
-    {% endif %}
     </div>
 </div>
 <div class="grid grid-cols-12 flex">
