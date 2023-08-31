@@ -121,7 +121,7 @@ class ProfilController extends AbstractController
     #[Route('/profil/{id}', name: 'detail', requirements: ["id" => "\d+"])]
     public function detail(
         UtilisateurRepository $utilisateurRepository,
-        int $id
+        int                   $id
     ): Response
     {
         try {
@@ -134,6 +134,6 @@ class ProfilController extends AbstractController
             ["id" => $id]
         );
         return $this->render('profil/profil.html.twig',
-        compact('user'));
+            compact('user'));
     }
 }

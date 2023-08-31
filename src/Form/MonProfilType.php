@@ -28,9 +28,6 @@ class MonProfilType extends AbstractType
             ->add('prenom')
             ->add('telephone')
             ->add('mail')
-
-
-
             ->add('imageFile', VichImageType::class, [
                 'required' => false,
                 'constraints' => [
@@ -40,7 +37,7 @@ class MonProfilType extends AbstractType
                             'image/jpeg',
                             'image/png'
                         ],
-                        'mimeTypesMessage'=> 'Veuillez télécharger une image au format JPEG ou PNG'
+                        'mimeTypesMessage' => 'Veuillez télécharger une image au format JPEG ou PNG'
                     ])
                 ]
             ])

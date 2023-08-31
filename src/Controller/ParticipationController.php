@@ -12,11 +12,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ParticipationController extends AbstractController
 {
-    #[Route('/participation/{id}', name: 'app_participation', requirements: ["id"=>"\d+"])]
+    #[Route('/participation/{id}', name: 'app_participation', requirements: ["id" => "\d+"])]
     public function index(
-        Sortie $sortie,
-        EtatRepository $etatRepository,
-        SortieRepository $sortieRepository,
+        Sortie                 $sortie,
+        EtatRepository         $etatRepository,
+        SortieRepository       $sortieRepository,
         EntityManagerInterface $entityManager,
     ): Response
     {
@@ -25,15 +25,15 @@ class ParticipationController extends AbstractController
         } catch (\Throwable $throwable) {
             return $this->render(':bundles/TwigBundle/Exception:error401.html.twig');
         }
-        $etatOuvert=$etatRepository->findOneBy(["id"=>2]);
-        if($sortie->getEtat()!==$etatOuvert || !$this->getUser()) {
+        $etatOuvert = $etatRepository->findOneBy(["id" => 2]);
+        if ($sortie->getEtat() !== $etatOuvert || !$this->getUser()) {
             return $this->render('error401.html.twig');
         } else {
             $user = $this->getUser();
             //  $sortie = $sortieRepository->findOneBy(["id" => $id]);
             $places = count($sortie->getParticipants());
 
-            if(!$sortie->getParticipants()->contains($user) && $places < $sortie->getNbInscriptionsMax()){
+            if (!$sortie->getParticipants()->contains($user) && $places < $sortie->getNbInscriptionsMax()) {
                 $sortie->addParticipant($user);
                 $entityManager->persist($user);
                 $entityManager->flush();
@@ -44,11 +44,12 @@ class ParticipationController extends AbstractController
         }
 
     }
-    #[Route('desistement/{id}', name: 'app_desistement', requirements: ["id"=>"\d+"])]
+
+    #[Route('desistement/{id}', name: 'app_desistement', requirements: ["id" => "\d+"])]
     public function desistement(
-        Sortie $sortie,
-        EtatRepository $etatRepository,
-        SortieRepository $sortieRepository,
+        Sortie                 $sortie,
+        EtatRepository         $etatRepository,
+        SortieRepository       $sortieRepository,
         EntityManagerInterface $entityManager,
         //  int $id
     ): Response
@@ -58,8 +59,8 @@ class ParticipationController extends AbstractController
         } catch (\Throwable $throwable) {
             return $this->render(':bundles/TwigBundle/Exception:error401.html.twig');
         }
-        $etatOuvert=$etatRepository->findOneBy(["id"=>2]);
-        if($sortie->getEtat()!==$etatOuvert || !$this->getUser()) {
+        $etatOuvert = $etatRepository->findOneBy(["id" => 2]);
+        if ($sortie->getEtat() !== $etatOuvert || !$this->getUser()) {
             return $this->render('error401.html.twig');
         } else {
             $user = $this->getUser();

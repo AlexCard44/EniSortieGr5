@@ -24,9 +24,9 @@ class SortiesFiltre
 
     public ?bool $sortiesPassees = null;
 
-    public ?string $name=null;
+    public ?string $name = null;
 
-    public ?\DateTimeInterface $dateTime= null;
+    public ?\DateTimeInterface $dateTime = null;
 
     /**
      * @return \DateTimeInterface|null
