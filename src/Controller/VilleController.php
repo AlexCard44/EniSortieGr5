@@ -70,11 +70,11 @@ class VilleController extends AbstractController
 
     #[Route('/delete/{id}',
         name: '_delete',
-        requirements: ["id" => "\d+"])]
+        requirements: ["id"=>"\d+"])]
     public function delete(
-        Ville                  $ville,
+        Ville $ville,
         EntityManagerInterface $entityManager
-    ): Response
+    ):Response
     {
         // Vérifier si l'utilisateur est bien connecté
         // Dans le cas contraire, on envoie l'utilisateur vers une page d'erreur qui lui demande de se connecter
