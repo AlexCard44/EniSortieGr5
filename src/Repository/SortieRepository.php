@@ -153,9 +153,6 @@ class SortieRepository extends ServiceEntityRepository
                     ->andWhere('sortie.etat != 6 AND sortie.etat != 1 OR :utilisateur = sortie.organisateur')
                     ->setParameter('utilisateur', $utilisateur)
                     ->setParameter('dateTime', $sortiesFiltre->getDateTime());
-
-
-
             }
 
 
