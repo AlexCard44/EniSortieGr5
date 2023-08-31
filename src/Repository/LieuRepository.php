@@ -46,12 +46,13 @@ class LieuRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
-    public function findAllCustom():Paginator {
-        $queryBuilder=$this->createQueryBuilder('lieu')
-            ->addOrderBy('lieu.id','ASC')
+    public function findAllCustom(): Paginator
+    {
+        $queryBuilder = $this->createQueryBuilder('lieu')
+            ->addOrderBy('lieu.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery();
-        $paginator=new Paginator($queryBuilder);
+        $paginator = new Paginator($queryBuilder);
         return $paginator;
     }
 }

@@ -24,7 +24,7 @@ class SortiesFiltreRepository extends ServiceEntityRepository
     }
 
 
-    public function findSearch(SortiesFiltre $sortiesFiltre) :Paginator
+    public function findSearch(SortiesFiltre $sortiesFiltre): Paginator
     {
         $query = $this
             ->createQueryBuilder('p')
@@ -35,13 +35,10 @@ class SortiesFiltreRepository extends ServiceEntityRepository
             $query = $query
                 ->andWhere('p.name LIKE :sortiesOrganisees')
                 ->setParameter('sortiesOrganisees', "%{$sortiesFiltre->sortiesOrganisees}%");
-
-
         }
         return $this->paginator->paginate(
             $query,
             $sortiesFiltre->sortiesOrganisees,
-
         );
     }
 

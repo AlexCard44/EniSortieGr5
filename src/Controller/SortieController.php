@@ -15,21 +15,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Form\FormInterface;
-use Doctrine\Persistence\ManagerRegistry as PersistenceManagerRegistry;
 
 #[Route('/sortie', name: 'sortie')]
 class SortieController extends AbstractController
 {
     #[Route('/liste', name: '_liste')]
     public function liste(
-        SortieRepository        $sortieRepository,
-        Request                 $request,
+        SortieRepository      $sortieRepository,
+        Request               $request,
         UtilisateurRepository $utilisateurRepository
     ): Response
 
     {
-       try {
+        try {
             $userActuel = $this->getUser()->getUserIdentifier();
         } catch (\Throwable $throwable) {
             return $this->render('@Twig/Exception/error401.html.twig');
@@ -48,7 +46,6 @@ class SortieController extends AbstractController
                 'sorties' => $sorties
             ]);
         }
-
 
 
         return $this->render('sortie/liste.html.twig', [
@@ -95,16 +92,17 @@ class SortieController extends AbstractController
 
 
         $sortie->setSite($this->getUser()->getSite());
-     
-        if ($sortieForm->isSubmitted()&&$sortieForm->isValid()){
-          
-            if ("Publier" === $sortieForm->getClickedButton()->getName()){
+
+        if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
+
+            if ("Publier" === $sortieForm->getClickedButton()->getName()) {
                 $etat = $etatRepository->findOneBy(["id" => 2]);
                 $sortie->setEtat($etat);
                 $sortie->setEstPublie(true);
             }
             $entityManager->persist($sortie);
             $entityManager->flush();
+            $this->addFlash('success', $sortie->getNom() . ' a bien été créée !');
             return $this->redirectToRoute('sortie_liste');
         }
 
@@ -125,7 +123,7 @@ class SortieController extends AbstractController
     ): Response
     {
 
-        if($this->getUser() !== $sortie->getOrganisateur() || ($sortie->getEtat()->getId() != 1 && $sortie->getEtat()->getId() != 2)) {
+        if ($this->getUser() !== $sortie->getOrganisateur() || ($sortie->getEtat()->getId() != 1 && $sortie->getEtat()->getId() != 2)) {
             return $this->render('@Twig/Exception/error403.html.twig');
         }
         $sortieForm = $this->createForm(SortieType::class, $sortie);

@@ -33,30 +33,30 @@ class LieuType extends AbstractType
             ])
             ->add('rue', null, [
                 "label" => "Numéro et nom de la rue",
-                "attr"=> [
-                    "id"=>"rue"
+                "attr" => [
+                    "id" => "rue"
                 ]
             ])
             ->add('latitude', null, [
                 "label" => "Latitude (coordonnées GPS)",
-                "attr"=> [
-                    "id"=>"latitude"
+                "attr" => [
+                    "id" => "latitude"
                 ]
             ])
             ->add('longitude', null, [
                 "label" => "Longitude (coordonnées GPS)",
-                "attr"=> [
-                    "id"=>"longitude"
+                "attr" => [
+                    "id" => "longitude"
                 ]
             ])
             ->add('ville', EntityType::class, [
-                'class'=>Ville::class,
+                'class' => Ville::class,
                 'required' => true,
                 'multiple' => false,
                 'label' => 'Ville',
                 'choice_label' => 'nom',
-                "attr"=> [
-                    "id"=>"ville"
+                "attr" => [
+                    "id" => "ville"
                 ]
             ])
             ->add('Enregistrer', SubmitType::class, [
@@ -68,7 +68,10 @@ class LieuType extends AbstractType
         if (str_contains($currentURL, 'edit')) {
             $builder
                 ->add('Supprimer', SubmitType::class, [
-                    "label" => "Supprimer le lieu"
+                    "label" => "Supprimer le lieu",
+                    'attr' => [
+                        'class' => 'bg-lime-500 hover:bg-lime-700 text-white font-bold py-2 px-4 border border-lime-700 rounded'
+                    ]
                 ]);
         }
     }

@@ -6,7 +6,6 @@ use App\Repository\UtilisateurRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Serializable;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -15,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: UtilisateurRepository::class)]
-#[UniqueEntity(fields: ['username'], message: 'There is already an account with this username')]
+#[UniqueEntity(fields: ['username', 'mail'], message: "l'email ou le username sont déjà utilisés")]
 #[Vich\Uploadable()]
 class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -25,8 +24,9 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
-//    #[Assert\NotNull()]
-//    #[Assert\NotBlank()]
+    #[Assert\NotNull()]
+    #[Assert\NotBlank()]
+    #[Assert\Regex("/^[a-zA-Z0-9]{2,30}$/")]
     private ?string $username = null;
 
     #[ORM\Column]
@@ -36,12 +36,20 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[Assert\Regex("/^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()-=_+{}\[\]:;<>,.?~])(?=.*[0-9]).{6,}$/", message: 'Votre mot de passe doit contenir au moins 6 caractères, une majuscule et un caractère spéciale')]
+    #[Assert\NotCompromisedPassword(message: 'Mot de passe compromis ')]
     private ?string $password = null;
 
     #[ORM\Column(length: 30)]
+    #[Assert\NotNull()]
+    #[Assert\NotBlank()]
+    #[Assert\Regex("/^[A-Z][a-zA-Z]{1,29}$/", message: 'Doit commencer par une majuscule')]
     private ?string $nom = null;
 
     #[ORM\Column(length: 30)]
+    #[Assert\NotNull()]
+    #[Assert\NotBlank()]
+    #[Assert\Regex("/^[A-Z][a-zA-Z]{1,29}$/", message: 'Doit commencer par une majuscule')]
     private ?string $prenom = null;
 
     #[ORM\Column(length: 15, nullable: true)]
@@ -49,6 +57,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $telephone = null;
 
     #[ORM\Column(length: 30)]
+    #[Assert\Email]
     private ?string $mail = null;
 
     #[ORM\Column]
@@ -68,7 +77,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $sortiesParticipees;
 
     #[ORM\Column(length: 2100, nullable: true)]
-    private ?String $photo = null;
+    private ?string $photo = null;
 
     #[Vich\UploadableField(mapping: 'products', fileNameProperty: 'photo', size: 'imageSize')]
     private ?File $imageFile = null;
@@ -165,7 +174,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->username;
+        return (string)$this->username;
     }
 
     /**
@@ -263,7 +272,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $role = $this->getRoles();
 
-        if($this->administrateur === true) {
+        if ($this->administrateur === true) {
             $this->setRoles([]);
         } else {
             $this->setRoles(["ROLE_ADMIN"]);
@@ -387,20 +396,20 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
         return [
             'id' => $this->id,
             "photo" => $this->photo,
-            'site'=>$this->site,
-            'username'=>$this->username,
-            'role'=>$this->roles,
-            'password'=>$this->password,
-            'nom'=>$this->nom,
-            'prenom'=>$this->prenom,
-            'telephone'=>$this->telephone,
-            'mail'=>$this->mail,
-            'administrateur'=>$this->administrateur,
-            'actif'=>$this->actif,
-            'sortiesParticipees'=>$this->sortiesParticipees,
-            'sortiesOrganisees'=>$this->sortiesOrganisees,
-            'imageSize'=>$this->imageSize,
-            'updatedAt'=>$this->updatedAt
+            'site' => $this->site,
+            'username' => $this->username,
+            'role' => $this->roles,
+            'password' => $this->password,
+            'nom' => $this->nom,
+            'prenom' => $this->prenom,
+            'telephone' => $this->telephone,
+            'mail' => $this->mail,
+            'administrateur' => $this->administrateur,
+            'actif' => $this->actif,
+            'sortiesParticipees' => $this->sortiesParticipees,
+            'sortiesOrganisees' => $this->sortiesOrganisees,
+            'imageSize' => $this->imageSize,
+            'updatedAt' => $this->updatedAt
         ];
     }
 
