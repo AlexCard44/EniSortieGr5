@@ -11,6 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ParticipationController extends AbstractController
 {
+
     // Fonction pour rejoindre une sortie en tant que participant
     #[Route('/participation/{id}', name: 'app_participation', requirements: ["id" => "\d+"])]
     public function index(
