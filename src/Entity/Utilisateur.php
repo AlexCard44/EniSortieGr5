@@ -15,7 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: UtilisateurRepository::class)]
-#[UniqueEntity(fields: ['username'], message: 'There is already an account with this username')]
+#[UniqueEntity(fields: ['username','mail'], message: "l'email ou le username sont déjà utilisés")]
 #[Vich\Uploadable()]
 class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -25,8 +25,9 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
-//    #[Assert\NotNull()]
-//    #[Assert\NotBlank()]
+    #[Assert\NotNull()]
+    #[Assert\NotBlank()]
+    #[Assert\Regex("/^[a-zA-Z0-9]{2,30}$/")]
     private ?string $username = null;
 
     #[ORM\Column]
@@ -36,12 +37,20 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[Assert\Regex("/^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()-=_+{}\[\]:;<>,.?~])(?=.*[0-9]).{6,}$/", message: 'Votre mot de passe doit contenir au moins 6 caractères, une majuscule et un caractère spéciale')]
+    #[Assert\NotCompromisedPassword(message: 'Mot de passe compromis ')]
     private ?string $password = null;
 
     #[ORM\Column(length: 30)]
+    #[Assert\NotNull()]
+    #[Assert\NotBlank()]
+    #[Assert\Regex("/^[A-Z][a-zA-Z]{1,29}$/", message: 'Doit commencer par une majuscule')]
     private ?string $nom = null;
 
     #[ORM\Column(length: 30)]
+    #[Assert\NotNull()]
+    #[Assert\NotBlank()]
+    #[Assert\Regex("/^[A-Z][a-zA-Z]{1,29}$/", message: 'Doit commencer par une majuscule')]
     private ?string $prenom = null;
 
     #[ORM\Column(length: 15, nullable: true)]
@@ -49,6 +58,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $telephone = null;
 
     #[ORM\Column(length: 30)]
+    #[Assert\Email]
     private ?string $mail = null;
 
     #[ORM\Column]

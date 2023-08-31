@@ -83,6 +83,13 @@
                             </ul>
                         </div>
 
+                        <div class="flex items-center">
+                            <a href="{{ path('ville_creation') }}" class="text-gray-900 hover:bg-lime-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium font-hepta">Ajouter une Ville</a>
+                        </div>
+                        <div class="flex items-center">
+                            <a href="{{ path('ville_liste') }}" class="text-gray-900 hover:bg-lime-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium font-hepta">Afficher les villes</a>
+                        </div>
+
 
                         {% if 'ROLE_ADMIN' in app.user.getRoles() %}
                         <div class="flex items-center">
