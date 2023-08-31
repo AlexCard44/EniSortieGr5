@@ -16,21 +16,21 @@ class MotDePasseType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('password', PasswordType::class,[
+            ->add('password', PasswordType::class, [
                 'label' => 'Ancien mot de passe',
 
             ])
-            ->add('newPassword', RepeatedType::class,[
-                'type'=>PasswordType::class,
+            ->add('newPassword', RepeatedType::class, [
+                'type' => PasswordType::class,
                 'first_options' => [
-                    'label'=>'Nouveau mot de passe',
-                    'attr' =>['id' => 'newPassword']
+                    'label' => 'Nouveau mot de passe',
+                    'attr' => ['id' => 'newPassword']
                 ],
                 'second_options' => [
-                    'label'=>'Confirmer nouveau mot de passe',
-                    'attr' =>['id' => 'confirmNewPassword']
+                    'label' => 'Confirmer nouveau mot de passe',
+                    'attr' => ['id' => 'confirmNewPassword']
                 ],
-                "mapped"=> false,
+                "mapped" => false,
 
 
             ])
@@ -38,11 +38,7 @@ class MotDePasseType extends AbstractType
                 'attr' => [
                     'class' => 'bg-lime-500 hover:bg-lime-700 text-white font-bold py-2 px-4 border border-lime-700 rounded'
                 ]
-            ]);
-
-
-
-        ;
+            ]);;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

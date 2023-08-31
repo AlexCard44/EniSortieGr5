@@ -93,20 +93,13 @@ class ProfilController extends AbstractController
             return $this->render('@Twig/Exception/error401.html.twig');
         }
         $userActuel = $this->getUser();
-
-
         $profil = $utilisateurRepository->findOneBy(['username' => $userActuel->getUserIdentifier()]);
-
-//        $form = $this->createForm(MotDePasseType::class,$profil);
         $form = $this->createForm(MotDePasseType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
             $oldPassword = $form->get('password')->getData();
-//          dd($passwordHasher->isPasswordValid($this->getUser(), $oldPassword));
-//            dump($profil->getPassword());
-//            dd($passwordHasher->isPasswordValid($profil, '123456'));
             //verif de la correspondance
             if ($passwordHasher->isPasswordValid($profil, $oldPassword)) {
                 $newMdpHash = $passwordHasher->hashPassword($profil, $form->get('newPassword')->getData());
@@ -128,7 +121,7 @@ class ProfilController extends AbstractController
     #[Route('/profil/{id}', name: 'detail', requirements: ["id" => "\d+"])]
     public function detail(
         UtilisateurRepository $utilisateurRepository,
-        int $id
+        int                   $id
     ): Response
     {
         try {
@@ -141,6 +134,6 @@ class ProfilController extends AbstractController
             ["id" => $id]
         );
         return $this->render('profil/profil.html.twig',
-        compact('user'));
+            compact('user'));
     }
 }

@@ -16,7 +16,6 @@ class VilleType extends AbstractType
             ->add('nom', null, [
                 "label" => "Nom de la Ville : "
             ])
-
             ->add('codePostal', null, [
                 "label" => "Numéro de code postal (5 chiffres) : "
             ])
@@ -24,9 +23,7 @@ class VilleType extends AbstractType
                 'attr' => [
                     'class' => 'bg-lime-500 hover:bg-lime-700 text-white font-bold py-2 px-4 border border-lime-700 rounded'
                 ]
-            ])
-
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

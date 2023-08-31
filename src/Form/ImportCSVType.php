@@ -21,7 +21,7 @@ class ImportCSVType extends AbstractType
                 'constraints' => [
                     new File([
                         'mimeTypes' => 'fichier/csv',
-                        'mimeTypesMessage'=>'Veuillez téléverser un fichier au format CSV'
+                        'mimeTypesMessage' => 'Veuillez téléverser un fichier au format CSV'
                     ])
                 ],
                 'attr' => [
@@ -33,8 +33,7 @@ class ImportCSVType extends AbstractType
                 'attr' => [
                     'class' => 'bg-lime-500 hover:bg-lime-700 text-white font-bold py-2 px-4 border border-lime-700 rounded'
                 ]
-            ]);
-        ;
+            ]);;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

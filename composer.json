@@ -11,6 +11,8 @@
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.16",
         "easycorp/easyadmin-bundle": "^4.7",
+        "phpoffice/phpspreadsheet": "^1.29",
+        "league/csv": "*",
         "symfony/asset": "6.3.*",
         "symfony/console": "6.3.*",
         "symfony/dotenv": "6.3.*",
