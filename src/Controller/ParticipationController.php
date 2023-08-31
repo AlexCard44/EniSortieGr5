@@ -18,7 +18,6 @@ class ParticipationController extends AbstractController
         EtatRepository $etatRepository,
         SortieRepository $sortieRepository,
         EntityManagerInterface $entityManager,
-      //  int $id
     ): Response
     {
         try {

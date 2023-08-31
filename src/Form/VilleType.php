@@ -16,7 +16,6 @@ class VilleType extends AbstractType
             ->add('nom', null, [
                 "label" => "Nom de la Ville : "
             ])
-
             ->add('codePostal', null, [
                 "label" => "Numéro de code postal (5 chiffres) : "
             ])

@@ -90,19 +90,6 @@ class SortieType extends AbstractType
                     'class' => 'bg-lime-500 hover:bg-lime-700 text-white font-bold py-2 px-4 border border-lime-700 rounded'
                 ]
             ]);
-
-//            if(str_contains($currentUrl,'creation')) {
-//                $builder->add('Publier', SubmitType::class, [
-//                    "label" => "Publier la sortie"
-//                ]);
-//            }
-
-//            if(str_contains($currentUrl,'edit')) {
-//                $builder->add('Annuler', SubmitType::class, [
-//                    "label" => "Annuler la sortie"
-//                ]);
-//            }
-
             $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
                 $sortie=$event->getData();
                 $form=$event->getForm();

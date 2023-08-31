@@ -15,8 +15,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Form\FormInterface;
-use Doctrine\Persistence\ManagerRegistry as PersistenceManagerRegistry;
 
 #[Route('/sortie', name: 'sortie')]
 class SortieController extends AbstractController

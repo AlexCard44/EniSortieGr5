@@ -62,8 +62,7 @@ class SortieRepository extends ServiceEntityRepository
     public function findAllCustom(): Paginator
     {
         $queryBuilder = $this->createQueryBuilder('sortie')
-
-            ->addOrderBy('sortie.nom','ASC')
+            ->addOrderBy('sortie.nom', 'ASC')
             ->andWhere('sortie.estPublie=true')
             ->andWhere('sortie.etat!=7')
             ->setMaxResults(10)
@@ -80,82 +79,66 @@ class SortieRepository extends ServiceEntityRepository
 
     public function findSearch(SortiesFiltre $sortiesFiltre, Utilisateur $utilisateur): Paginator
     {
-       # $utilisateurId = $this->getUser()->getId();
         $query = $this
-
             ->createQueryBuilder('sortie')
             ->select('sortie');
 
-
-        if(empty($sortiesFiltre->sortiesOrganisees) && empty($sortiesFiltre->sortiesPassees) && empty($sortiesFiltre->sortiesNonInscrit) && empty($sortiesFiltre->sortiesInscrit) && empty($sortiesFiltre->getName())) {
+        if (empty($sortiesFiltre->sortiesOrganisees) && empty($sortiesFiltre->sortiesPassees) && empty($sortiesFiltre->sortiesNonInscrit) && empty($sortiesFiltre->sortiesInscrit) && empty($sortiesFiltre->getName())) {
             $query = $query
-                ->addOrderBy('sortie.nom','ASC')
+                ->addOrderBy('sortie.nom', 'ASC')
                 ->andWhere('sortie.estPublie=true')
                 ->andWhere('sortie.etat!=7')
                 ->setMaxResults(10);
         }
-
         if (!empty($sortiesFiltre->sortiesOrganisees)) {
             $query = $query
                 ->andWhere('sortie.organisateur = :utilisateur')
                 ->andWhere('sortie.etat != 7')
                 ->setParameter('utilisateur', $utilisateur);
         }
-
         if (!empty($sortiesFiltre->sortiesPassees)) {
             $query = $query
                 ->andWhere('sortie.etat = :etat')
                 ->andWhere('sortie.estPublie = true')
                 ->setParameter('etat', 5);
         }
-
-
-            if (!empty($sortiesFiltre->sortiesNonInscrit)){
-                $query=$query
-                    ->andWhere('sortie.etat != 7')
-                    ->andWhere('sortie.estPublie = true AND sortie.etat != 6 AND sortie.etat != 1 
+        if (!empty($sortiesFiltre->sortiesNonInscrit)) {
+            $query = $query
+                ->andWhere('sortie.etat != 7')
+                ->andWhere('sortie.estPublie = true AND sortie.etat != 6 AND sortie.etat != 1 
                     OR 
                     (:utilisateur NOT MEMBER OF sortie.participants AND :utilisateur = sortie.organisateur AND (sortie.etat = 6 OR sortie.etat = 1))')
-                    ->andWhere(':utilisateur NOT MEMBER OF sortie.participants')
-                    ->setParameter('utilisateur', $utilisateur);
-            }
-
-
-
-
-            if (!empty($sortiesFiltre->sortiesInscrit)) {
-                $query = $query
-                    ->andWhere('sortie.etat != 7')
-                    ->andWhere('sortie.estPublie = true AND sortie.etat != 6 AND sortie.etat != 1 AND :utilisateur MEMBER OF sortie.participants
+                ->andWhere(':utilisateur NOT MEMBER OF sortie.participants')
+                ->setParameter('utilisateur', $utilisateur);
+        }
+        if (!empty($sortiesFiltre->sortiesInscrit)) {
+            $query = $query
+                ->andWhere('sortie.etat != 7')
+                ->andWhere('sortie.estPublie = true AND sortie.etat != 6 AND sortie.etat != 1 AND :utilisateur MEMBER OF sortie.participants
                     OR
                     (:utilisateur MEMBER OF sortie.participants AND :utilisateur = sortie.organisateur AND (sortie.etat = 6 OR sortie.etat = 1))')
-                  ->andWhere(':utilisateur MEMBER OF sortie.participants')
-                  ->setParameter('utilisateur', $utilisateur);
-            }
-
-            if (!empty($sortiesFiltre->getName())){
-                $query =$query
-                    ->andWhere('sortie.etat != 7')
-                    ->andWhere('sortie.estPublie = true AND sortie.etat != 1
+                ->andWhere(':utilisateur MEMBER OF sortie.participants')
+                ->setParameter('utilisateur', $utilisateur);
+        }
+        if (!empty($sortiesFiltre->getName())) {
+            $query = $query
+                ->andWhere('sortie.etat != 7')
+                ->andWhere('sortie.estPublie = true AND sortie.etat != 1
                     OR 
                     (:utilisateur = sortie.organisateur)')
-                    ->andWhere('sortie.nom LIKE :name')
-                    ->setParameter('name', "%{$sortiesFiltre->getName()}%")
-                    ->setParameter('utilisateur', $utilisateur)
-                ;
-            }
-
-            if (!empty($sortiesFiltre->getDateTime())){
-                $query=$query
-                    ->andWhere('sortie.etat != 7')
-                    ->andWhere('sortie.dateHeureDebut >= :dateTime ')
-                    ->addOrderBy('sortie.dateHeureDebut', 'ASC')
-                    ->andWhere('sortie.etat != 6 AND sortie.etat != 1 OR :utilisateur = sortie.organisateur')
-                    ->setParameter('utilisateur', $utilisateur)
-                    ->setParameter('dateTime', $sortiesFiltre->getDateTime());
-            }
-
-
+                ->andWhere('sortie.nom LIKE :name')
+                ->setParameter('name', "%{$sortiesFiltre->getName()}%")
+                ->setParameter('utilisateur', $utilisateur);
+        }
+        if (!empty($sortiesFiltre->getDateTime())) {
+            $query = $query
+                ->andWhere('sortie.etat != 7')
+                ->andWhere('sortie.dateHeureDebut >= :dateTime ')
+                ->addOrderBy('sortie.dateHeureDebut', 'ASC')
+                ->andWhere('sortie.etat != 6 AND sortie.etat != 1 OR :utilisateur = sortie.organisateur')
+                ->setParameter('utilisateur', $utilisateur)
+                ->setParameter('dateTime', $sortiesFiltre->getDateTime());
+        }
 
 
         $paginator = new Paginator($query);
