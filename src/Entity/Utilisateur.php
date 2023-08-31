@@ -6,7 +6,6 @@ use App\Repository\UtilisateurRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Serializable;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -15,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: UtilisateurRepository::class)]
-#[UniqueEntity(fields: ['username','mail'], message: "l'email ou le username sont déjà utilisés")]
+#[UniqueEntity(fields: ['username', 'mail'], message: "l'email ou le username sont déjà utilisés")]
 #[Vich\Uploadable()]
 class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -78,7 +77,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $sortiesParticipees;
 
     #[ORM\Column(length: 2100, nullable: true)]
-    private ?String $photo = null;
+    private ?string $photo = null;
 
     #[Vich\UploadableField(mapping: 'products', fileNameProperty: 'photo', size: 'imageSize')]
     private ?File $imageFile = null;
@@ -175,7 +174,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->username;
+        return (string)$this->username;
     }
 
     /**
@@ -273,7 +272,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $role = $this->getRoles();
 
-        if($this->administrateur === true) {
+        if ($this->administrateur === true) {
             $this->setRoles([]);
         } else {
             $this->setRoles(["ROLE_ADMIN"]);
@@ -397,20 +396,20 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
         return [
             'id' => $this->id,
             "photo" => $this->photo,
-            'site'=>$this->site,
-            'username'=>$this->username,
-            'role'=>$this->roles,
-            'password'=>$this->password,
-            'nom'=>$this->nom,
-            'prenom'=>$this->prenom,
-            'telephone'=>$this->telephone,
-            'mail'=>$this->mail,
-            'administrateur'=>$this->administrateur,
-            'actif'=>$this->actif,
-            'sortiesParticipees'=>$this->sortiesParticipees,
-            'sortiesOrganisees'=>$this->sortiesOrganisees,
-            'imageSize'=>$this->imageSize,
-            'updatedAt'=>$this->updatedAt
+            'site' => $this->site,
+            'username' => $this->username,
+            'role' => $this->roles,
+            'password' => $this->password,
+            'nom' => $this->nom,
+            'prenom' => $this->prenom,
+            'telephone' => $this->telephone,
+            'mail' => $this->mail,
+            'administrateur' => $this->administrateur,
+            'actif' => $this->actif,
+            'sortiesParticipees' => $this->sortiesParticipees,
+            'sortiesOrganisees' => $this->sortiesOrganisees,
+            'imageSize' => $this->imageSize,
+            'updatedAt' => $this->updatedAt
         ];
     }
 

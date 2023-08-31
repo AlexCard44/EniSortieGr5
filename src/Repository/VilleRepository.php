@@ -47,16 +47,15 @@ class VilleRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-public function findAllCustom():Paginator {
-        $queryBuilder=$this->createQueryBuilder('ville')
+    public function findAllCustom(): Paginator
+    {
+        $queryBuilder = $this->createQueryBuilder('ville')
             ->addOrderBy('ville.codePostal', 'ASC')
             ->setMaxResults(10)
             ->getQuery();
-        $paginator=new Paginator($queryBuilder);
+        $paginator = new Paginator($queryBuilder);
         return $paginator;
-}
-
-
+    }
 
 
 }

@@ -21,13 +21,14 @@ class SortieType extends AbstractType
 {
     private RequestStack $requestStack;
 
-    public function __construct(RequestStack $requestStack) {
-        $this->requestStack=$requestStack;
+    public function __construct(RequestStack $requestStack)
+    {
+        $this->requestStack = $requestStack;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $currentUrl=$this->requestStack->getCurrentRequest()->getPathInfo();
+        $currentUrl = $this->requestStack->getCurrentRequest()->getPathInfo();
         $builder
             ->add('nom', null, [
                 "label" => "Nom de la sortie : "
@@ -36,16 +37,15 @@ class SortieType extends AbstractType
 
             ->add('dateHeureDebut', DateTimeType::class, [
                 "label" => "Date et heure de début de la sortie : ",
-                'widget'=>'single_text',
+                'widget' => 'single_text',
             ])
-
             ->add('dateHeureFin', DateTimeType::class, [
                 "label" => "Date et heure de fin de la sortie : ",
-                'widget'=>'single_text',
+                'widget' => 'single_text',
             ])
             ->add('dateLimiteInscription', DateTimeType::class, [
                 "label" => "Date limite d'inscription : ",
-                'widget'=>'single_text',
+                'widget' => 'single_text',
             ])
             ->add('nbInscriptionsMax', null, [
                 "label" => "Nombre de places : "
@@ -58,9 +58,9 @@ class SortieType extends AbstractType
 //            ->add('urlPhoto', null, ["label" => "Photo : "])
             // TODO : accéder à Ville  (relation indirecte passant par Lieu et faire en sorte qu'en sélectionnant la ville, cela limite la sélection des lieux)
             ->add('lieu', EntityType::class, [
-                'class'=> Lieu::class,
-                'multiple'=>false,
-                'label'=>'Ville :',
+                'class' => Lieu::class,
+                'multiple' => false,
+                'label' => 'Ville :',
                 'choice_label' => 'rue',
             ])
             ->add('lieu', EntityType::class, [
@@ -77,7 +77,7 @@ class SortieType extends AbstractType
                             'image/jpeg',
                             'image/png'
                         ],
-                        'mimeTypesMessage'=> 'Veuillez télécharger une image au format JPEG ou PNG',
+                        'mimeTypesMessage' => 'Veuillez télécharger une image au format JPEG ou PNG',
                     ])
                 ]
             ])
@@ -90,41 +90,28 @@ class SortieType extends AbstractType
                     'class' => 'bg-lime-500 hover:bg-lime-700 text-white font-bold py-2 px-4 border border-lime-700 rounded'
                 ]
             ]);
-
-//            if(str_contains($currentUrl,'creation')) {
-//                $builder->add('Publier', SubmitType::class, [
-//                    "label" => "Publier la sortie"
-//                ]);
-//            }
-
-//            if(str_contains($currentUrl,'edit')) {
-//                $builder->add('Annuler', SubmitType::class, [
-//                    "label" => "Annuler la sortie"
-//                ]);
-//            }
-
-            $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
-                $sortie=$event->getData();
-                $form=$event->getForm();
-                if ($sortie && !$sortie->isEstPublie()) {
-                    $form->add('Publier', SubmitType::class, [
-                            'label' => "Publier la sortie",
-                            'attr' => [
-                                'class' => 'bg-lime-500 hover:bg-lime-700 text-white font-bold py-2 px-4 border border-lime-700 rounded'
-                            ]
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+            $sortie = $event->getData();
+            $form = $event->getForm();
+            if ($sortie && !$sortie->isEstPublie()) {
+                $form->add('Publier', SubmitType::class, [
+                        'label' => "Publier la sortie",
+                        'attr' => [
+                            'class' => 'bg-lime-500 hover:bg-lime-700 text-white font-bold py-2 px-4 border border-lime-700 rounded'
                         ]
-                    );
-                }
-            });
-
-            if(str_contains($currentUrl,'edit')) {
-                $builder->add('Annuler', SubmitType::class, [
-                    "label" => "Annuler la sortie",
-                    'attr' => [
-                        'class' => 'bg-lime-500 hover:bg-lime-700 text-white font-bold py-2 px-4 border border-lime-700 rounded'
                     ]
-                ]);
+                );
             }
+        });
+
+        if (str_contains($currentUrl, 'edit')) {
+            $builder->add('Annuler', SubmitType::class, [
+                "label" => "Annuler la sortie",
+                'attr' => [
+                    'class' => 'bg-lime-500 hover:bg-lime-700 text-white font-bold py-2 px-4 border border-lime-700 rounded'
+                ]
+            ]);
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver): void

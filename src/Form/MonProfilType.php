@@ -22,46 +22,21 @@ class MonProfilType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        // $user = $options['user'];
         $builder
-            ->add('username')
-            //->add('roles')
-//            ->add('password')
+            ->add('username', null, [
+                'label' => 'Pseudo'
+            ])
             ->add('nom')
-            ->add('prenom')
-            ->add('telephone')
+            ->add('prenom', null, [
+                'label' => 'Prénom'
+            ])
+            ->add('telephone', null, [
+                'label' => 'Téléphone'
+            ])
             ->add('mail')
-//            ->add('administrateur')
-//            ->add('actif')
-//            ->add('site', EntityType::class, [
-//                'class' => Site::class,
-//                'choice_label' => 'nom'
-//            ])
-//            ->add('sortiesParticipees', CollectionType::class,[
-//                'entry_type'=> SortieType::class,
-//                'allow_add' => false,
-//                'allow_delete' => false,
-//                'by_reference' => false,
-//                //'disabled' => true,
-//             //   'query_builder' =>
-//
-//            ])
-//            ->add('photo', FileType::class,[
-//                'label'=>'Ajouter une image de profil ',
-//                'required'=>false,
-//                'constraints'=> [
-//                    new File([
-//                        'maxSize'=> '4M',
-//                        'mimeTypes'=>[
-//                            'image/jpeg',
-//                            'image/png'
-//                        ],
-//                        'mimeTypesMessage'=> 'Veuillez télécherger uune image au format JPEG ou PNG'
-//                    ])
-//                ]
-//            ])
             ->add('imageFile', VichImageType::class, [
                 'required' => false,
+                'label' => 'Photo',
                 'constraints' => [
                     new File([
                         'maxSize' => '4M',
@@ -69,9 +44,10 @@ class MonProfilType extends AbstractType
                             'image/jpeg',
                             'image/png'
                         ],
-                        'mimeTypesMessage'=> 'Veuillez télécharger une image au format JPEG ou PNG'
+                        'mimeTypesMessage' => 'Veuillez télécharger une image au format JPEG ou PNG'
                     ])
-                ]
+                ],
+                'download_uri' => false,
             ])
             ->add('modifier', SubmitType::class, [
                 'attr' => [

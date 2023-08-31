@@ -20,14 +20,11 @@ class LieuController extends AbstractController
         LieuRepository $lieuRepository
     ): Response
     {
-        // On vérifie si l'utilisateur est bien connecté
-        // Dans le cas contraire, on l'envoie vers une page d'erreur lui demandant de se connecter
         try {
             $userActuel = $this->getUser()->getUserIdentifier();
         } catch (\Throwable $throwable) {
             return $this->render('@Twig/Exception/error401.html.twig');
         }
-        // On fait appel à une fonction de requête SQL personnalisée afin de récupérer l'ensemble des enregistrements de la table Lieux (selon quelques critères) et de les afficher
         $lieux = $lieuRepository->findAllCustom();
         return $this->render('lieu/liste.html.twig',
             compact('lieux')
@@ -40,22 +37,15 @@ class LieuController extends AbstractController
         Request                $request
     ): Response
     {
-
-        // On vérifie si l'utilisateur est bien connecté
-        // Dans le cas contraire, on l'envoie vers une page d'erreur
+        $lieu = new Lieu();
         try {
             $userActuel = $this->getUser()->getUserIdentifier();
         } catch (\Throwable $throwable) {
             return $this->render('@Twig/Exception/error401.html.twig');
         }
-
-        // On instancie un nouvel objet Lieu et on créé un nouveau formulaire de type lieu (lié à l'entité Lieu) et une nouvelle requête
-        $lieu = new Lieu();
         $lieuForm = $this->createForm(LieuType::class, $lieu);
         $lieuForm->handleRequest($request);
 
-        // Si le formulaire est soumis, valide et que l'utilisateur a bien cliqué sur le bouton dénommé 'Enregistrer' alors on prépare la requête et on l'envoie en base de données
-        // Ajout d'une notification de succès qui apparaitra sur la page de redirection
         if ($lieuForm->isSubmitted() && $lieuForm->isValid() && 'Enregistrer' === $lieuForm->getClickedButton()->getName()) {
             $entityManager->persist($lieu);
             $entityManager->flush();
@@ -77,22 +67,15 @@ class LieuController extends AbstractController
         Request                $request
     ): Response
     {
-
-        // On vérifie si l'utilisateur est bien connecté
-        // Dans le cas contraire, on l'envoie vers une page d'erreur
         try {
             $userActuel = $this->getUser()->getUserIdentifier();
         } catch (\Throwable $throwable) {
             return $this->render('@Twig/Exception/error401.html.twig');
         }
 
-        // On créé un nouveau formulaire de type lieu (lié à l'entité Lieu) et une nouvelle requête
         $lieuForm = $this->createForm(LieuType::class, $lieu);
         $lieuForm->handleRequest($request);
 
-        // Si le formulaire est soumis, valide et que l'utilisateur a bien cliqué sur le bouton dénommé 'Supprimer' alors on prépare la requête et on l'envoie en base de données pour supprimer l'enregistrement correspondant
-        // Si l'utilisateur clique sur un autre bouton (donc le bouton 'Enregistrer') on envoie une requête de modification en BDD.
-        // Ajout d'une notification de succès en cas de suppression ou de modification de l'enregistrement
         if ($lieuForm->isSubmitted() && $lieuForm->isValid()) {
             if ("Supprimer" === $lieuForm->getClickedButton()->getName()) {
                 $entityManager->remove($lieu);

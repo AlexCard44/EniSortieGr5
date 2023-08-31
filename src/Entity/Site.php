@@ -128,5 +128,26 @@ class Site
         return $this->nom;
     }
 
+    public function __serialize(): array
+    {
+        return [
+            //'id' => $this->id,
+            'nom' => $this->nom,
+            'sorties' => $this->sorties,
+            'utilisateurs' => $this->utilisateurs,
+            'ville' => $this->ville
+        ];
+
+    }
+
+    public function __unserialize(array $data): void
+    {
+        //$this->id = $data['id'];
+        $this->nom = $data['nom'];
+        $this->sorties = $data['sorties'];
+        $this->utilisateurs = $data['utilisateurs'];
+        $this->ville = $data['ville'];
+    }
+
 
 }
